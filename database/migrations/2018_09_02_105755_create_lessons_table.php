@@ -17,7 +17,6 @@ class CreateLessonsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('instructor_id');
             $table->unsignedInteger('course_id');
-            $table->unsignedInteger('section_id');
             $table->string('title');
             $table->text('content');
             $table->boolean('status')->default(true);

@@ -2,7 +2,15 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row mt-lg-5 justify-content-center">
+      <div class="row">
+          <div class="col-lg-12">
+              <nav class="breadcrumb">
+                  <a class="breadcrumb-item" href="{{route('admin.instructor.create')}}">Instructor</a>
+                  <span class="breadcrumb-item active">Add</span>
+              </nav>
+          </div>
+      </div>
+        <div class="row mt-lg-3 justify-content-center">
             <div class="col-xl-6 col-md-6 mb-4">
                 <div class="card card-cascade narrower z-depth-1">
                     <div class="view gradient-card-header indigo narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">

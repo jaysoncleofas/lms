@@ -6,7 +6,15 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row mt-lg-5">
+      <div class="row">
+          <div class="col-lg-12">
+              <nav class="breadcrumb">
+                  <span class="breadcrumb-item active">Course</span>
+                  <span class="breadcrumb-item active">List</span>
+              </nav>
+          </div>
+      </div>
+        <div class="row mt-lg-3">
             <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card card-cascade narrower z-depth-1">
                     <div class="view gradient-card-header indigo narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
@@ -37,7 +45,7 @@
                                             <td>{{date('F j, Y',strtotime($course->created_at))}}</td>
                                             <td>
                                                 @foreach ($course->users as $instructor)
-                                                    {{$instructor->firstName.' '.$instructor->lastName}}, 
+                                                    {{$instructor->firstName.' '.$instructor->lastName}},
                                                 @endforeach
                                             </td>
                                             <td>

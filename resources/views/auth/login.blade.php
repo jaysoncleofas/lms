@@ -9,7 +9,7 @@
                     <form action="{{route('login')}}" method="post">
                         @csrf
                         <div class="md-form">
-                            <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                            <input type="email" name="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
                             <label>Email Address</label>
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">

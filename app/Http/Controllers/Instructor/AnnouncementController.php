@@ -95,7 +95,7 @@ class AnnouncementController extends Controller
         $course = $user->courses()->findOrFail($course_id);
         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-        $announcement = Announcement::where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
+        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
 
         return view('instructor.announcement.edit', compact('course', 'section', 'announcement'));
     }
@@ -113,7 +113,7 @@ class AnnouncementController extends Controller
         $course = $user->courses()->findOrFail($course_id);
         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-        $announcement = Announcement::where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
+        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
 
         $request->validate([
             'content' => 'required|string|max:255',
@@ -140,7 +140,7 @@ class AnnouncementController extends Controller
         $course = $user->courses()->findOrFail($course_id);
         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-        $announcement = Announcement::where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
+        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
 
         $announcement->delete();
 

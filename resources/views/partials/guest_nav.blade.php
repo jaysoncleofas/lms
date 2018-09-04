@@ -11,7 +11,7 @@
                 <a class="nav-link" href="{{route('login')}}">Login </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
+                <a class="nav-link" href="{{route('register_token')}}">Register</a>
             </li>
         </ul>
     </div>

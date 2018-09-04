@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row mt-lg-5">
+      <div class="row">
+          <div class="col-lg-12">
+              <nav class="breadcrumb">
+                  <span class="breadcrumb-item active">Dashboard</span>
+              </nav>
+          </div>
+      </div>
+        <div class="row mt-lg-3">
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card card-cascade cascading-admin-card">
                     <div class="admin-up">

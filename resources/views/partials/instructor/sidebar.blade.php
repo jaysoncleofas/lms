@@ -37,7 +37,7 @@
                         <a href="{{route('instructor.student.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('student',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-users"></i> Students<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
                     <li>
-                        <a href="" class="{{Nav::hasSegment('student',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bookmark"></i> Lesson<i class="fa fa-angle-right pull-right"></i></a>
+                        <a href="{{route('instructor.lesson.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('lesson',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bookmark"></i> Lesson<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
                     <li>
                         <a href="" class="{{Nav::hasSegment('student',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i> Quiz<i class="fa fa-angle-right pull-right"></i></a>

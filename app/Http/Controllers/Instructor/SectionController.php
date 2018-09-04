@@ -49,7 +49,7 @@ class SectionController extends Controller
         $course = $user->courses()->findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|unique:sections|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         $section = new Section;
@@ -61,7 +61,7 @@ class SectionController extends Controller
         session()->flash('status', 'Successfully added!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.section.index', $course->id);
+        return redirect()->route('instructor.announcement.index', [$course->id, $section->id]);
     }
 
     /**
@@ -110,7 +110,7 @@ class SectionController extends Controller
 
         if ($request->name != $section->name) {
             $request->validate([
-                'name' => 'required|string|unique:sections|max:255',
+                'name' => 'required|string|max:255',
             ]);
         }
 

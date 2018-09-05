@@ -10,8 +10,7 @@
           <div class="col-lg-12">
               <nav class="breadcrumb">
                   <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                  <a class="breadcrumb-item" href="{{route('instructor.section.index', $course->id)}}">{{$section->name}}</a>
-                  <a class="breadcrumb-item" href="{{route('instructor.lesson.index', [$course->id, $section->id])}}">Lessons</a>
+                  <a class="breadcrumb-item" href="{{route('instructor.lesson.index', $course->id)}}">Lessons</a>
                   <span class="breadcrumb-item active">Update</span>
               </nav>
           </div>
@@ -20,7 +19,7 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card">
                   <div class="card-body">
-                      <form class="" action="{{route('instructor.lesson.update', [$course->id, $section->id, $lesson->id])}}" method="post">
+                      <form class="" action="{{route('instructor.lesson.update', [$course->id, $lesson->id])}}" method="post">
                           @csrf {{method_field('PUT')}}
                           <div class="form-row">
                               <div class="col-md-6">

@@ -27,18 +27,38 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
     Route::resource('/instructor', 'Admin\InstructorController');
 });
 
+// Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {
+//     Route::get('/dashboard', 'HomeController@instructor_dashboard')->name('dashboard');
+//     Route::resource('/course/{course}/section', 'Instructor\SectionController')->except('show');
+//
+//     Route::resource('/course/{course}/section/{section}/announcement', 'Instructor\AnnouncementController')->except(['show']);
+//
+//     Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
+//
+//     Route::put('/course/{course}/section/{section}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
+//     Route::resource('/course/{course}/section/{section}/lesson', 'Instructor\LessonController');
+//
+//     Route::resource('/course/{course}/section/{section}/quiz', 'Instructor\QuizController');
+//
+//     Route::resource('/course/{course}/section/{section}/assignment', 'Instructor\AssignmentController');
+//
+//     Route::resource('/course/{course}/section/{section}/token', 'Instructor\TokenController')->except(['show']);
+// });
+
 Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@instructor_dashboard')->name('dashboard');
-    // Route::get('/course/{course}/section/{section}/announcement', 'Instructor\SectionController@announcement')->name('section.announcement');
-    Route::get('/course/{course}/sections', 'Instructor\SectionController@index')->name('section.index');
-    Route::resource('/course/{course}/section', 'Instructor\SectionController')->except(['show', 'index']);
+    Route::resource('/course/{course}/section', 'Instructor\SectionController')->except('show');
 
-    Route::resource('/course/{course}/section/{section}/announcement', 'Instructor\AnnouncementController')->except(['show']);
+    Route::resource('/course/{course}/announcement', 'Instructor\AnnouncementController')->except(['show']);
 
-    Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
+    // Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
 
-    Route::put('/course/{course}/section/{section}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
-    Route::resource('/course/{course}/section/{section}/lesson', 'Instructor\LessonController');
+    Route::put('/course/{course}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
+    Route::resource('/course/{course}/lesson', 'Instructor\LessonController');
 
-    Route::resource('/course/{course}/section/{section}/token', 'Instructor\TokenController')->except(['show']);
+    Route::resource('/course/{course}/quiz', 'Instructor\QuizController');
+
+    Route::resource('/course/{course}/assignment', 'Instructor\AssignmentController');
+
+    Route::resource('/course/{course}/token', 'Instructor\TokenController')->except(['show']);
 });

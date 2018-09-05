@@ -28,10 +28,7 @@
                             <table id="example" class="table table-striped mb-0">
                                 <thead>
                                     <tr>
-                                        <td>Name</td>
-                                        <td>Code</td>
-                                        <td>Description</td>
-                                        <td>Date Created</td>
+                                        <td>Course</td>
                                         <td>Instructors</td>
                                         <td>Action</td>
                                     </tr>
@@ -40,9 +37,9 @@
                                     @foreach ($courses as $course)
                                         <tr>
                                             <td>{{$course->name}}</td>
-                                            <td>{{$course->code}}</td>
+                                            {{-- <td>{{$course->code}}</td>
                                             <td>{{$course->description}}</td>
-                                            <td>{{date('F j, Y',strtotime($course->created_at))}}</td>
+                                            <td>{{date('F j, Y',strtotime($course->created_at))}}</td> --}}
                                             <td>
                                                 @foreach ($course->users as $instructor)
                                                     {{$instructor->firstName.' '.$instructor->lastName}},

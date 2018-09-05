@@ -9,7 +9,7 @@
       <div class="row">
           <div class="col-lg-12">
               <nav class="breadcrumb">
-                  <a class="breadcrumb-item" href="{{route('admin.course.create')}}">Course</a>
+                  <a class="breadcrumb-item" href="{{route('admin.course.index')}}">Course</a>
                   <span class="breadcrumb-item active">Update</span>
               </nav>
           </div>

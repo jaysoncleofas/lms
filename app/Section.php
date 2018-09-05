@@ -7,6 +7,9 @@ use App\Course;
 use App\User;
 use App\Token;
 use App\Lesson;
+use App\Quiz;
+use App\Assignment;
+use App\Announcement;
 
 class Section extends Model
 {
@@ -34,5 +37,20 @@ class Section extends Model
     public function lessons()
     {
         return $this->belongsToMany('App\Lesson');
+    }
+
+    public function quizzes()
+    {
+        return $this->belongsToMany('App\Quiz');
+    }
+
+    public function assignments()
+    {
+        return $this->belongsToMany('App\Assignment');
+    }
+
+    public function announcements()
+    {
+        return $this->belongsToMany('App\Announcement');
     }
 }

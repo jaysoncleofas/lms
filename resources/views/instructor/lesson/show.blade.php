@@ -6,8 +6,7 @@
           <div class="col-lg-12">
               <nav class="breadcrumb">
                   <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                  <a class="breadcrumb-item" href="{{route('instructor.section.index', $course->id)}}">{{$section->name}}</a>
-                  <a class="breadcrumb-item" href="{{route('instructor.lesson.index', [$course->id, $section->id])}}">Lessons</a>
+                  <a class="breadcrumb-item" href="{{route('instructor.lesson.index', $course->id)}}">Lessons</a>
                   <span class="breadcrumb-item active">Show</span>
               </nav>
           </div>
@@ -22,7 +21,7 @@
                               <span class="breadcrumb-item active">{{$value->name}}</span>
                           @endforeach
                       @endif
-                      <a href="{{route('instructor.lesson.edit', [$course->id, $section->id, $lesson->id])}}" class="pull-right"><i class="fa fa-pencil"></i> Update</a>
+                      <a href="{{route('instructor.lesson.edit', [$course->id, $lesson->id])}}" class="pull-right"><i class="fa fa-pencil"></i> Update</a>
                       <div class="row justify-content-center">
                           <div class="col-md-8">
                               <h2 class="text-center py-5">{{$lesson->title}}</h2>

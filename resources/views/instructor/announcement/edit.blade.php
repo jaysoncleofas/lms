@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+    <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
     <style media="screen">
         .mdb-feed {
             margin: 0 !important
@@ -14,8 +15,6 @@
             <div class="col-lg-12">
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                    <a class="breadcrumb-item" href="{{route('instructor.section.index', $course->id)}}">Sections</a>
-                    <span class="breadcrumb-item active">{{$section->name}}</span>
                     <span class="breadcrumb-item active">Announcement</span>
                 </nav>
             </div>
@@ -25,7 +24,7 @@
                 <a class="comment" data-toggle="collapse" href="#collapseExample-4" aria-expanded="false" aria-controls="collapseExample-4">Update Announcement</a>
                 <div class="card mt-5">
                     <div class="card-body">
-                        <form class="" action="{{route('instructor.announcement.update', [$course->id, $section->id, $announcement->id])}}" method="post">
+                        <form class="" action="{{route('instructor.announcement.update', [$course->id, $announcement->id])}}" method="post">
                             {{ csrf_field() }} {{method_field('PUT')}}
                             <!-- Add comment -->
                             <div class="md-form mt-1 mb-1">
@@ -37,8 +36,18 @@
                                   </span>
                               @endif
                             </div>
-                            <div class="d-flex justify-content-end">
-                              <a href="{{route('instructor.announcement.index', [$course->id, $section->id])}}" class="btn btn-flat waves-effect">Cancel</a>
+                            <div class="col-md-12">
+                                <p>Assign Section</p>
+                                <div class="md-form">
+                                     <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
+                                        @foreach ($sections as $section2)
+                                        <option value="{{ $section2->id }}">{{ $section2->name }}</option>
+                                        @endforeach
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-5">
+                              <a href="{{route('instructor.announcement.index', $course->id)}}" class="btn btn-flat waves-effect">Cancel</a>
                               <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
@@ -47,4 +56,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script>
+        $('.multiple-select').select2();
+        $('.multiple-select').select2().val({!! json_encode($announcement->sections()->allRelatedIds()) !!}).trigger('change');
+    </script>
 @endsection

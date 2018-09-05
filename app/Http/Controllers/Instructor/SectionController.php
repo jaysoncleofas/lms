@@ -61,7 +61,7 @@ class SectionController extends Controller
         session()->flash('status', 'Successfully added!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.announcement.index', [$course->id, $section->id]);
+        return redirect()->route('instructor.section.index', $course->id);
     }
 
     /**
@@ -134,6 +134,10 @@ class SectionController extends Controller
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
         $section = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->findOrFail($id);
+        $section->lessons()->detach();
+        $section->quizzes()->detach();
+        $section->assignments()->detach();
+        $section->delete();
 
         return redirect()->route('instructor.section.index', $course->id);
     }

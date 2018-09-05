@@ -31,7 +31,7 @@
                                         <td>Name</td>
                                         <td>Email</td>
                                         <td>Username</td>
-                                        <td>Birth Date</td>
+                                        {{-- <td>Birth Date</td> --}}
                                         <td>Action</td>
                                     </tr>
                                 </thead>
@@ -41,7 +41,7 @@
                                             <td>{{$instructor->firstName.' '.$instructor->lastName}}</td>
                                             <td>{{$instructor->email}}</td>
                                             <td>{{$instructor->username}}</td>
-                                            <td>{{date('F j, Y',strtotime($instructor->birthDate))}}</td>
+                                            {{-- <td>{{date('F j, Y',strtotime($instructor->birthDate))}}</td> --}}
                                             <td>
                                                 <a href="{{route('admin.instructor.edit', $instructor->id)}}" class="blue-text">Update</a> |
                                                 <a  class="text-danger" onclick="if(confirm('Are you sure you want to delete this instructor?')) {

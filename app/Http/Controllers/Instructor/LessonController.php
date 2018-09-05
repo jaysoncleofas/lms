@@ -17,15 +17,15 @@ class LessonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index($course_id, $section_id)
+     public function index($course_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
+         // $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $lessons = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
 
-         return view('instructor.lesson.index', compact('course', 'section', 'lessons'));
+         return view('instructor.lesson.index', compact('course', 'lessons'));
        }
 
     /**
@@ -33,16 +33,14 @@ class LessonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function create($course_id, $section_id)
+     public function create($course_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
-         $sections = Section::where('course_id', $course_id)->get();
 
-         // return $section;
+         $sections = Section::where('course_id', $course_id)->where('isActive', true)->get();
 
-         return view('instructor.lesson.create', compact('course', 'section', 'sections'));
+         return view('instructor.lesson.create', compact('course', 'sections'));
      }
 
     /**
@@ -51,11 +49,10 @@ class LessonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(Request $request, $course_id, $section_id)
+     public function store(Request $request, $course_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course_id)->findOrFail($section_id);
 
          $request->validate([
              'title' => 'required|string|unique:lessons|max:255',
@@ -74,7 +71,7 @@ class LessonController extends Controller
          session()->flash('status', 'Successfully added!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.lesson.index', [$course->id, $section_id]);
+         return redirect()->route('instructor.lesson.index', $course->id);
      }
 
     /**
@@ -83,11 +80,10 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function show($course_id, $section_id, $id)
+     public function show($course_id, $id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
@@ -96,7 +92,7 @@ class LessonController extends Controller
          foreach ($sections as $section2) {
              $section22[$section2->id] = $section2->title;
          }
-         return view('instructor.lesson.show', compact('course', 'section', 'lesson', 'section22', 'sections'));
+         return view('instructor.lesson.show', compact('course', 'lesson', 'section22', 'sections'));
      }
 
     /**
@@ -105,11 +101,10 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function edit($course_id, $section_id, $id)
+     public function edit($course_id, $id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
@@ -118,7 +113,7 @@ class LessonController extends Controller
          foreach ($sections as $section2) {
              $section22[$section2->id] = $section2->title;
          }
-         return view('instructor.lesson.edit', compact('course', 'section', 'lesson', 'section22', 'sections'));
+         return view('instructor.lesson.edit', compact('course', 'lesson', 'section22', 'sections'));
      }
 
     /**
@@ -128,11 +123,10 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function update(Request $request, $course_id, $section_id, $id)
+     public function update(Request $request, $course_id, $id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
@@ -154,7 +148,7 @@ class LessonController extends Controller
          session()->flash('status', 'Successfully Updated!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.lesson.index', [$course->id, $section_id]);
+         return redirect()->route('instructor.lesson.index', $course->id);
      }
 
     /**
@@ -167,7 +161,6 @@ class LessonController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
         $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
@@ -177,14 +170,13 @@ class LessonController extends Controller
         session()->flash('status', 'Successfully Deleted!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.lesson.index', [$course->id, $section_id]);
+        return redirect()->route('instructor.lesson.index', $course->id);
     }
 
-    public function status(Request $request, $course_id, $section_id, $lesson_id)
+    public function status(Request $request, $course_id, $lesson_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
         $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($lesson_id);
 
@@ -194,6 +186,6 @@ class LessonController extends Controller
         session()->flash('status', 'Successfully Updated!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.lesson.index', [$course->id, $section_id]);
+        return redirect()->route('instructor.lesson.index', $course->id);
     }
 }

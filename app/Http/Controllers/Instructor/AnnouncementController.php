@@ -18,15 +18,16 @@ class AnnouncementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($course_id, $id)
+    public function index($course_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($id);
+        // $section = Section::where('course_id', $course->id)->findOrFail($id);
 
-        $announcements = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->where('section_id', $id)->latest()->get();
+        $announcements = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
 
-        return view('instructor.announcement.index', compact('course', 'section', 'announcements'));
+        // return view('instructor.announcement.index', compact('course', 'section', 'announcements'));
+        return view('instructor.announcement.index', compact('course', 'announcements'));
     }
 
     /**
@@ -34,13 +35,14 @@ class AnnouncementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($course_id, $section_id)
+    public function create($course_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-        return view('instructor.announcement.create', compact('course', 'section'));
+        $sections = Section::where('course_id', $course_id)->where('isActive', true)->get();
+
+        return view('instructor.announcement.create', compact('course', 'sections'));
     }
 
     /**
@@ -49,11 +51,10 @@ class AnnouncementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $course_id, $section_id)
+    public function store(Request $request, $course_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
         $request->validate([
             'content' => 'required|string|max:255',
@@ -62,14 +63,15 @@ class AnnouncementController extends Controller
         $announcement = new Announcement;
         $announcement->instructor_id = $user->id;
         $announcement->course_id = $course->id;
-        $announcement->section_id = $section_id;
         $announcement->content = $request->content;
         $announcement->save();
+
+        $announcement->sections()->sync($request->sections, false);
 
         session()->flash('status', 'Successfully added!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.announcement.index', [$course->id, $section_id]);
+        return redirect()->route('instructor.announcement.index', $course->id);
     }
 
     /**
@@ -89,15 +91,21 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($course_id, $section_id, $id)
+    public function edit($course_id, $id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
+        // $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
+        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
-        return view('instructor.announcement.edit', compact('course', 'section', 'announcement'));
+        $sections = Section::where('course_id', $course_id)->get();
+        $section22 = array();
+        foreach ($sections as $section2) {
+            $section22[$section2->id] = $section2->title;
+        }
+
+        return view('instructor.announcement.edit', compact('course', 'section22', 'sections', 'announcement'));
     }
 
     /**
@@ -107,13 +115,13 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $course_id, $section_id, $id)
+    public function update(Request $request, $course_id, $id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
+        // $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
+        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
         $request->validate([
             'content' => 'required|string|max:255',
@@ -125,7 +133,7 @@ class AnnouncementController extends Controller
         session()->flash('status', 'Successfully Updated!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.announcement.index', [$course->id, $section_id]);
+        return redirect()->route('instructor.announcement.index', $course->id);
     }
 
     /**
@@ -134,19 +142,18 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($course_id, $section_id, $id)
+    public function destroy($course_id, $id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->where('section_id', $section_id)->findOrFail($id);
-
+        $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
+        $announcement->sections()->detach();
         $announcement->delete();
 
         session()->flash('status', 'Successfully Deleted!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.announcement.index', [$course->id, $section_id]);
+        return redirect()->route('instructor.announcement.index', $course->id);
     }
 }

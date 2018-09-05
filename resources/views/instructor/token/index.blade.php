@@ -19,7 +19,7 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card card-cascade narrower z-depth-1">
                     <div class="view gradient-card-header indigo narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
-                            <a class="white-text mx-3">Tokens</a>
+                            <a class="white-text mx-3">Tokens for {{$section->name}} section only</a>
                         <div>
                             <a class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Generate Token" onclick="
                                         event.preventDefault();

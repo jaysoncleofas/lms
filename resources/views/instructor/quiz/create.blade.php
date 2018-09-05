@@ -10,25 +10,25 @@
           <div class="col-lg-12">
               <nav class="breadcrumb">
                   <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                  <a class="breadcrumb-item" href="{{route('instructor.lesson.index', $course->id)}}">Lessons</a>
+                  <a class="breadcrumb-item" href="{{route('instructor.quiz.index', $course->id)}}">Quiz</a>
                   <span class="breadcrumb-item active">Add</span>
               </nav>
           </div>
       </div>
-        <div class="row mt-lg-3">
-            <div class="col-xl-12 col-md-12 mb-4">
+        <div class="row justify-content-center mt-lg-3">
+            <div class="col-xl-6 col-md-6 mb-4">
                 <div class="card">
                   <div class="card-body">
-                      <form class="" action="{{route('instructor.lesson.store', $course->id)}}" method="post">
+                      <form class="" action="{{route('instructor.quiz.store', $course->id)}}" method="post">
                           @csrf
                           <div class="form-row">
-                              <div class="col-md-6">
+                              <div class="col-md-12">
                                   <div class="md-form">
                                       <input type="text" name="title" value="{{old('title')}}" class="form-control">
                                       <label for="">Title</label>
                                   </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-12">
                                   <p>Assign Section</p>
                                   <div class="md-form">
                                        <select class="multiple-select form-control" multiple="multiple" name="sections[]" required style="width:100% !important;">
@@ -36,12 +36,6 @@
                                           <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                                           @endforeach
                                        </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-12">
-                                  <div class="md-form">
-                                      <textarea name="content" class="md-textarea form-control" rows="8" cols="80">{{old('title')}}</textarea>
-                                      <label for="">Content</label>
                                   </div>
                               </div>
                           </div>

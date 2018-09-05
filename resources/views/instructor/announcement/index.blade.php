@@ -14,17 +14,16 @@
             <div class="col-lg-12">
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                    <a class="breadcrumb-item" href="{{route('instructor.section.index', $course->id)}}">{{$section->name}}</a>
                     <span class="breadcrumb-item active">Announcement</span>
                 </nav>
             </div>
         </div>
         <div class="row mt-lg-3 justify-content-center">
-            <div class="col-xl-6 col-md-6 mb-5 pb-5">
-                <a href="{{route('instructor.announcement.create', [$course->id, $section->id])}}" class="comment">Write Announcement</a>
-                <div class="collapse {{$errors->has('content') ? 'show' : ''}}" id="collapseExample-4">
+            <div class="col-xl-8 col-md-8 mb-5 pb-5">
+                <a href="{{route('instructor.announcement.create', $course->id)}}" class="comment">Write Announcement</a>
+                {{-- <div class="collapse {{$errors->has('content') ? 'show' : ''}}" id="collapseExample-4">
                   <div class="card card-body mt-1">
-                    <form class="" action="{{route('instructor.announcement.store', [$course->id, $section->id])}}" method="post">
+                    <form class="" action="{{route('instructor.announcement.store', $course->id)}}" method="post">
                         {{ csrf_field() }}
                         <!-- Add comment -->
                         <div class="md-form mt-1 mb-1">
@@ -42,7 +41,7 @@
                         </div>
                     </form>
                   </div>
-                </div>
+                </div> --}}
 
                 @if (count($announcements) > 0)
                     @foreach ($announcements as $announcement)
@@ -67,9 +66,15 @@
                                             </div>
                                             <!-- Added text -->
                                             <div class="added-text">{{$announcement->content}}</div>
+
+                                            <p>Posted to:
+                                                @foreach ($announcement->sections as $section)
+                                                    {{$section->name}},
+                                                @endforeach
+                                            </p>
                                             <!-- Feed footer -->
                                             <div class="feed-footer">
-                                              <a href="{{route('instructor.announcement.edit', [$course->id, $section->id, $announcement->id])}}" class="thumbs mr-3">
+                                              <a href="{{route('instructor.announcement.edit', [$course->id, $announcement->id])}}" class="thumbs mr-3">
                                                 <i class="fa fa-edit blue-text"></i> Edit
                                               </a>
                                               <a class="thumbs" onclick="if(confirm('Are you sure you want to delete this announcement?')) {
@@ -78,7 +83,7 @@
                                                         }">
                                                 <i class="fa fa-trash red-text"></i> Delete
                                               </a>
-                                              <form id="delete-announcement-form-{{$announcement->id}}" action="{{ route('instructor.announcement.destroy', [$course->id, $section->id, $announcement->id]) }}" method="post">
+                                              <form id="delete-announcement-form-{{$announcement->id}}" action="{{ route('instructor.announcement.destroy', [$course->id, $announcement->id]) }}" method="post">
                                                 @csrf {{method_field('DELETE')}}
 
                                               </form>

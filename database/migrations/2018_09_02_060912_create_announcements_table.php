@@ -17,7 +17,6 @@ class CreateAnnouncementsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('instructor_id');
             $table->unsignedInteger('course_id');
-            $table->unsignedInteger('section_id');
             $table->text('content');
             $table->timestamps();
         });

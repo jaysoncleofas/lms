@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\Section;
 
 class Announcement extends Model
 {
@@ -17,5 +18,10 @@ class Announcement extends Model
     public function instructor()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function sections()
+    {
+        return $this->belongsToMany('App\Section');
     }
 }

@@ -9,8 +9,9 @@
       <div class="row">
           <div class="col-lg-12">
               <nav class="breadcrumb">
-                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                  <span class="breadcrumb-item active">Quizzes</span>
+                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">Course</a>
+                  <span class="breadcrumb-item active">{{$course->name}}</span>
+                  <span class="breadcrumb-item active">Quiz</span>
               </nav>
           </div>
       </div>
@@ -18,7 +19,7 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card card-cascade narrower z-depth-1">
                     <div class="view gradient-card-header indigo narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
-                            <a class="white-text mx-3">Quiz table</a>
+                            <a class="white-text mx-3">Quiz list</a>
                         <div>
                             <a href="{{route('instructor.quiz.create', $course->id)}}" class="btn btn-outline-white btn-rounded btn-sm px-2"><i class="fa fa-pencil mt-0"></i></a>
                         </div>
@@ -28,9 +29,11 @@
                             <table id="example" class="table table-striped mb-0">
                                 <thead>
                                     <tr>
+                                        {{-- <td></td> --}}
                                         <td>Title</td>
                                         <td>Sections</td>
-                                        <td>Questions</td>
+                                        <td></td>
+                                        {{-- <td>Questions</td> --}}
                                         <td>Status</td>
                                         <td>Action</td>
                                     </tr>
@@ -38,6 +41,7 @@
                                 <tbody>
                                     @foreach ($quizzes as $quiz)
                                         <tr>
+
                                             <td><a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="blue-text">{{$quiz->title}}</a></td>
                                             <td>
                                                 @foreach ($quiz->sections as $section2)
@@ -45,8 +49,11 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                10
+                                                <a href="#" class="btn btn-sm btn-primary">Add question</a>
                                             </td>
+                                            {{-- <td>
+                                                10
+                                            </td> --}}
                                             <td>
                                                 {{-- @if ($quiz->isActive == 1)
                                                     <a href="#" class="btn btn-sm btn-success" onclick="if(confirm('Are you sure you want to deactivate this quiz?')) {
@@ -71,7 +78,11 @@
                                                       <input type="hidden" name="status" value="1">
                                                     </form>
                                                 @endif --}}
-                                                test
+                                                @if ($quiz->isActive == true)
+                                                    <a href="#" class="btn btn-success btn-sm">Active</a>
+                                                @else
+                                                    <a href="#" class="btn btn-danger btn-sm">Deactivate</a>
+                                                @endif
                                             </td>
                                             <td>
                                                 <a href="{{route('instructor.quiz.edit', [$course->id, $quiz->id])}}" class="blue-text">Update</a> |

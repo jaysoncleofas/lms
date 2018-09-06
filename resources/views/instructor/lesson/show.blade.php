@@ -5,9 +5,9 @@
       <div class="row">
           <div class="col-lg-12">
               <nav class="breadcrumb">
-                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                  <a class="breadcrumb-item" href="{{route('instructor.lesson.index', $course->id)}}">Lessons</a>
-                  <span class="breadcrumb-item active">Show</span>
+                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">Course</a>
+                  <span class="breadcrumb-item active">{{$course->name}}</span>
+                  <a class="breadcrumb-item" href="{{route('instructor.lesson.index', $course->id)}}">Lesson</a>
               </nav>
           </div>
       </div>

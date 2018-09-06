@@ -23,18 +23,18 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="progress">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                            {{-- <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div> --}}
                             <p class="card-text">{{$course->description}}</p>
                         </div>
 
-                        <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+                        {{-- <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
                           <ul class="list-unstyled list-inline font-small">
                             <li class="list-inline-item pr-2 white-text"><i class="fa fa-clock-o pr-1"></i>{{date('F j, Y',strtotime($course->created_at))}}</li>
-                            {{-- <li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="fa fa-users pr-1"></i>12</a></li> --}}
+                            <li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="fa fa-users pr-1"></i>12</a></li>
                           </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             @endforeach

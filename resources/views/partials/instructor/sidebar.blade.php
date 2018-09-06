@@ -42,7 +42,7 @@
                         <a href="{{route('instructor.assignment.index', $course->id)}}" class="{{Nav::hasSegment('assignment',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignment<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
                     <li>
-                        <a href="{{route('instructor.token.index', $course->id)}}" class="{{Nav::isRoute('instructor.token.index')}} collapsible-header waves-effect arrow-r"><i class="fa fa-adn"></i> Token<i class="fa fa-angle-right pull-right"></i></a>
+                        <a href="{{route('instructor.token.index', $course->id)}}" class="{{Nav::hasSegment('token',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-adn"></i> Token<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
                 @endif
             </ul>

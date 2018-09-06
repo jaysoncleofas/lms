@@ -9,8 +9,8 @@
       <div class="row">
           <div class="col-lg-12">
               <nav class="breadcrumb">
-                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                  <a class="breadcrumb-item" href="{{route('instructor.section.index', $course->id)}}">{{$section->name}}</a>
+                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">Course</a>
+                  <span class="breadcrumb-item active">{{$course->name}}</span>
                   <span class="breadcrumb-item active">Assignment</span>
               </nav>
           </div>
@@ -19,9 +19,9 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card card-cascade narrower z-depth-1">
                     <div class="view gradient-card-header indigo narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
-                            <a class="white-text mx-3">Assignment table</a>
+                            <a class="white-text mx-3">Assignment list</a>
                         <div>
-                            <a href="{{route('instructor.assignment.create', [$course->id, $section->id])}}" class="btn btn-outline-white btn-rounded btn-sm px-2"><i class="fa fa-pencil mt-0"></i></a>
+                            <a href="{{route('instructor.assignment.create', $course->id)}}" class="btn btn-outline-white btn-rounded btn-sm px-2"><i class="fa fa-pencil mt-0"></i></a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -31,7 +31,7 @@
                                     <tr>
                                         <td>Title</td>
                                         <td>Sections</td>
-                                        <td>Questions</td>
+                                        {{-- <td>Questions</td> --}}
                                         <td>Status</td>
                                         <td>Action</td>
                                     </tr>
@@ -39,15 +39,15 @@
                                 <tbody>
                                     @foreach ($assignments as $assignment)
                                         <tr>
-                                            <td><a href="{{ route('instructor.assignment.show', [$course->id, $section->id, $assignment->id]) }}" class="blue-text">{{$assignment->title}}</a></td>
+                                            <td><a href="{{ route('instructor.assignment.show', [$course->id, $assignment->id]) }}" class="blue-text">{{$assignment->title}}</a></td>
                                             <td>
                                                 @foreach ($assignment->sections as $section2)
                                                     {{$section2->name}},
                                                 @endforeach
                                             </td>
-                                            <td>
-                                                dynamic 10
-                                            </td>
+                                            {{-- <td>
+                                                number of items
+                                            </td> --}}
                                             <td>
                                                 {{-- @if ($assignment->isActive == 1)
                                                     <a href="#" class="btn btn-sm btn-success" onclick="if(confirm('Are you sure you want to deactivate this assignment?')) {
@@ -56,7 +56,7 @@
                                                               }">
                                                               Active
                                                     </a>
-                                                    <form id="deactivate-form-{{$assignment->id}}" action="{{ route('instructor.assignment.status', [$course->id, $section->id, $assignment->id]) }}" method="post">
+                                                    <form id="deactivate-form-{{$assignment->id}}" action="{{ route('instructor.assignment.status', [$course->id, $assignment->id]) }}" method="post">
                                                       @csrf {{method_field('PUT')}}
                                                       <input type="hidden" name="status" value="0">
                                                     </form>
@@ -67,22 +67,27 @@
                                                               }">
                                                         Deactivate
                                                     </a>
-                                                    <form id="activate-form-{{$assignment->id}}" action="{{ route('instructor.assignment.status', [$course->id, $section->id, $assignment->id]) }}" method="post">
+                                                    <form id="activate-form-{{$assignment->id}}" action="{{ route('instructor.assignment.status', [$course->id, $assignment->id]) }}" method="post">
                                                       @csrf {{method_field('PUT')}}
                                                       <input type="hidden" name="status" value="1">
                                                     </form>
                                                 @endif --}}
-                                                test
+                                                {{-- test --}}
+                                                @if ($assignment->isActive == true)
+                                                    <a href="#" class="btn btn-success btn-sm">Active</a>
+                                                @else
+                                                    <a href="#" class="btn btn-danger btn-sm">Deactivate</a>
+                                                @endif
                                             </td>
                                             <td>
-                                                <a href="{{route('instructor.assignment.edit', [$course->id, $section->id, $assignment->id])}}" class="blue-text">Update</a> |
+                                                <a href="{{route('instructor.assignment.edit', [$course->id, $assignment->id])}}" class="blue-text">Update</a> |
                                                 <a  class="text-danger" onclick="if(confirm('Are you sure you want to delete this assignment?')) {
                                                             event.preventDefault();
                                                             $('#delete-instructor-form-{{$assignment->id}}').submit();
                                                           }">
                                                     Delete
                                                 </a>
-                                                <form id="delete-instructor-form-{{$assignment->id}}" action="{{ route('instructor.assignment.destroy', [$course->id, $section->id, $assignment->id]) }}" method="post">
+                                                <form id="delete-instructor-form-{{$assignment->id}}" action="{{ route('instructor.assignment.destroy', [$course->id, $assignment->id]) }}" method="post">
                                                   @csrf {{method_field('DELETE')}}
 
                                                 </form>

@@ -139,6 +139,9 @@ class SectionController extends Controller
         $section->assignments()->detach();
         $section->delete();
 
+        session()->flash('status', 'Successfully Deleted!');
+        session()->flash('type', 'success');
+
         return redirect()->route('instructor.section.index', $course->id);
     }
 }

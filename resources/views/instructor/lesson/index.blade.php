@@ -9,8 +9,9 @@
       <div class="row">
           <div class="col-lg-12">
               <nav class="breadcrumb">
-                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
-                  <span class="breadcrumb-item active">Lessons</span>
+                  <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">Course</a>
+                  <span class="breadcrumb-item active">{{$course->name}}</span>
+                  <span class="breadcrumb-item active">Lesson</span>
               </nav>
           </div>
       </div>
@@ -18,7 +19,7 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card card-cascade narrower z-depth-1">
                     <div class="view gradient-card-header indigo narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
-                            <a class="white-text mx-3">Lesson table</a>
+                            <a class="white-text mx-3">Lesson list</a>
                         <div>
                             <a href="{{route('instructor.lesson.create', $course->id)}}" class="btn btn-outline-white btn-rounded btn-sm px-2"><i class="fa fa-pencil mt-0"></i></a>
                         </div>

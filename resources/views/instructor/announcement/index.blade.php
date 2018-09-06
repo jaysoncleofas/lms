@@ -13,7 +13,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <nav class="breadcrumb">
-                    <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">{{$course->name}}</a>
+                    <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">Course</a>
+                    <span class="breadcrumb-item active">{{$course->name}}</span>
                     <span class="breadcrumb-item active">Announcement</span>
                 </nav>
             </div>
@@ -61,8 +62,8 @@
                                           <div class="excerpt">
                                             <!-- Brief -->
                                             <div class="brief">
-                                              <a class="name">{{$announcement->instructor->firstName.' '.$announcement->instructor->lastName}}</a> posted
-                                              <div class="date">{{$announcement->created_at->diffForHumans()}}</div>
+                                              <a class="name">{{$announcement->instructor->firstName.' '.$announcement->instructor->lastName}}</a>
+                                              <div class="date"><i class="fa fa-clock-o"></i> {{$announcement->created_at->diffForHumans()}}</div>
                                             </div>
                                             <!-- Added text -->
                                             <div class="added-text">{{$announcement->content}}</div>

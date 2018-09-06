@@ -18,14 +18,14 @@ class TokenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($course_id, $section_id)
+    public function index($course_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
-        $tokens = Token::where('instructor_id', $user->id)->where('section_id', $section_id)->latest()->get();
 
-        return view('instructor.token.index', compact('course', 'section', 'tokens'));
+        $tokens = Token::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
+
+        return view('instructor.token.index', compact('course', 'tokens', 'sections'));
     }
 
     /**
@@ -33,13 +33,14 @@ class TokenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function create($course_id, $section_id)
+     public function create($course_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
-         return view('instructor.token.create', compact('course', 'section'));
+         $sections = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->where('isActive', true)->get();
+
+         return view('instructor.token.create', compact('course', 'sections'));
      }
 
     /**
@@ -48,22 +49,26 @@ class TokenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $course_id, $section_id)
+    public function store(Request $request, $course_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
+
+        $request->validate([
+            'section' => 'required|max:255',
+        ]);
 
         $token = new Token;
         $token->instructor_id = $user->id;
-        $token->section_id = $section_id;
-        $token->token = str_random(10);
+        $token->course_id = $course_id;
+        $token->section_id = $request->section;
+        $token->token = str_random(20);
         $token->save();
 
         session()->flash('status', 'Successfully added!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.token.index', [$course->id, $section_id]);
+        return redirect()->route('instructor.token.index', $course->id);
     }
 
     /**
@@ -85,11 +90,11 @@ class TokenController extends Controller
      */
     public function edit($id)
     {
-        $user = Auth::user();
-        $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
-
-        return view('instructor.token.create', compact('course', 'section'));
+        // $user = Auth::user();
+        // $course = $user->courses()->findOrFail($course_id);
+        // $section = Section::where('course_id', $course->id)->findOrFail($section_id);
+        //
+        // return view('instructor.token.create', compact('course', 'section'));
     }
 
     /**
@@ -99,20 +104,20 @@ class TokenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $course_id, $section_id, $token_id)
+    public function update(Request $request, $course_id, $id)
     {
-        $user = Auth::user();
-        $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
-
-        $token = Token::findOrFail($token_id);
-        $token->status = $request->status == 1 ? true : false;
-        $token->save();
-
-        session()->flash('status', 'Successfully updated!');
-        session()->flash('type', 'success');
-
-        return redirect()->route('instructor.token.index', [$course->id, $section_id]);
+        // $user = Auth::user();
+        // $course = $user->courses()->findOrFail($course_id);
+        // $section = Section::where('course_id', $course->id)->findOrFail($section_id);
+        //
+        // $token = Token::findOrFail($token_id);
+        // $token->status = $request->status == 1 ? true : false;
+        // $token->save();
+        //
+        // session()->flash('status', 'Successfully updated!');
+        // session()->flash('type', 'success');
+        //
+        // return redirect()->route('instructor.token.index', [$course->id, $section_id]);
     }
 
     /**
@@ -121,7 +126,7 @@ class TokenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($course_id, $section_id, $token_id)
+    public function destroy($course_id, $token_id)
     {
         $token = Token::findOrFail($token_id);
 
@@ -130,6 +135,6 @@ class TokenController extends Controller
         session()->flash('status', 'Successfully Deleted!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.token.index', [$course_id, $section_id]);
+        return redirect()->route('instructor.token.index', $course_id);
     }
 }

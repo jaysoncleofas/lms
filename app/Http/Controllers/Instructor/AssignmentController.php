@@ -17,15 +17,14 @@ class AssignmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index($course_id, $section_id)
+     public function index($course_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $assignments = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
 
-         return view('instructor.assignment.index', compact('course', 'section', 'assignments'));
+         return view('instructor.assignment.index', compact('course', 'assignments'));
        }
 
     /**
@@ -33,15 +32,14 @@ class AssignmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function create($course_id, $section_id)
+     public function create($course_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $sections = Section::where('course_id', $course_id)->get();
 
-         return view('instructor.assignment.create', compact('course', 'section', 'sections'));
+         return view('instructor.assignment.create', compact('course', 'sections'));
      }
 
     /**
@@ -50,11 +48,10 @@ class AssignmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(Request $request, $course_id, $section_id)
+     public function store(Request $request, $course_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course_id)->findOrFail($section_id);
 
          $request->validate([
              'title' => 'required|string|max:255',
@@ -71,7 +68,7 @@ class AssignmentController extends Controller
          session()->flash('status', 'Successfully added!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.assignment.index', [$course->id, $section_id]);
+         return redirect()->route('instructor.assignment.index', $course->id);
      }
 
     /**
@@ -91,11 +88,10 @@ class AssignmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function edit($course_id, $section_id, $id)
+     public function edit($course_id, $id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
@@ -104,7 +100,7 @@ class AssignmentController extends Controller
          foreach ($sections as $section2) {
              $section22[$section2->id] = $section2->title;
          }
-         return view('instructor.assignment.edit', compact('course', 'section', 'assignment', 'section22', 'sections'));
+         return view('instructor.assignment.edit', compact('course', 'assignment', 'section22', 'sections'));
      }
 
     /**
@@ -114,11 +110,10 @@ class AssignmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function update(Request $request, $course_id, $section_id, $id)
+     public function update(Request $request, $course_id, $id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
@@ -138,7 +133,7 @@ class AssignmentController extends Controller
          session()->flash('status', 'Successfully Updated!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.assignment.index', [$course->id, $section_id]);
+         return redirect()->route('instructor.assignment.index', $course->id);
      }
 
     /**
@@ -147,12 +142,10 @@ class AssignmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function destroy($course_id, $section_id, $id)
+     public function destroy($course_id, $id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
-
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
          $assignment->sections()->detach();
@@ -161,6 +154,6 @@ class AssignmentController extends Controller
          session()->flash('status', 'Successfully Deleted!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.assignment.index', [$course->id, $section_id]);
+         return redirect()->route('instructor.assignment.index', $course->id);
      }
 }

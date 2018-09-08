@@ -32,8 +32,7 @@
                                         {{-- <td></td> --}}
                                         <td>Title</td>
                                         <td>Sections</td>
-                                        <td></td>
-                                        {{-- <td>Questions</td> --}}
+                                        <td>Questions</td>
                                         <td>Status</td>
                                         <td>Action</td>
                                     </tr>
@@ -49,8 +48,9 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-primary">Add question</a>
+                                                <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info">{{count($quiz->questions)}} </a>
                                             </td>
+                                            {{-- <i class="fa fa-plus"></i> --}}
                                             {{-- <td>
                                                 10
                                             </td> --}}

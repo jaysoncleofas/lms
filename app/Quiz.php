@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Section;
+use App\Question;
 
 class Quiz extends Model
 {
@@ -17,5 +18,10 @@ class Quiz extends Model
     public function sections()
     {
         return $this->belongsToMany('App\Section');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany('App\Question');
     }
 }

@@ -61,4 +61,6 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
     Route::resource('/course/{course}/assignment', 'Instructor\AssignmentController');
 
     Route::resource('/course/{course}/token', 'Instructor\TokenController')->except(['show']);
+
+    Route::resource('/course/{course}/quiz/{quiz}/question', 'Instructor\QuestionController');
 });

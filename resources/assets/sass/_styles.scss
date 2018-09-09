@@ -197,3 +197,16 @@ button{
 .card .card-body h3 {
     padding: 0 !important;
 }
+
+#wizard.nav-tabs {
+    border: 0; 
+    padding: 0; 
+    margin-left: 0; 
+    margin-right: 0; 
+    margin-bottom: 0; 
+    background-color: white !important; 
+    z-index: 0; 
+    position: relative; 
+    -webkit-border-radius: 0; 
+    border-radius: 0; 
+}

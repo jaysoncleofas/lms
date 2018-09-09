@@ -63,8 +63,8 @@
                               </div>
                               <div class="col-md-12">
                                   <div class="md-form">
-                                      <input type="text" name="correct" value="{{old('correct')}}" class="form-control {{$errors->has('correct') ? 'is-invalid' : ''}}">
-                                      <label for="">Correct answer</label>
+                                        <input type="text" name="correct" value="{{old('correct')}}" class="form-control {{$errors->has('correct') ? 'is-invalid' : ''}}">
+                                        <label for="">Correct answer</label>
                                       @if ($errors->has('correct'))
                                           <span class="invalid-feedback" role="alert">
                                               <strong>{{ $errors->first('correct') }}</strong>
@@ -74,20 +74,20 @@
                               </div>
                               <div class="col-md-12">
                                   <div class="md-form">
-                                      <input type="text" name="option_one" value="{{old('option_one')}}" class="form-control">
-                                      <label for="">Option</label>
+                                        <input type="text" name="option_one" value="{{old('option_one')}}" class="form-control">
+                                        <label for="">Option</label>
                                   </div>
                               </div>
                               <div class="col-md-12">
                                   <div class="md-form">
-                                      <input type="text" name="option_two" value="{{old('option_two')}}" class="form-control">
-                                      <label for="">Option</label>
+                                        <input type="text" name="option_two" value="{{old('option_two')}}" class="form-control">
+                                        <label for="">Option</label>
                                   </div>
                               </div>
                               <div class="col-md-12">
                                   <div class="md-form">
-                                      <input type="text" name="option_three" value="{{old('option_three')}}" class="form-control">
-                                      <label for="">Option</label>
+                                        <input type="text" name="option_three" value="{{old('option_three')}}" class="form-control">
+                                        <label for="">Option</label>
                                   </div>
                               </div>
                           </div>

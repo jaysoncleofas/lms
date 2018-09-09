@@ -18,10 +18,10 @@ class CreateQuestionsTable extends Migration
             $table->unsignedInteger('quiz_id');
             $table->string('question');
             $table->string('question_image')->nullable();
-            $table->string('correct');
-            $table->string('option_one');
-            $table->string('option_two');
-            $table->string('option_three');
+            $table->string('choices');
+            // $table->string('option_one');
+            // $table->string('option_two');
+            // $table->string('option_three');
             $table->timestamps();
         });
     }

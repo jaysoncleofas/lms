@@ -70,15 +70,15 @@ class StudentController extends Controller
 
         $quiz = $section->quizzes()->findOrFail($quiz_id);
 
-        $temp=[];
-        foreach($quiz->questions as $question){
-            $temp[] = $question->correct;
-            $temp[] = $question->option_one;
-            $temp[] = $question->option_two;
-            $temp[] = $question->option_three;
-        }
+        // $temp=[];
+        // foreach($quiz->questions as $question){
+        //     $temp[] = $question->correct;
+        //     $temp[] = $question->option_one;
+        //     $temp[] = $question->option_two;
+        //     $temp[] = $question->option_three;
+        // }
 
-        return $temp;
+        // return $temp;
 
 
         

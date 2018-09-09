@@ -20,6 +20,6 @@ class Quiz extends Model
 
     public function questions()
     {
-        return $this->hasMany('App\Question');
+        return $this->hasMany('App\Question')->inRandomOrder();
     }
 }

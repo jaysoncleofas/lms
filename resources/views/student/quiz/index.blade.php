@@ -35,7 +35,7 @@
                                         <tr>
                                             <th>{{$key+1}}</th>
                                             <td><a href="">{{$quiz->title}}</a></td>
-                                            <td>23minutes</td>
+                                            <td>{{$quiz->timeLimit}} minutes</td>
                                             <td>none</td>
                                             <td>
                                                 <a href="{{route('student.quiz.show', [$course->id, $section->id, $quiz->id])}}">Take</a>

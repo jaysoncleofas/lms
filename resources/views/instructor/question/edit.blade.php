@@ -18,7 +18,7 @@
           </div>
       </div>
         <div class="row justify-content-center mt-lg-3">
-            <div class="col-xl-9 col-md-9 mb-4">
+            <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card card-cascade narrower z-depth-1">
                     <div class="view gradient-card-header indigo narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
                             <a class="white-text mx-3">Update Question</a>

@@ -1,3 +1,6 @@
+.text-oswald{
+    font-family:Oswald;
+}
 [type=checkbox]+label{
     color: #757575 !important
 }
@@ -103,6 +106,7 @@ div.dataTables_wrapper div.dataTables_length select {
 main.admin{
     margin-left: 240px;
     margin-top: 80px;
+    padding: 15px 15px;
 }
 
 // .side-nav.side-nav-light .collapsible li .collapsible-header{
@@ -124,16 +128,20 @@ main.admin{
 #slide-out {
   background: #fafafa;
   z-index: 1029;
+  font-family:Oswald;
 }
 
 .side-nav .collapsible-body a {
   font-family: Oswald, sans-serif;
-  font-size: 16px !important;
+  font-size: 26px !important;
 }
 
-.side-nav.side-nav-light .collapsible-body a {
-    background-color: #fafafa
+.side-nav.side-nav-light .collapsible a {
+    color: #555;
+    font-size: 16px;
 }
+
+
 .side-nav .collapsible li a:hover {
     background-color: #979797;
     color: #fff;
@@ -146,7 +154,7 @@ main.admin{
 }
 
 body {
-    background-color:#f7f7f7;
+    background-color:#fff;
     // font-size: 16px;
     /* font-family: 'Open', sans-serif; */
 }
@@ -174,4 +182,18 @@ button{
 .side-nav.side-nav-light .logo-wrapper {
     border-bottom: none !important;
     // height: 65px;
+}
+
+.invalid-feedback {
+    display: block !important;
+}
+
+#privacy-policy{
+    position: relative;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.card .card-body h3 {
+    padding: 0 !important;
 }

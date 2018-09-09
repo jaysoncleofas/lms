@@ -29,9 +29,6 @@
                     <li>
                         <a href="{{route('instructor.announcement.index', $course->id)}}" class="{{Nav::hasSegment('announcement',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bullhorn"></i> Announcement<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
-                    {{-- <li>
-                        <a href="{{route('instructor.student.index', $course->id)}}" class="{{Nav::hasSegment('student',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-users"></i> Students<i class="fa fa-angle-right pull-right"></i></a>
-                    </li> --}}
                     <li>
                         <a href="{{route('instructor.lesson.index', $course->id)}}" class="{{Nav::hasSegment('lesson',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bookmark"></i> Lesson<i class="fa fa-angle-right pull-right"></i></a>
                     </li>

@@ -18,7 +18,8 @@ class CreateLessonsTable extends Migration
             $table->unsignedInteger('instructor_id');
             $table->unsignedInteger('course_id');
             $table->string('title');
-            $table->text('content');
+            $table->text('description');
+            $table->string('upload_file');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

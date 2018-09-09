@@ -25,16 +25,21 @@
                         </div>
                     </div>
                     <div class="card-body">
-                      <form class="" action="{{route('instructor.lesson.store', $course->id)}}" method="post">
+                      <form class="" action="{{route('instructor.lesson.store', $course->id)}}" method="post" enctype="multipart/form-data">
                           @csrf
                           <div class="form-row">
-                              <div class="col-md-6">
+                              <div class="col-md-12">
                                   <div class="md-form">
-                                      <input type="text" name="title" value="{{old('title')}}" class="form-control">
+                                      <input type="text" name="title" value="{{old('title')}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
                                       <label for="">Title</label>
+                                      @if ($errors->has('title'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('title') }}</strong>
+                                        </span>
+                                      @endif
                                   </div>
                               </div>
-                              <div class="col-md-6 mt-3">
+                              <div class="col-md-12 my-3">
                                   <p class="mb-0">Assign Section</p>
                                   <div class="md-form mt-0">
                                        <select class="multiple-select form-control" multiple="multiple" name="sections[]" required style="width:100% !important;">
@@ -46,10 +51,34 @@
                               </div>
                               <div class="col-md-12">
                                   <div class="md-form">
-                                      <textarea name="content" class="md-textarea form-control" rows="8" cols="80">{{old('title')}}</textarea>
-                                      <label for="">Content</label>
+                                      <textarea name="content" class="md-textarea form-control pt-0 {{$errors->has('content') ? 'is-invalid' : ''}}" rows="8" cols="80">{{old('title')}}</textarea>
+                                      <label for="">Description</label>
+                                      @if ($errors->has('content'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('content') }}</strong>
+                                        </span>
+                                      @endif
                                   </div>
                               </div>
+                              <div class="col-md-12">
+                                    <div class="md-form">
+                                        <div class="file-field">
+                                            <div class="btn btn-primary btn-sm float-left">
+                                                <span>Choose file</span>
+                                                <input type="file" name="upload_file">
+                                            </div>
+                                            <div class="file-path-wrapper pr-3">
+                                                <input class="file-path {{$errors->has('upload_file') ? 'is-invalid' : ''}}" type="text" name="upload_file" placeholder="Upload upload_file" readonly>
+                                            </div>
+                                        </div>
+  
+                                        @if ($errors->has('upload_file'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('upload_file') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
                           </div>
                           <button type="submit" name="button" class="btn btn-primary pull-right btn-sm mt-4">Save</button>
                       </form>

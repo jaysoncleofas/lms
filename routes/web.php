@@ -17,7 +17,9 @@ Route::get('/', function () {
 
 Route::get('/register-token', 'HomeController@register_token')->name('register_token');
 Route::post('/register-token', 'HomeController@check_token')->name('check_token');
-Route::get('/register/{id}', 'HomeController@register_student')->name('register_student');
+Route::get('/register/privacy-policy/{token}', 'HomeController@privacy_policy')->name('privacy_policy');
+Route::get('/register/{token}', 'HomeController@register_student')->name('register_student');
+Route::post('/register/student/{section}', 'HomeController@register')->name('register.student');
 
 Auth::routes();
 
@@ -27,31 +29,13 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
     Route::resource('/instructor', 'Admin\InstructorController');
 });
 
-// Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {
-//     Route::get('/dashboard', 'HomeController@instructor_dashboard')->name('dashboard');
-//     Route::resource('/course/{course}/section', 'Instructor\SectionController')->except('show');
-//
-//     Route::resource('/course/{course}/section/{section}/announcement', 'Instructor\AnnouncementController')->except(['show']);
-//
-//     Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
-//
-//     Route::put('/course/{course}/section/{section}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
-//     Route::resource('/course/{course}/section/{section}/lesson', 'Instructor\LessonController');
-//
-//     Route::resource('/course/{course}/section/{section}/quiz', 'Instructor\QuizController');
-//
-//     Route::resource('/course/{course}/section/{section}/assignment', 'Instructor\AssignmentController');
-//
-//     Route::resource('/course/{course}/section/{section}/token', 'Instructor\TokenController')->except(['show']);
-// });
-
 Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@instructor_dashboard')->name('dashboard');
     Route::resource('/course/{course}/section', 'Instructor\SectionController')->except('show');
 
     Route::resource('/course/{course}/announcement', 'Instructor\AnnouncementController')->except(['show']);
 
-    // Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
+    Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
 
     Route::put('/course/{course}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
     Route::resource('/course/{course}/lesson', 'Instructor\LessonController');
@@ -63,4 +47,17 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
     Route::resource('/course/{course}/token', 'Instructor\TokenController')->except(['show']);
 
     Route::resource('/course/{course}/quiz/{quiz}/question', 'Instructor\QuestionController');
+});
+
+
+Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->group(function () {
+    Route::get('/dashboard', 'HomeController@student_dashboard')->name('dashboard');
+    Route::get('/course/{course}/section/{section}/announcement', 'StudentController@announcement')->name('announcement');
+    // lesson
+    Route::get('/course/{course}/section/{section}/lesson', 'StudentController@lesson_index')->name('lesson.index');
+    Route::get('/course/{course}/section/{section}/lesson/{lesson}', 'StudentController@lesson_show')->name('lesson.show');
+    Route::get('/course/{course}/section/{section}/lesson/{lesson}/download', 'StudentController@lesson_download')->name('lesson.download');
+
+    Route::get('/course/{course}/section/{section}/quiz', 'StudentController@quiz_index')->name('quiz.index');
+    Route::get('/course/{course}/section/{section}/quiz/{quiz}', 'StudentController@quiz_show')->name('quiz.show');
 });

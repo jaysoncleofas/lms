@@ -12,6 +12,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
@@ -26,10 +27,9 @@
             @if (Auth::check() && Auth::user()->role == 'admin')
                 @include('partials.admin.sidebar')
             @elseif (Auth::check() && Auth::user()->role == 'instructor')
-                {{-- @if (!Nav::isRoute('instructor.dashboard')) --}}
-                    @include('partials.instructor.sidebar')
-                {{-- @endif --}}
-
+                @include('partials.instructor.sidebar')
+            @elseif (Auth::check() && Auth::user()->role == 'student')
+                @include('partials.student.sidebar')        
             @endif
 
         </header>

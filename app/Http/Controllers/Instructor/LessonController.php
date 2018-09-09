@@ -9,6 +9,7 @@ use App\Course;
 use App\User;
 use App\Section;
 use App\Lesson;
+use carbon\Carbon;
 
 class LessonController extends Controller
 {
@@ -38,7 +39,7 @@ class LessonController extends Controller
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
 
-         $sections = Section::where('course_id', $course_id)->where('isActive', true)->get();
+         $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
 
          return view('instructor.lesson.create', compact('course', 'sections'));
      }
@@ -59,11 +60,23 @@ class LessonController extends Controller
              'content' => 'required|string',
          ]);
 
+         if ($request->hasFile('upload_file')) {
+            $request->validate([
+                'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:1000',
+            ]);
+                    $lessonfile = $request->upload_file;
+                    $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+                    $name = $timestamp. '-' .$lessonfile->getClientOriginalName();
+                    // $image->image = $name;
+                    $lessonfile->storeAs('public/files', $name);
+        }
+
          $lesson = new Lesson;
          $lesson->instructor_id = $user->id;
          $lesson->course_id = $course->id;
          $lesson->title = $request->title;
          $lesson->content = $request->content;
+         $lesson->upload_file = $name ?? "";
          $lesson->save();
 
          $lesson->sections()->sync($request->sections, false);
@@ -108,7 +121,7 @@ class LessonController extends Controller
 
          $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
-         $sections = Section::where('course_id', $course_id)->get();
+         $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->get();
          $section22 = array();
          foreach ($sections as $section2) {
              $section22[$section2->id] = $section2->title;
@@ -134,6 +147,20 @@ class LessonController extends Controller
              'title' => 'required|string|max:255',
              'content' => 'required|string',
          ]);
+
+         if ($request->hasFile('upload_file')) {
+            $request->validate([
+                'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:1000',
+            ]);
+                    $lessonfile = $request->upload_file;
+                    $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+                    $name = $timestamp. '-' .$lessonfile->getClientOriginalName();
+                    // $image->image = $name;
+                    $lessonfile->storeAs('public/files', $name);
+
+                    $lesson->upload_file = $name;
+        }
+
 
          $lesson->title = $request->title;
          $lesson->content = $request->content;

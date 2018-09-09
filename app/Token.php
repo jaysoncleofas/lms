@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Section;
+use App\Course;
 
 class Token extends Model
 {
@@ -17,6 +18,11 @@ class Token extends Model
     public function section()
     {
         return $this->belongsTo('App\Section');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
     }
 
 }

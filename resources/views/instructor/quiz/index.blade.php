@@ -48,7 +48,7 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info">{{count($quiz->questions)}} </a>
+                                                <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info"  data-toggle="tooltip" data-placement="top" title="Add question">{{count($quiz->questions)}} </a>
                                             </td>
                                             {{-- <i class="fa fa-plus"></i> --}}
                                             {{-- <td>

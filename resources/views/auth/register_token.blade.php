@@ -8,17 +8,18 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('check_token') }}">
                         @csrf
-                        <div class="col-md-12">
+                        <p class="h4 mb-4">Register</p>
+                        {{-- <div class="col-md-12"> --}}
                             <div class="md-form">
-                                <input type="text" name="token" class="form-control {{$errors->has('token') ? 'is-invalid' : ''}}" value="{{old('token')}}">
+                                <input type="text" name="classToken" class="form-control {{$errors->has('classToken') ? 'is-invalid' : ''}}" value="{{old('classToken')}}">
                                 <label>Token</label>
-                                @if ($errors->has('token'))
+                                @if ($errors->has('classToken'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('token') }}</strong>
+                                        <strong>{{ $errors->first('classToken') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        {{-- </div> --}}
                         <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Register</button>
                     </form>
                 </div>

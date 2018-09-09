@@ -3,13 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Course;
-use App\User;
-use App\Token;
-use App\Lesson;
-use App\Quiz;
-use App\Assignment;
-use App\Announcement;
 
 class Section extends Model
 {
@@ -51,6 +44,11 @@ class Section extends Model
 
     public function announcements()
     {
-        return $this->belongsToMany('App\Announcement');
+        return $this->belongsToMany('App\Announcement')->orderBy('created_at', 'desc');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany('App\User', 'section_user');
     }
 }

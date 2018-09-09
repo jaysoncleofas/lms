@@ -40,7 +40,7 @@ class AnnouncementController extends Controller
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
 
-        $sections = Section::where('course_id', $course_id)->where('isActive', true)->get();
+        $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
 
         return view('instructor.announcement.create', compact('course', 'sections'));
     }
@@ -99,7 +99,7 @@ class AnnouncementController extends Controller
 
         $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
-        $sections = Section::where('course_id', $course_id)->get();
+        $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->get();
         $section22 = array();
         foreach ($sections as $section2) {
             $section22[$section2->id] = $section2->title;

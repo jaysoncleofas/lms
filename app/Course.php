@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
-use App\Section;
 
 class Course extends Model
 {
@@ -22,5 +20,10 @@ class Course extends Model
     public function sections()
     {
         return $this->hasMany('App\Section');
+    }
+
+    public function tokens()
+    {
+        return $this->hasMany('App\Token');
     }
 }

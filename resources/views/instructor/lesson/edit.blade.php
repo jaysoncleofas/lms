@@ -25,16 +25,16 @@
                         </div>
                     </div>
                     <div class="card-body">
-                      <form class="" action="{{route('instructor.lesson.update', [$course->id, $lesson->id])}}" method="post">
+                      <form class="" action="{{route('instructor.lesson.update', [$course->id, $lesson->id])}}" method="post" enctype="multipart/form-data">
                           @csrf {{method_field('PUT')}}
                           <div class="form-row">
-                              <div class="col-md-6">
+                              <div class="col-md-12">
                                   <div class="md-form">
                                       <input type="text" name="title" value="{{$lesson->title}}" class="form-control">
                                       <label for="">Title</label>
                                   </div>
                               </div>
-                              <div class="col-md-6 mt-3">
+                              <div class="col-md-12 mt-3">
                                   <p class="mb-0">Assign Section</p>
                                   <div class="md-form mt-0">
                                        <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
@@ -50,6 +50,25 @@
                                       <label for="">Content</label>
                                   </div>
                               </div>
+                              <div class="col-md-12">
+                                    <div class="md-form">
+                                        <div class="file-field">
+                                            <div class="btn btn-primary btn-sm float-left">
+                                                <span>Choose file</span>
+                                                <input type="file" name="upload_file">
+                                            </div>
+                                            <div class="file-path-wrapper pr-3">
+                                                <input class="file-path" type="text" name="upload_file" placeholder="Upload upload_file" value="{{substr($lesson->upload_file, 20)}}" readonly>
+                                            </div>
+                                        </div>
+  
+                                        @if ($errors->has('upload_file'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('upload_file') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
                           </div>
                           <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
                       </form>

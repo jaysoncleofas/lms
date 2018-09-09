@@ -2,18 +2,18 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row mt-lg-5">
+        <div class="row">
             <div class="col-lg-12">
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item" href="{{route('instructor.dashboard')}}">Course</a>
                     <span class="breadcrumb-item active">{{$course->name}}</span>
                     <span class="breadcrumb-item active">Sections</span>
+                    <a href="{{route('instructor.section.create', $course->id)}}" class="breadcrumb-item"><i class="fa fa-plus"></i> Add</a>
                 </nav>
             </div>
         </div>
         <div class="row mt-lg-3">
             <div class="col-xl-12 col-md-12 mb-4">
-                <a href="{{route('instructor.section.create', $course->id)}}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
                 {{-- <div class="card">
                     <header>
                         <div class="card-header indigo white-text text-center">
@@ -31,9 +31,9 @@
                         {{-- <img class="img-fluid" src="{{asset('images/book.jpg')}}" alt="Card image cap"> --}}
                         <div class="card-body">
                             <!--Title-->
-                            <a href="{{route('instructor.announcement.index', [$course->id,$section->id])}}" class="card-title">{{$section->name}}</a>
+                            <a href="{{route('instructor.student.index', [$course->id,$section->id])}}" class="card-title">{{$section->name}}</a>
                             {{-- <hr> --}}<br><br>
-                            <p><i class="fa fa-users"></i> 32 students</p>
+                            <p><i class="fa fa-users"></i> {{count($section->users)}} students</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <a href="{{route('instructor.section.edit', [$course->id, $section->id])}}" class="px-2 blue-text waves-effect">Edit</a>

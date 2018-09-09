@@ -18,7 +18,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->findOrFail($id);
+        $section = Section::where('instructor_id', $user->id)->where('course_id', $course->id)->findOrFail($id);
 
         // $students = User::where('role', 'student')->where('course_id', $course_id)->where('section_id', $id)->latest()->get();
 

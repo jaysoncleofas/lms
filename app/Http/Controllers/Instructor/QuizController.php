@@ -37,7 +37,7 @@ class QuizController extends Controller
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
 
-         $sections = Section::where('course_id', $course_id)->get();
+         $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->get();
 
          return view('instructor.quiz.create', compact('course', 'sections'));
      }
@@ -95,7 +95,7 @@ class QuizController extends Controller
 
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
-         $sections = Section::where('course_id', $course_id)->get();
+         $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->get();
          $section22 = array();
          foreach ($sections as $section2) {
              $section22[$section2->id] = $section2->title;

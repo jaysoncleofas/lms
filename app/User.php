@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
+        'avatar'
     ];
 
     /**
@@ -43,7 +44,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Section');
     }
-    
+
 
     public function announcements()
     {

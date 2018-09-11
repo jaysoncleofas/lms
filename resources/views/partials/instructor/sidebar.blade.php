@@ -22,7 +22,7 @@
                     <li>
                         <a href="{{route('instructor.section.index', $course->id)}}" class="{{Nav::isRoute('instructor.section.edit')}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Sections<i class="fa fa-angle-right pull-right"></i></a>
                     </li> --}}
-                @if (Nav::hasSegment($course->id, 3))
+                @if (Nav::hasSegment('section', 3))
                     <li>
                         <a href="{{route('instructor.section.index', $course->id)}}" class="{{Nav::hasSegment('section',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Sections<i class="fa fa-angle-right pull-right"></i></a>
                     </li>

@@ -61,3 +61,10 @@ Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->gro
     Route::get('/course/{course}/section/{section}/quiz', 'StudentController@quiz_index')->name('quiz.index');
     Route::get('/course/{course}/section/{section}/quiz/{quiz}', 'StudentController@quiz_show')->name('quiz.show');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', 'UserController@index')->name('profile.index');
+    Route::put('/profile', 'UserController@update')->name('profile.update');
+    Route::put('/profile/picture', 'UserController@profile_remove')->name('profile.picture.remove');
+    Route::get('/change-password', 'UserController@change_password_index')->name('change.password.index');
+});

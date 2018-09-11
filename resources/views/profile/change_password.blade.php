@@ -2,48 +2,48 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
                 <h3 class="text-oswald">Change Password</h3>
-            </div>
-        </div>
-        <div class="row mt-lg-3">
-            <div class="col-lg-8">
-                <div class="form-row">
-                    <div class="col-lg-12">
-                        <div class="md-form">
-                            <input type="text" name="current_password" class="form-control {{$errors->has('current_password') ? 'is-invalid' : ''}}" value="{{$user->current_password}}">
-                            <label>Current Password</label>
-                            @if ($errors->has('current_password'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('current_password') }}</strong>
-                                </span>
-                            @endif
+
+                <form class="" action="{{route('change.password.update')}}" method="post">
+                    @csrf {{method_field('PUT')}}
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <div class="md-form">
+                                <input type="password" name="oldpassword" class="form-control {{$errors->has('oldpassword') ? 'is-invalid' : ''}}">
+                                <label>Current Password</label>
+                                @if ($errors->has('oldpassword'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('oldpassword') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-12">
-                        <div class="md-form">
-                            <input type="text" name="new_password" class="form-control {{$errors->has('new_password') ? 'is-invalid' : ''}}" value="{{$user->new_password}}">
-                            <label>New Password</label>
-                            @if ($errors->has('new_password'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('new_password') }}</strong>
-                                </span>
-                            @endif
+                    <div class="form-row">
+                        <div class="col-12">
+                            <div class="md-form">
+                                <input type="password" name="password" id="password" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
+                                <label>New Password</label>
+                                @if ($errors->has('password'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-12">
-                        <div class="md-form">
-                            <input type="text" name="new_password" class="form-control {{$errors->has('new_password') ? 'is-invalid' : ''}}" value="{{$user->new_password}}">
-                            <label>Confirm Password</label>
+                    <div class="form-row">
+                        <div class="col-12">
+                            <div class="md-form">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                                <label for="password-confirm" class="form-label">Confirm Password</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
+                    <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
+                </form>
             </div>
         </div>
     </div>

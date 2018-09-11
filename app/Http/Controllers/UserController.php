@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use carbon\Carbon;
+use Illuminate\Support\Facades\Input as input;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -77,9 +79,33 @@ class UserController extends Controller
         return redirect()->route('profile.update');
     }
 
-    public function change_password_index(Request $request)
+    public function change_password_index()
     {
         return view('profile.change_password', compact('user'));
+    }
+
+    public function change_password_update(Request $request)
+    {
+        $user = Auth::user();
+
+        if (Hash::check(Input::get('oldpassword'), $user['password'])) {
+                $this->validate($request, [
+                    'password' => 'required|min:6|confirmed'
+                    ]);
+                $user->password = bcrypt(Input::get('password'));
+                $user->save();
+                session()->flash('status', 'You have successfully changed your password!');
+                session()->flash('type', 'success');
+                return redirect()->route('change.password.index');
+              } else {
+                session()->flash('status', 'Invalid Current Password');
+                session()->flash('type', 'success');
+                return redirect()->route('change.password.index');
+              }
+
+        // return $user;
+
+
     }
 
 

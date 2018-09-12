@@ -68,4 +68,5 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/picture', 'UserController@profile_remove')->name('profile.picture.remove');
     Route::get('/change-password', 'UserController@change_password_index')->name('change.password.index');
     Route::put('/change-password', 'UserController@change_password_update')->name('change.password.update');
+    Route::get('/my-files', 'UserController@my_files')->name('my_files');
 });

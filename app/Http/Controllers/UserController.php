@@ -103,9 +103,13 @@ class UserController extends Controller
                 return redirect()->route('change.password.index');
               }
 
-        // return $user;
+        // return $user
 
+    }
 
+    public function my_files()
+    {
+        return view('profile.my_files');
     }
 
 

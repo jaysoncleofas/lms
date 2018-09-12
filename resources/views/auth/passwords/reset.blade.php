@@ -1,3 +1,50 @@
+@extends('layouts.guest_app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('password.request') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
+
+                        <div class="md-form">
+                            <input type="email" name="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                            <label>Email Address</label>
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="md-form">
+                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                            <label>Password</label>
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif      
+                        </div>
+
+                        <div class="md-form">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <label>Confirm Password</label>      
+                        </div>
+
+                        <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+{{-- 
+
 @extends('layouts.app')
 
 @section('content')
@@ -62,4 +109,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection --}}

@@ -8,7 +8,6 @@
                 <div class="card-body">
                     <form action="{{ route('password.email') }}" method="post">
                         @csrf
-                        <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="md-form">
                             <input type="email" name="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
@@ -31,7 +30,7 @@
 
 
 
-{{-- 
+{{--
 
 @extends('layouts.app')
 

@@ -8,7 +8,7 @@ use App\Announcement;
 use App\Section;
 use Auth;
 use App\Lesson;
- 
+
 class StudentController extends Controller
 {
     public function announcement($course_id, $section_id)
@@ -19,7 +19,7 @@ class StudentController extends Controller
         $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
-        
+
         return view('student.announcement', compact('user','course', 'section'));
     }
 
@@ -81,7 +81,7 @@ class StudentController extends Controller
         // return $temp;
 
 
-        
+
 
         return view('student.quiz.show', compact('user','course', 'section', 'quiz', 'temp'));
     }

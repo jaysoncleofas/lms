@@ -7,6 +7,7 @@ use Auth;
 use carbon\Carbon;
 use Illuminate\Support\Facades\Input as input;
 use Illuminate\Support\Facades\Hash;
+use App\File;
 
 
 class UserController extends Controller
@@ -109,7 +110,60 @@ class UserController extends Controller
 
     public function my_files()
     {
-        return view('profile.my_files');
+        $files = File::where('user_id', Auth::id())->get();
+        return view('profile.my_files', compact('files'));
+    }
+
+    public function files_store(Request $request)
+    {
+        $request->validate([
+            'file_upload' => 'required',
+        ]);
+
+        if ($request->hasFile('file_upload')) {
+           $request->validate([
+               'file_upload' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:1000',
+           ]);
+
+           $fileUpload = $request->file_upload;
+           time() . '.' .
+           // $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+           $name = time().'-'.$fileUpload->getClientOriginalName();
+           $type = $fileUpload->getClientOriginalExtension();
+           $size = $fileUpload->getClientSize();
+           $fileUpload->storeAs('public/userfiles', $name);
+       }
+
+        $files = new File;
+        $files->user_id = Auth::id();
+        $files->name = $name ?? "";
+        $files->type = $type ?? "";
+        $files->size = $size ?? "";
+        $files->save();
+
+        session()->flash('status', 'Successfully saved!');
+        session()->flash('type', 'success');
+
+        return redirect()->back();
+    }
+
+
+    public function files_download($file_id){
+
+        $entry = File::findOrFail($file_id);
+        $pathToFile = storage_path()."/app/public/userfiles/".$entry->name;
+        return response()->download($pathToFile);
+    }
+
+    public function files_destroy($file_id){
+
+        $entry = File::findOrFail($file_id);
+        $entry->delete();
+
+        session()->flash('status', 'Successfully deleted!');
+        session()->flash('type', 'success');
+
+        return redirect()->back();
     }
 
 

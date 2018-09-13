@@ -36,7 +36,9 @@
                                 </label>
                             </div>
                         </div>
-
+                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
                         <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Login</button>
                     </form>
                 </div>

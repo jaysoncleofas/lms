@@ -25,7 +25,7 @@
                         </li>
                     @endif
                     <li>
-                        <a href="{{route('student.dashboard')}}" class="{{Nav::isRoute('student.dashboard')}} collapsible-header waves-effect arrow-r"><i class="fa fa-folder"></i> Files<i class="fa fa-angle-right pull-right"></i></a>
+                        <a href="{{route('my_files')}}" class="{{Nav::isRoute('my_files')}} collapsible-header waves-effect arrow-r"><i class="fa fa-folder"></i> Files<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
                 </ul>
             </li>

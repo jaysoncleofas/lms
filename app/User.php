@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Announcement');
     }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }

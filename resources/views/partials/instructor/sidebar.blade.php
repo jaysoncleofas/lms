@@ -22,7 +22,7 @@
                     <li>
                         <a href="{{route('instructor.section.index', $course->id)}}" class="{{Nav::isRoute('instructor.section.edit')}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Sections<i class="fa fa-angle-right pull-right"></i></a>
                     </li> --}}
-                @if (Nav::hasSegment('section', 3))
+                @if (Nav::hasSegment('course', 2))
                     <li>
                         <a href="{{route('instructor.section.index', $course->id)}}" class="{{Nav::hasSegment('section',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Sections<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
@@ -42,6 +42,9 @@
                         <a href="{{route('instructor.token.index', $course->id)}}" class="{{Nav::hasSegment('token',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-adn"></i> Token<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
                 @endif
+                <li>
+                    <a href="{{route('my_files')}}" class="{{Nav::isRoute('my_files')}} collapsible-header waves-effect arrow-r"><i class="fa fa-folder"></i> Files<i class="fa fa-angle-right pull-right"></i></a>
+                </li>
             </ul>
         </li>
     </ul>

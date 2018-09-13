@@ -69,4 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/change-password', 'UserController@change_password_index')->name('change.password.index');
     Route::put('/change-password', 'UserController@change_password_update')->name('change.password.update');
     Route::get('/my-files', 'UserController@my_files')->name('my_files');
+    Route::post('/my-files', 'UserController@files_store')->name('my_files.store');
+    Route::get('/my-files/download/{file}', 'UserController@files_download')->name('my_files.download');
+    Route::delete('/my-files/{file}', 'UserController@files_destroy')->name('my_files.destroy');
 });

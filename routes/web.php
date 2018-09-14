@@ -53,6 +53,7 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
 Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@student_dashboard')->name('dashboard');
     Route::get('/course/{course}/section/{section}/announcement', 'StudentController@announcement')->name('announcement');
+    Route::get('/course/{course}/section/{section}', 'StudentController@section_index')->name('section.index');
     // lesson
     Route::get('/course/{course}/section/{section}/lesson', 'StudentController@lesson_index')->name('lesson.index');
     Route::get('/course/{course}/section/{section}/lesson/{lesson}', 'StudentController@lesson_show')->name('lesson.show');
@@ -72,4 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/my-files', 'UserController@files_store')->name('my_files.store');
     Route::get('/my-files/download/{file}', 'UserController@files_download')->name('my_files.download');
     Route::delete('/my-files/{file}', 'UserController@files_destroy')->name('my_files.destroy');
+
+    Route::post('/new-message', 'MessageController@store')->name('message.store');
+    Route::get('/messages', 'MessageController@index')->name('message.index');
 });

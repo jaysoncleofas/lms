@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSectionUserTable extends Migration
+class CreateConvosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateSectionUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('section_user', function (Blueprint $table) {
+        Schema::create('convos', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('section_id');
-            $table->foreign('section_id')->references('id')->on('sections');
-
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedInteger('to_user_id');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +28,6 @@ class CreateSectionUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('section_user');
+        Schema::dropIfExists('convos');
     }
 }

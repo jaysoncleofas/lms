@@ -90,7 +90,18 @@ class StudentController extends Controller
 
         $entry = Lesson::findOrFail($lesson_id);
         $pathToFile = storage_path()."/app/public/files/".$entry->upload_file;
-        return response()->download($pathToFile);           
+        return response()->download($pathToFile);
+    }
+
+    public function section_index($course_id, $section_id)
+    {
+        $user = Auth::user();
+        $course = Course::findOrFail($course_id);
+        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->findOrFail($section_id);
+
+        return view('student.section', compact('user','course', 'section'));
     }
 
 }

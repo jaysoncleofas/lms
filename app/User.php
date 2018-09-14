@@ -51,6 +51,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Announcement');
     }
 
+    public function convos()
+    {
+        return $this->hasMany('App\Convo');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Mesage');
+    }
+
     public function files()
     {
         return $this->hasMany(File::class);

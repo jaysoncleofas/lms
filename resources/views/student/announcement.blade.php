@@ -34,7 +34,7 @@
 
                                           <!-- Label -->
                                           <div class="label">
-                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(18)-mini.jpg" class="rounded-circle z-depth-1-half">
+                                            <img src="{{$announcement->instructor->avatar ? asset('storage/avatars/'.$announcement->instructor->avatar) : asset('images/profile_pic.png')}}" style="height:40px;width:40px;" class="rounded-circle z-depth-1-half">
                                           </div>
 
                                           <!-- Excerpt -->

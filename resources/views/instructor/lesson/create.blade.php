@@ -51,11 +51,11 @@
                               </div>
                               <div class="col-md-12">
                                   <div class="md-form">
-                                      <textarea name="content" class="md-textarea form-control pt-0 {{$errors->has('content') ? 'is-invalid' : ''}}" rows="8" cols="80">{{old('title')}}</textarea>
+                                      <textarea name="description" class="md-textarea form-control pt-0 {{$errors->has('description') ? 'is-invalid' : ''}}" rows="8" cols="80">{{old('title')}}</textarea>
                                       <label for="">Description</label>
-                                      @if ($errors->has('content'))
+                                      @if ($errors->has('description'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('content') }}</strong>
+                                            <strong>{{ $errors->first('description') }}</strong>
                                         </span>
                                       @endif
                                   </div>
@@ -71,7 +71,7 @@
                                                 <input class="file-path {{$errors->has('upload_file') ? 'is-invalid' : ''}}" type="text" name="upload_file" placeholder="Upload upload_file" readonly>
                                             </div>
                                         </div>
-  
+
                                         @if ($errors->has('upload_file'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('upload_file') }}</strong>

@@ -10,7 +10,7 @@ class Lesson extends Model
       'instructor_id',
       'course_id',
       'title',
-      'content',
+      'description',
       'status'
     ];
 

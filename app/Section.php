@@ -29,7 +29,7 @@ class Section extends Model
 
     public function lessons()
     {
-        return $this->belongsToMany('App\Lesson');
+        return $this->belongsToMany('App\Lesson')->where('status', true);
     }
 
     public function quizzes()
@@ -50,5 +50,10 @@ class Section extends Model
     public function students()
     {
         return $this->belongsToMany('App\User', 'section_user');
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo('App\User');
     }
 }

@@ -57,7 +57,7 @@ class LessonController extends Controller
 
          $request->validate([
              'title' => 'required|string|unique:lessons|max:255',
-             'content' => 'required|string',
+             'description' => 'required|string',
          ]);
 
          if ($request->hasFile('upload_file')) {
@@ -75,7 +75,7 @@ class LessonController extends Controller
          $lesson->instructor_id = $user->id;
          $lesson->course_id = $course->id;
          $lesson->title = $request->title;
-         $lesson->content = $request->content;
+         $lesson->description = $request->description;
          $lesson->upload_file = $name ?? "";
          $lesson->save();
 

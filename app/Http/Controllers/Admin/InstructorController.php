@@ -127,7 +127,7 @@ class InstructorController extends Controller
             'birthDate' => $request->formatted_birthDate_submit,
             'username'  => $request->username,
             'email'     => $request->email,
-            'password'  => $request->password == '' ? bcrypt('secrect') : bcrypt($request->password),
+            'password'  => $request->password == '' ? $user->password : bcrypt($request->password),
         ]);
 
         session()->flash('status', 'Successfully updated!');

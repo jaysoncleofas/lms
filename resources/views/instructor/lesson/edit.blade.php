@@ -46,7 +46,7 @@
                               </div>
                               <div class="col-md-12">
                                   <div class="md-form">
-                                      <textarea name="content" class="md-textarea form-control" rows="8" cols="80">{{$lesson->content}}</textarea>
+                                      <textarea name="description" class="md-textarea form-control" rows="8" cols="80">{{$lesson->description}}</textarea>
                                       <label for="">Content</label>
                                   </div>
                               </div>
@@ -61,7 +61,7 @@
                                                 <input class="file-path" type="text" name="upload_file" placeholder="Upload upload_file" value="{{substr($lesson->upload_file, 20)}}" readonly>
                                             </div>
                                         </div>
-  
+
                                         @if ($errors->has('upload_file'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('upload_file') }}</strong>

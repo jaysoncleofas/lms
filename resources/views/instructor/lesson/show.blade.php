@@ -26,7 +26,7 @@
                           <div class="col-md-8">
                               <h2 class="text-center py-5">{{$lesson->title}}</h2>
 
-                              <p>{{$lesson->content}}</p>
+                              <p>{{$lesson->description}}</p>
                           </div>
                       </div>
                   </div>

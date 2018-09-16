@@ -12,4 +12,9 @@ class Question extends Model
     {
         return $this->belongsTo('App\Quiz');
     }
+
+    public function assignment()
+    {
+        return $this->belongsTo('App\Assignment');
+    }
 }

@@ -145,7 +145,7 @@ class LessonController extends Controller
 
          $request->validate([
              'title' => 'required|string|max:255',
-             'content' => 'required|string',
+             'description' => 'required|string',
          ]);
 
          if ($request->hasFile('upload_file')) {
@@ -163,7 +163,7 @@ class LessonController extends Controller
 
 
          $lesson->title = $request->title;
-         $lesson->content = $request->content;
+         $lesson->description = $request->description;
          $lesson->save();
 
          if (isset($request->sections)) {
@@ -172,7 +172,7 @@ class LessonController extends Controller
              $lesson->sections()->sync(array());
          }
 
-         session()->flash('status', 'Successfully Updated!');
+         session()->flash('status', 'Successfully updated!');
          session()->flash('type', 'success');
 
          return redirect()->route('instructor.lesson.index', $course->id);
@@ -184,17 +184,17 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($course_id, $section_id, $id)
+    public function destroy($course_id, $lesson_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
 
-        $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
+        $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($lesson_id);
 
         $lesson->sections()->detach();
         $lesson->delete();
 
-        session()->flash('status', 'Successfully Deleted!');
+        session()->flash('status', 'Successfully deleted!');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.lesson.index', $course->id);
@@ -210,9 +210,16 @@ class LessonController extends Controller
         $lesson->status = $request->status == 1 ? true : false;
         $lesson->save();
 
-        session()->flash('status', 'Successfully Updated!');
+        session()->flash('status', 'Successfully updated!');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.lesson.index', $course->id);
+    }
+
+    public function download($course_id, $lesson_id){
+
+        $entry = Lesson::findOrFail($lesson_id);
+        $pathToFile = storage_path()."/app/public/files/".$entry->upload_file;
+        return response()->download($pathToFile);
     }
 }

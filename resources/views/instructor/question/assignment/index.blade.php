@@ -9,13 +9,15 @@
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <div>
             <h3 class="text-oswald">{{$course->name}}</h3>
-            <h4 class="text-oswald">Quiz / {{$quiz->title}}</h4>
+            <h4 class="text-oswald">Assignment / {{$assignment->title}}</h4>
         </div>
+
         <div>
-            <a href="{{route('instructor.quiz.index', $course->id)}}" class="btn btn-primary">Quizzes</a>
-            <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-primary">Add Question</a>
+            <a href="{{route('instructor.assignment.index', $course->id)}}" class="btn btn-primary">Assignments</a>
+            <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}" class="btn btn-primary">Add Question</a>
         </div>
     </div>
+
     <div class="row mt-lg-3">
         <div class="col-lg-4 col-sm-4 mb-4">
             <div class="card">
@@ -45,7 +47,7 @@
                         <td> <img src="{{asset('storage/images/'.$question->question_image)}}" class="img-fluid" style="height:50px;"
                                 alt=""> </td>
                         <td>
-                            <a href="{{route('instructor.question.edit', [$course->id, $quiz->id, $question->id])}}"
+                            <a href="{{route('instructor.question.assignmentEdit', [$course->id, $assignment->id, $question->id])}}"
                                 class="blue-text">Update</a> |
                             <a class="text-danger" onclick="if(confirm('Are you sure you want to delete this question?')) {
                                                             event.preventDefault();
@@ -53,7 +55,7 @@
                                                           }">
                                 Delete
                             </a>
-                            <form id="delete-instructor-form-{{$question->id}}" action="{{ route('instructor.question.destroy', [$course->id, $quiz->id, $question->id]) }}"
+                            <form id="delete-instructor-form-{{$question->id}}" action="{{ route('instructor.question.assignmentDestroy', [$course->id, $assignment->id, $question->id]) }}"
                                 method="post">
                                 @csrf {{method_field('DELETE')}}
 

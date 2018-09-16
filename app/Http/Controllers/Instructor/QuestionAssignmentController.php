@@ -4,28 +4,28 @@ namespace App\Http\Controllers\Instructor;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Quiz;
+use App\Assignment;
 use Auth;
 use App\Course;
 use App\Question;
 use Carbon\carbon;
 
-class QuestionController extends Controller
+class QuestionAssignmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-     public function index($course_id, $quiz_id)
+    public function index($course_id, $assignment_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
 
-         $questions = Question::where('quiz_id', $quiz->id)->get();
+         $questions = Question::where('assignment_id', $assignment->id)->get();
 
-         return view('instructor.question.index', compact('course', 'quiz', 'questions'));
+         return view('instructor.question.assignment.index', compact('course', 'assignment', 'questions'));
      }
 
     /**
@@ -33,13 +33,13 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($course_id, $quiz_id)
+    public function create($course_id, $assignment_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+        $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
 
-        return view('instructor.question.create', compact('course', 'quiz'));
+        return view('instructor.question.assignment.create', compact('course', 'assignment'));
     }
 
     /**
@@ -48,11 +48,11 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(Request $request, $course_id, $quiz_id)
+    public function store(Request $request, $course_id, $assignment_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
 
          $request->validate([
              'question' => 'required|string|max:255',
@@ -71,7 +71,7 @@ class QuestionController extends Controller
          }
 
          $question = new Question;
-         $question->quiz_id = $quiz->id;
+         $question->assignment_id = $assignment->id;
          $question->question = $request->question;
          $question->question_image = $name ?? "";
          $question->correct = $request->correct;
@@ -83,7 +83,7 @@ class QuestionController extends Controller
          session()->flash('status', 'Successfully saved!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.question.create', [$course->id, $quiz->id]);
+         return redirect()->route('instructor.question.assignmentCreate', [$course->id, $assignment->id]);
      }
 
     /**
@@ -103,15 +103,15 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function edit($course_id, $quiz_id, $question_id)
+    public function edit($course_id, $assignment_id, $question_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
 
-         $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
+         $question = Question::where('assignment_id', $assignment->id)->findOrFail($question_id);
 
-         return view('instructor.question.edit', compact('course', 'quiz', 'question'));
+         return view('instructor.question.assignment.edit', compact('course', 'assignment', 'question'));
      }
 
     /**
@@ -121,12 +121,12 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function update(Request $request, $course_id, $quiz_id, $question_id)
+    public function update(Request $request, $course_id, $assignment_id, $question_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
-         $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
+         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
+         $question = Question::where('assignment_id', $assignment->id)->findOrFail($question_id);
 
          $request->validate([
              'question' => 'required|string|max:255',
@@ -155,7 +155,7 @@ class QuestionController extends Controller
          session()->flash('status', 'Successfully added!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.question.index', [$course->id, $quiz->id]);
+         return redirect()->route('instructor.question.assignmentIndex', [$course->id, $assignment->id]);
      }
 
     /**
@@ -164,18 +164,18 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function destroy($course_id, $quiz_id, $question_id)
+    public function destroy($course_id, $assignment_id, $question_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
-         $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
+         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
+         $question = Question::where('assignment_id', $assignment->id)->findOrFail($question_id);
 
          $question->delete();
 
          session()->flash('status', 'Successfully Deleted!');
          session()->flash('type', 'success');
 
-         return redirect()->route('instructor.question.index', [$course->id, $quiz->id]);
+         return redirect()->route('instructor.question.assignmentIndex', [$course->id, $assignment->id]);
      }
 }

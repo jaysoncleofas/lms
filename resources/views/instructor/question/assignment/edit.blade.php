@@ -9,17 +9,17 @@
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <div>
             <h3 class="text-oswald">{{$course->name}}</h3>
-            <h4 class="text-oswald">Quiz / {{$quiz->title}}</h4>
+            <h4 class="text-oswald">Assignment / {{$assignment->title}}</h4>
         </div>
     </div>
     <div class="row justify-content-center mt-5">
         <div class="col-xl-9 col-md-9 mb-4">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Update Question</h3>
-                <a href="{{route('instructor.question.index', [$course->id, $quiz->id])}}" class="btn btn-primary btn-sm">Questions</a>
+                <a href="{{route('instructor.question.assignmentIndex', [$course->id, $assignment->id])}}" class="btn btn-primary btn-sm">Questions</a>
             </div>
 
-            <form class="" action="{{route('instructor.question.update', [$course->id, $quiz->id, $question->id])}}"
+            <form class="" action="{{route('instructor.question.assignmentUpdate', [$course->id, $assignment->id, $question->id])}}"
                 method="post" enctype="multipart/form-data">
                 @csrf {{method_field('PUT')}}
 

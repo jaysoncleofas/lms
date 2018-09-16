@@ -104,20 +104,20 @@ class TokenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $course_id, $id)
+    public function update(Request $request, $course_id, $token_id)
     {
-        // $user = Auth::user();
-        // $course = $user->courses()->findOrFail($course_id);
-        // $section = Section::where('course_id', $course->id)->findOrFail($section_id);
-        //
-        // $token = Token::findOrFail($token_id);
-        // $token->status = $request->status == 1 ? true : false;
-        // $token->save();
-        //
-        // session()->flash('status', 'Successfully updated!');
-        // session()->flash('type', 'success');
-        //
-        // return redirect()->route('instructor.token.index', [$course->id, $section_id]);
+        $user = Auth::user();
+        $course = $user->courses()->findOrFail($course_id);
+        // $token = ::where('course_id', $course->id)->findOrFail($section_id);
+        
+        $token = Token::findOrFail($token_id);
+        $token->status = $request->status == 1 ? true : false;
+        $token->save();
+        
+        session()->flash('status', 'Successfully updated!');
+        session()->flash('type', 'success');
+        
+        return redirect()->back();
     }
 
     /**

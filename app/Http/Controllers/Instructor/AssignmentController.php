@@ -130,7 +130,7 @@ class AssignmentController extends Controller
              $assignment->sections()->sync(array());
          }
 
-         session()->flash('status', 'Successfully Updated!');
+         session()->flash('status', 'Successfully updated!');
          session()->flash('type', 'success');
 
          return redirect()->route('instructor.assignment.index', $course->id);
@@ -151,9 +151,25 @@ class AssignmentController extends Controller
          $assignment->sections()->detach();
          $assignment->delete();
 
-         session()->flash('status', 'Successfully Deleted!');
+         session()->flash('status', 'Successfully deleted!');
          session()->flash('type', 'success');
 
+         return redirect()->route('instructor.assignment.index', $course->id);
+     }
+
+     public function status(Request $request, $course_id, $assignment_id)
+     {
+         $user = Auth::user();
+         $course = $user->courses()->findOrFail($course_id);
+ 
+         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
+ 
+         $assignment->isActive = $request->status == 1 ? true : false;
+         $assignment->save();
+ 
+         session()->flash('status', 'Successfully updated!');
+         session()->flash('type', 'success');
+ 
          return redirect()->route('instructor.assignment.index', $course->id);
      }
 }

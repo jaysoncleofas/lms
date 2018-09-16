@@ -152,7 +152,7 @@ main.admin {
 }
 
 body {
-  background-color: #fff;
+  background-color: white;
   /* font-family: 'Open', sans-serif; */
 }
 
@@ -204,6 +204,93 @@ button {
   z-index: 0;
   position: relative;
   border-radius: 0;
+}
+
+.shadow-textarea textarea.form-control::-webkit-input-placeholder {
+  font-weight: 300;
+}
+
+.shadow-textarea textarea.form-control:-ms-input-placeholder {
+  font-weight: 300;
+}
+
+.shadow-textarea textarea.form-control::-ms-input-placeholder {
+  font-weight: 300;
+}
+
+.shadow-textarea textarea.form-control::placeholder {
+  font-weight: 300;
+}
+
+.shadow-textarea textarea.form-control {
+  padding-left: 0.8rem;
+}
+
+.dtHorizontalExampleWrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#dtHorizontalExample th,
+td {
+  white-space: nowrap;
+}
+
+.table {
+  border-top: none !important;
+  margin-bottom: 0px !important;
+}
+
+tbody {
+  border-bottom: 1px solid #ced4da;
+}
+
+thead {
+  border-top: none !important;
+}
+
+.dataTables_filter input {
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 0;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  background-color: transparent;
+  font-size: 16px;
+  padding-left: 0px;
+}
+
+.dataTables_filter input:focus {
+  -webkit-box-shadow: 0 1px 0 0 #4285f4;
+  box-shadow: 0 1px 0 0 #4285f4;
+  border-bottom: 1px solid #4285f4;
+}
+
+.table {
+  border-bottom: 1px solid #d2ecff;
+}
+
+.table thead th {
+  border-bottom: 0px;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #e6f5fe;
+}
+
+.table th,
+.table td {
+  border-top: none !important;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: none;
 }
 
 /*!

@@ -157,4 +157,20 @@ class QuizController extends Controller
 
          return redirect()->route('instructor.quiz.index', [$course->id]);
      }
+
+     public function status(Request $request, $course_id, $quiz_id)
+     {
+         $user = Auth::user();
+         $course = $user->courses()->findOrFail($course_id);
+ 
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+ 
+         $quiz->isActive = $request->status == 1 ? true : false;
+         $quiz->save();
+ 
+         session()->flash('status', 'Successfully updated!');
+         session()->flash('type', 'success');
+ 
+         return redirect()->route('instructor.quiz.index', $course->id);
+     }
 }

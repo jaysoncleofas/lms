@@ -9,22 +9,21 @@
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <div>
             <h3 class="text-oswald">{{$course->name}}</h3>
-            <h4 class="text-oswald">Quiz / {{$quiz->title}}</h4>
+            <h4 class="text-oswald">Assignment / {{$assignment->title}}</h4>
         </div>
     </div>
     <div class="row justify-content-center mt-5">
         <div class="col-xl-9 col-md-9 mb-4">
             <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Update Question</h3>
-                <a href="{{route('instructor.question.index', [$course->id, $quiz->id])}}" class="btn btn-primary btn-sm">Questions</a>
+                <h3 class="text-oswald">Add Question</h3>
+                <a href="{{route('instructor.question.assignmentIndex', [$course->id, $assignment->id])}}" class="btn btn-primary btn-sm">Questions</a>
             </div>
-
-            <form class="" action="{{route('instructor.question.update', [$course->id, $quiz->id, $question->id])}}"
-                method="post" enctype="multipart/form-data">
-                @csrf {{method_field('PUT')}}
+            <form class="" action="{{route('instructor.question.assignmentStore', [$course->id, $assignment->id])}}" method="post"
+                enctype="multipart/form-data">
+                @csrf
 
                 <div class="md-form">
-                    <input type="text" name="question" value="{{$question->question}}" class="form-control {{$errors->has('question') ? 'is-invalid' : ''}}">
+                    <input type="text" name="question" value="{{old('question')}}" class="form-control {{$errors->has('question') ? 'is-invalid' : ''}}">
                     <label for="">Question</label>
                     @if ($errors->has('question'))
                     <span class="invalid-feedback" role="alert">
@@ -53,7 +52,7 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="correct" value="{{$question->correct}}" class="form-control {{$errors->has('correct') ? 'is-invalid' : ''}}">
+                    <input type="text" name="correct" value="{{old('correct')}}" class="form-control {{$errors->has('correct') ? 'is-invalid' : ''}}">
                     <label for="">Correct answer</label>
                     @if ($errors->has('correct'))
                     <span class="invalid-feedback" role="alert">
@@ -63,21 +62,21 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="option_one" value="{{$question->option_one}}" class="form-control">
+                    <input type="text" name="option_one" value="{{old('option_one')}}" class="form-control">
                     <label for="">Option</label>
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="option_two" value="{{$question->option_two}}" class="form-control">
+                    <input type="text" name="option_two" value="{{old('option_two')}}" class="form-control">
                     <label for="">Option</label>
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="option_three" value="{{$question->option_three}}" class="form-control">
+                    <input type="text" name="option_three" value="{{old('option_three')}}" class="form-control">
                     <label for="">Option</label>
                 </div>
 
-                <button type="submit" name="button" class="btn btn-primary btn-sm pull-right btn-sm mt-4">Update</button>
+                <button type="submit" name="button" class="btn btn-primary btn-sm pull-right btn-sm mt-4">Save</button>
             </form>
 
         </div>
@@ -99,8 +98,6 @@
 
         if (file) {
             reader.readAsDataURL(file); //reads the data as a URL
-        } else {
-            preview.src = "{{$question->question_image ? asset('storage/images/'.$question->question_image) : ''}}";
         }
 
     }

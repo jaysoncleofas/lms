@@ -57,18 +57,18 @@ class AnnouncementController extends Controller
         $course = $user->courses()->findOrFail($course_id);
 
         $request->validate([
-            'content' => 'required|string|max:255',
+            'message' => 'required|string|max:255',
         ]);
 
         $announcement = new Announcement;
         $announcement->instructor_id = $user->id;
         $announcement->course_id = $course->id;
-        $announcement->content = $request->content;
+        $announcement->message = $request->message;
         $announcement->save();
 
         $announcement->sections()->sync($request->sections, false);
 
-        session()->flash('status', 'Successfully added!');
+        session()->flash('status', 'Successfully posted!');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.announcement.index', $course->id);
@@ -124,13 +124,13 @@ class AnnouncementController extends Controller
         $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
         $request->validate([
-            'content' => 'required|string|max:255',
+            'message' => 'required|string|max:255',
         ]);
 
-        $announcement->content = $request->content;
+        $announcement->message = $request->message;
         $announcement->save();
 
-        session()->flash('status', 'Successfully Updated!');
+        session()->flash('status', 'Successfully updated!');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.announcement.index', $course->id);
@@ -151,7 +151,7 @@ class AnnouncementController extends Controller
         $announcement->sections()->detach();
         $announcement->delete();
 
-        session()->flash('status', 'Successfully Deleted!');
+        session()->flash('status', 'Successfully deleted!');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.announcement.index', $course->id);

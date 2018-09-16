@@ -17,4 +17,9 @@ class Assignment extends Model
     {
         return $this->belongsToMany('App\Section');
     }
+
+    public function questions()
+    {
+        return $this->hasMany('App\Question')->inRandomOrder();
+    }
 }

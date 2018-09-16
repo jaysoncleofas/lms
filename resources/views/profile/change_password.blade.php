@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
+                    <button type="submit" name="button" class="btn btn-primary pull-right mt-4 btn-sm">Update</button>
                 </form>
             </div>
         </div>

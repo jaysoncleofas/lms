@@ -37,16 +37,26 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
 
     Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
 
+    Route::get('/course/{course}/lesson/download/{lesson}', 'Instructor\LessonController@download')->name('lesson.download');
     Route::put('/course/{course}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
     Route::resource('/course/{course}/lesson', 'Instructor\LessonController');
 
+    Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');
     Route::resource('/course/{course}/quiz', 'Instructor\QuizController');
 
+    Route::put('/course/{course}/assignment/{assignment}/status', 'Instructor\AssignmentController@status')->name('assignment.status');
     Route::resource('/course/{course}/assignment', 'Instructor\AssignmentController');
 
     Route::resource('/course/{course}/token', 'Instructor\TokenController')->except(['show']);
 
     Route::resource('/course/{course}/quiz/{quiz}/question', 'Instructor\QuestionController');
+
+    Route::get('/course/{course}/assignment/{assignment}/question', 'Instructor\QuestionAssignmentController@index')->name('question.assignmentIndex');
+    Route::get('/course/{course}/assignment/{assignment}/question/create', 'Instructor\QuestionAssignmentController@create')->name('question.assignmentCreate');
+    Route::post('/course/{course}/assignment/{assignment}/question', 'Instructor\QuestionAssignmentController@store')->name('question.assignmentStore');
+    Route::get('/course/{course}/assignment/{assignment}/question/{question}/edit', 'Instructor\QuestionAssignmentController@edit')->name('question.assignmentEdit');
+    Route::put('/course/{course}/assignment/{assignment}/question/{question}', 'Instructor\QuestionAssignmentController@update')->name('question.assignmentUpdate');
+    Route::delete('/course/{course}/assignment/{assignment}/question/{question}', 'Instructor\QuestionAssignmentController@destroy')->name('question.assignmentDestroy');
 });
 
 

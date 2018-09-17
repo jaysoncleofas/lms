@@ -23,6 +23,16 @@
                     <label for="">Title</label>
                 </div>
 
+                <div class="md-form mb-3">
+                        <input type="text" name="deadline" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->expireDate))}}">
+                        <label for="deadline">Deadline</label>
+                        @if ($errors->has('deadline'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('deadline') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+
                 <p class="mb-0">Assign Section</p>
                 <div class="md-form mt-0">
                     <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
@@ -43,6 +53,9 @@
 <script>
     $('.multiple-select').select2();
     $('.multiple-select').select2().val({!!json_encode($assignment->sections()->allRelatedIds()) !!}).trigger('change');
-
+    $('.datepicker').pickadate({
+        formatSubmit: 'yyyy-mm-dd',
+        hiddenPrefix: 'formatted_',
+    });
 </script>
 @endsection

@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('check_token') }}">
                         @csrf
-                        <p class="h4 mb-4">Register</p>
+                        <h4 class="mb-4 text-oswald">Register</h4>
                         {{-- <div class="col-md-12"> --}}
                             <div class="md-form">
                                 <input type="text" name="classToken" class="form-control {{$errors->has('classToken') ? 'is-invalid' : ''}}" value="{{old('classToken')}}">

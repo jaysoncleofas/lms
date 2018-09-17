@@ -12,4 +12,9 @@ class Take extends Model
     {
         return $this->belongsToMany('App\Quiz');
     }
+
+    public function assignment()
+    {
+        return $this->belongsToMany('App\Assignment');
+    }
 }

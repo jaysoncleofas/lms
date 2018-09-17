@@ -14,7 +14,9 @@
                 <div class="card-body">
                     <h4 class="card-title text-oswald"><a href="{{route('student.announcement', [$section->course->id, $section->id])}}">{{$section->course->name}}</a></h4>
                     <hr>
-                    <p class="card-text">{{$section->course->description}}</p>
+                    <p class="card-text">
+                            {{ substr(strip_tags($section->course->description), 0, 200) }}{{ strlen($section->course->description) > 200 ? "..." : "" }}
+                    </p>
                 </div>
             </div>
         </div>

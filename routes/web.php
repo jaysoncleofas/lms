@@ -77,6 +77,9 @@ Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->gro
 
     Route::post('/course/{course}/section/{section}/quiz/{quiz}/take', 'TakeController@store')->name('take.store');
     Route::get('/course/{course}/section/{section}/quiz/{quiz}/take/{take}/result', 'TakeController@result')->name('take.result');
+
+    Route::post('/course/{course}/section/{section}/assignment/{assignment}/take', 'TakeController@store_assignment')->name('take.store_assignment');
+    Route::get('/course/{course}/section/{section}/assignment/{assignment}/take/{take}/result', 'TakeController@result_assignment')->name('take.result_assignment');
 });
 
 Route::middleware('auth')->group(function () {

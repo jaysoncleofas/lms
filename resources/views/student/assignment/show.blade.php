@@ -1,116 +1,156 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ asset('SmartWizard/dist/css/smart_wizard.css') }}" rel="stylesheet">
-<link href="{{ asset('SmartWizard/dist/css/smart_wizard_theme_arrows.css') }}" rel="stylesheet">
+<link href="{{ asset('SmartWizard/dist/css/smart_wizard_theme_dots.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="breadcrumb">
-                    <a class="breadcrumb-item" href="{{route('student.dashboard')}}">Course</a>
-                    <span class="breadcrumb-item active">{{$course->name}}</span>
-                    <span class="breadcrumb-item active">Section</span>
-                    <span class="breadcrumb-item active">{{$section->name}}</span>
-                    <span class="breadcrumb-item active">Lesson</span>
-                </nav>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="text-oswald">{{$course->name}} / {{$section->name}}</h3>
+            <h4 class="text-oswald">Assignmment / {{$assignment->title}}</h4>
         </div>
-        <div class="row mt-lg-3 justify-content-center">
-            
-            <div class="col-xl-12 col-md-12 mb-4">
-                <!-- SmartWizard html -->
-                <div>Registration closes in <span id="time">05:00</span> minutes!
-                <div id="smartwizard">
-                    <ul id="wizard">
-                        @foreach ($quiz->questions as $question)
-                            <li><a href="#step-{{$question->id}}">{{$question->question}}<br /></a></li>
-                        @endforeach
-                    </ul>
+    </div>
 
-                    <div>
-                        @foreach ($quiz->questions as $question)
-                            <div id="step-{{$question->id}}" class="">
-                                <h3 class="border-bottom border-gray pb-2">{{$question->question}} ?</h3>
-                                <img src="{{asset('storage/images/'.$question->question_image)}}" alt="">
+    <div class="row mt-lg-3 justify-content-center">
+
+        <div class="col-lg-12 col-md-12 mb-4">
+            @if ($assignment->timeLimit > 0)
+            <h4 class="text-oswald" id="divCounter"></h4>
+            @endif
+
+        <form id="take-assignment-form-{{$assignment->id}}" action="{{route('student.take.store_assignment', [$course->id, $section->id, $assignment->id])}}" method="POST">
+                @csrf
+        <div id="smartwizard">
+                <ul>
+                    <?php $i = 1; ?>
+                    @foreach($assignment->questions as $question)
+                    <li><a href="#step-{{$i}}">Q {{$i}}</a></li>
+                    <?php $i++; ?>
+                    @endforeach
+                </ul>
+    
+
+                <div>
+                    <?php $i = 1; ?>
+                    @foreach($assignment->questions as $question)
+                    <div id="step-{{$i}}" class="">
+                        <h4 class="text-oswald">{{ $i }}. {{$question->question}} ?</h4>
+                        <input type="hidden" name="questions[{{ $i }}]" value="{{ $question->id }}">
+
+                                <img src="{{asset('storage/images/'.$question->question_image)}}" alt="" class="img-fluid mb-3 z-depth-1">
 
                                 @php
+                                if($question->option_one == '' && $question->option_two == '' && $question->option_three == ''){
+                                    $choices = [$question->correct];
+                                } else {
                                     $choices = [
                                         $question->correct,
                                         $question->option_one,
                                         $question->option_two,
                                         $question->option_three
-                                    ];
+                                        ];
+                                }
 
-                                    shuffle($choices);
+                                shuffle($choices);
                                 @endphp
 
-                                @foreach ($choices as $key => $item)
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="materialGroup{{$key.''.$question->id}}" name="groupOfMaterialRadios{{$question->id}}">
-                                            <label class="form-check-label" for="materialGroup{{$key.''.$question->id}}"> {{$item}}</label>
-                                      </div>
-                                @endforeach
-                            </div>
-                        @endforeach    
-                    </div>
-                </div>
-            </div>    
-
-                    
-                {{-- @foreach ($quiz->questions as $question)
-                
-                    <div class="card">
-                            <div class="card-body">
-                                <div class="row justify-content-center">
-                                    <div class="col-md-8">
-                                        <h2 class="text-center text-oswald py-4">{{$question->question}}</h2>
-
-                        
-                                        {{($question->choices)}}
-                     
+                                @if (count($choices) == 1)
+                                    <div class="md-form">
+                                            <input type="text" name="answers[{{ $question->id }}]" value="" class="form-control"
+                                            id="choices{{ $question->id }}">
+                                            <label for="choices{{ $question->id }}">Answer</label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                @else
+                                    @foreach($choices as $key => $option)
+                                        @if (!empty($option))
+                                            <div class="form-check">
+                                                <input type="radio" name="answers[{{ $question->id }}]" value="{{ $option }}" class="form-check-input"
+                                                    id="choices{{ $key.''.$question->id }}">
+                                                <label class="form-check-label" for="choices{{ $key.''.$question->id }}">{{ $option
+                                                    }}</label>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
                     </div>
-                @endforeach --}}
-            
+                    <?php $i++; ?>
+                    @endforeach
+                  
+                </div>
+              
+            </div>
+        </form>
+
+
         </div>
-    </div>
+
+
+</div>
 @endsection
 
-
 @section('script')
-<script src="{{ asset('SmartWizard/dist/js/jquery.smartWizard.min.js') }}"></script>
-<script>
-    $(document).ready(function(){
-      $('#smartwizard').smartWizard();
+<script src="{{asset('SmartWizard/dist/js/jquery.smartWizard.js')}}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+              selected: 0,  // Initial selected step, 0 = first step 
+              keyNavigation:true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+              autoAdjustHeight:true, // Automatically adjust content height
+              cycleSteps: false, // Allows to cycle the navigation of steps
+              backButtonSupport: true, // Enable the back button support
+              useURLhash: true, // Enable selection of the step based on url hash
+              lang: {  // Language variables
+                  next: 'Next', 
+                  previous: 'Previous'
+              },
+              toolbarSettings: {
+                  toolbarPosition: 'bottom', // none, top, bottom, both
+                  toolbarButtonPosition: 'right', // left, right
+                  showNextButton: true, // show/hide a Next button
+                  showPreviousButton: true, // show/hide a Previous button
+                  toolbarExtraButtons: [
+              $('<button></button>').text('Finish')
+                            .addClass('btn btn-info')
+                            .on('click', function(){ 
+
+                                if(confirm('Are you sure you want to finish this assignment?')) {
+        
+                                                                $('#take-assignment-form-{{$assignment->id}}').submit();     
+                                                              }
+
+                                                              else {
+
+                                                                  return false;
+                                                              }
+                                             
+                            })
+                        ]
+              }, 
+              anchorSettings: {
+                  anchorClickable: true, // Enable/Disable anchor navigation
+                  enableAllAnchors: false, // Activates all anchors clickable all times
+                  markDoneStep: true, // add done css
+                  enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+              },            
+              contentURL: null, // content url, Enables Ajax content loading. can set as data data-content-url on anchor
+              disabledSteps: [],    // Array Steps disabled
+              errorSteps: [],    // Highlight step with errors
+              theme: 'dots',
+              transitionEffect: 'fade', // Effect on navigation, none/slide/fade
+              transitionSpeed: '400'
+        });
+
+        $('.step-anchor').removeClass('nav-tabs'); 
+        $('.sw-btn-group-extra').addClass('mt-3'); 
+        $('.sw-btn-group').addClass('mt-3'); 
 
     });
-    function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10)
-        seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-        }
-    }, 1000);
-}
-
-window.onload = function () {
-    var fiveMinutes = 60 * 5,
-        display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
-};
-    </script>
+  </script>
 @endsection

@@ -44,7 +44,10 @@
                         <td>
                             @if ($quiz->checktakes())
                                 <p class="green-text"><i class="fa fa-check"></i></p>
-                            @else    
+                            @elseif(count($quiz->questions) == 0)    
+                            
+                            <p class="red-text">unavailable</p>   
+                            @else 
                             <a class="blue-text" href="{{route('student.quiz.show', [$course->id, $section->id, $quiz->id])}}">Take</a>
                             @endif
                         </td>

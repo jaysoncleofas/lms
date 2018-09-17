@@ -26,8 +26,9 @@
                     <tr>
                         <th>#</th>
                         <th>Assignment</th>
-                        <th>Time limit</th>
-                        <th>Score</th>
+                        <th>Questions</th>
+                        <th>Result</th>
+                        <th>Deadline</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -36,10 +37,19 @@
                     <tr>
                         <th>{{$key+1}}</th>
                         <td><a href="">{{$assignment->title}}</a></td>
-                        <td>{{$assignment->timeLimit}} minutes</td>
-                        <td>none</td>
+                        <td>{{count($assignment->questions)}}</td>
+                        <td>{{$assignment->takes()->result ?? ''}}</td>
+                        <td>{{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}}</td>
                         <td>
-                            <a href="{{route('student.assignment.show', [$course->id, $section->id, $assignment->id])}}">Take</a>
+                            @if ($assignment->checktakes())
+                                <p class="green-text"><i class="fa fa-check"></i></p>
+                            @elseif(count($assignment->questions) == 0)
+                                <p class="red-text">Unavailable</p>
+                            @elseif(Carbon\Carbon::parse($assignment->expireDate)->isPast())
+                                <p class="red-text">Expired</p>
+                            @else    
+                                <a class="blue-text" href="{{route('student.assignment.show', [$course->id, $section->id, $assignment->id])}}">Take</a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -49,4 +59,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+@include('partials.notification')
 @endsection

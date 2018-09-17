@@ -18,7 +18,7 @@ class CreateQuizzesTable extends Migration
             $table->unsignedInteger('instructor_id');
             $table->unsignedInteger('course_id');
             $table->string('title');
-            $table->int('timeLimit')->nullable()->default('30');
+            $table->integer('timeLimit')->nullable()->default('30');
             $table->boolean('isActive')->default(true);
             $table->timestamps();
         });

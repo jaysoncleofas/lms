@@ -39,7 +39,7 @@ class Section extends Model
 
     public function assignments()
     {
-        return $this->belongsToMany('App\Assignment');
+        return $this->belongsToMany('App\Assignment')->where('isActive', true);
     }
 
     public function announcements()

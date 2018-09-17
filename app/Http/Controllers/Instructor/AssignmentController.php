@@ -55,17 +55,19 @@ class AssignmentController extends Controller
 
          $request->validate([
              'title' => 'required|string|max:255',
+             'deadline' => 'required|string|max:255',
          ]);
 
          $assignment = new Assignment;
          $assignment->instructor_id = $user->id;
          $assignment->course_id = $course->id;
          $assignment->title = $request->title;
+         $assignment->expireDate = $request->formatted_deadline_submit;
          $assignment->save();
 
          $assignment->sections()->sync($request->sections, false);
 
-         session()->flash('status', 'Successfully added!');
+         session()->flash('status', 'Successfully saved!');
          session()->flash('type', 'success');
 
          return redirect()->route('instructor.assignment.index', $course->id);
@@ -119,9 +121,11 @@ class AssignmentController extends Controller
 
          $request->validate([
              'title' => 'required|string|max:255',
+             'deadline' => 'required|string|max:255',
          ]);
 
          $assignment->title = $request->title;
+         $assignment->expireDate = $request->formatted_deadline_submit;
          $assignment->save();
 
          if (isset($request->sections)) {

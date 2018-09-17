@@ -9,6 +9,8 @@ use App\Section;
 use Auth;
 use App\Lesson;
 use App\Take;
+use DateTime;
+use carbon\Carbon;
 
 class StudentController extends Controller
 {
@@ -111,6 +113,49 @@ class StudentController extends Controller
         })->findOrFail($section_id);
 
         return view('student.assignment.index', compact('user','course', 'section'));
+    }
+
+    public function assignment_show($course_id, $section_id, $assignment_id)
+    {
+        $user = Auth::user();
+        $course = Course::findOrFail($course_id);
+        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->findOrFail($section_id);
+
+        $checkTake = Take::where('user_id', $user->id)->where('assignment_id', $assignment_id)->first();
+
+        if($checkTake)
+        {
+            session()->flash('status', 'Invalid');  
+            session()->flash('type', 'error');  
+            return view('student.assignment.index', compact('user','course', 'section'));
+        }
+
+        // foreach($section->assignments as $assignment){
+        //     // $date = new DateTime($assignment->expireDate);
+        //     // $now = new DateTime();
+
+        //     $date = new Carbon($assignment->expireDate);
+
+        //     if($date->isPast()) {
+        //         session()->flash('status', 'Expired deadline');  
+        //         session()->flash('type', 'error');  
+        //         return view('student.assignment.index', compact('user','course', 'section'));
+        //     }
+        // }
+
+        $assignment = $section->assignments()->where('isActive', true)->findOrFail($assignment_id);
+
+        $date = new Carbon($assignment->expireDate);
+
+        if($date->isPast()) {
+            session()->flash('status', 'Expired deadline');  
+            session()->flash('type', 'error');  
+            return view('student.assignment.index', compact('user','course', 'section'));
+        }
+
+        return view('student.assignment.show', compact('user','course', 'section', 'assignment'));
     }
 
 }

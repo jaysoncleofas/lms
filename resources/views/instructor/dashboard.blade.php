@@ -20,7 +20,9 @@
                 <div class="card-body">
                     <h4 class="card-title text-oswald">{{$course->name}}</h4>
                     <hr>
-                    <p class="card-text">{{$course->description}}</p>
+                    <p class="card-text">
+                            {{ substr(strip_tags($course->description), 0, 200) }}{{ strlen($course->description) > 200 ? "..." : "" }}
+                    </p>
                     <hr>
                     <a href="{{route('instructor.section.index', $course->id)}}" class="btn-floating btn-action ml-auto mr-4 mdb-color lighten-3"><i
                             class="fa fa-chevron-right pl-1"></i></a>

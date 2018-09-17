@@ -4,9 +4,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="text-center">{{$section->course->name}} / {{$section->section->name}}</h3>
+
+                    <h3 class="text-center text-oswald mb-5">{{$section->course->name}} / {{$section->section->name}}</h3>
                 {{-- <p>{{$section->course->name}}</p> --}}
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -41,8 +40,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-6">
+           
                                 <div class="md-form">
                                     <input placeholder="Select date" type="text" name="birthDate" class="form-control datepicker {{$errors->has('birthDate') ? 'is-invalid' : ''}}" value="{{old('birthDate')}}">
                                     <label>Date of Birth</label>
@@ -52,8 +50,7 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+                      
                                 <div class="md-form">
                                     <input type="email" name="email" class="form-control {{$errors->has('email') ? 'is-invalid' : ''}}" value="{{old('email')}}">
                                     <label>Email Address</label>
@@ -63,10 +60,8 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-12">
+                     
+             
                                 <div class="md-form">
                                     <input type="text" name="username" class="form-control {{$errors->has('username') ? 'is-invalid' : ''}}" value="{{old('username')}}">
                                     <label>Username</label>
@@ -76,8 +71,7 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="col-md-12">
+                     
                                 <div class="md-form">
                                     <input type="password" id="password" name="password" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
                                     <label>Password</label>
@@ -87,19 +81,16 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="col-md-12">
+                      
                                 <div class="md-form">
                                     <input type="password" id="password-confirm" name="password_confirmation" class="form-control">
                                     <label>Confirm Password</label>
                                 </div>
-                            </div>
-                        </div>
+                     
 
                         <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Register</button>
                     </form>
-                </div>
-            </div>
+           
           
         </div>
     </div>

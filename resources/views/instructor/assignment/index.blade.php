@@ -29,6 +29,7 @@
                         <th>Title</th>
                         <th>Sections</th>
                         <th>Questions</th>
+                        <th>Deadline</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -42,13 +43,14 @@
                             {{$section2->name}},
                             @endforeach
                         </td>
-
                         <td>
                             <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}"
                                 class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Add question">{{count($assignment->questions)}}
                             </a>
                         </td>
-
+                        <td>
+                            {{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}}
+                        </td>
                         <td>
                             @if ($assignment->isActive == true)
                             <a href="#" class="btn btn-sm btn-success" onclick="if(confirm('Are you sure you want to deactivate this assignment?')) {

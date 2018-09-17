@@ -34,7 +34,7 @@ class Section extends Model
 
     public function quizzes()
     {
-        return $this->belongsToMany('App\Quiz');
+        return $this->belongsToMany('App\Quiz')->where('isActive', true);
     }
 
     public function assignments()

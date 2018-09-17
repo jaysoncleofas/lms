@@ -8,6 +8,7 @@ use App\Announcement;
 use App\Section;
 use Auth;
 use App\Lesson;
+use App\Take;
 
 class StudentController extends Controller
 {
@@ -57,6 +58,7 @@ class StudentController extends Controller
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
+
         return view('student.quiz.index', compact('user','course', 'section'));
     }
 
@@ -68,20 +70,16 @@ class StudentController extends Controller
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
+        $checkTake = Take::where('user_id', $user->id)->where('quiz_id', $quiz_id)->first();
+
+        if($checkTake)
+        {
+            session()->flash('status', 'Invalid');  
+            session()->flash('type', 'error');  
+            return view('student.quiz.index', compact('user','course', 'section'));
+        }
+
         $quiz = $section->quizzes()->findOrFail($quiz_id);
-
-        // $temp=[];
-        // foreach($quiz->questions as $question){
-        //     $temp[] = $question->correct;
-        //     $temp[] = $question->option_one;
-        //     $temp[] = $question->option_two;
-        //     $temp[] = $question->option_three;
-        // }
-
-        // return $temp;
-
-
-
 
         return view('student.quiz.show', compact('user','course', 'section', 'quiz', 'temp'));
     }
@@ -102,6 +100,17 @@ class StudentController extends Controller
         })->findOrFail($section_id);
 
         return view('student.section', compact('user','course', 'section'));
+    }
+
+    public function assignment_index($course_id, $section_id)
+    {
+        $user = Auth::user();
+        $course = Course::findOrFail($course_id);
+        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->findOrFail($section_id);
+
+        return view('student.assignment.index', compact('user','course', 'section'));
     }
 
 }

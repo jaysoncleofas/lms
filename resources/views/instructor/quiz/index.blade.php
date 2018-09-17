@@ -27,11 +27,12 @@
             <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <td>Title</td>
-                        <td>Sections</td>
-                        <td>Questions</td>
-                        <td>Status</td>
-                        <td>Action</td>
+                        <th>Title</th>
+                        <th>Sections</th>
+                        <th>Questions</th>
+                        <th>Time Limit</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,7 @@
                                 data-toggle="tooltip" data-placement="top" title="Add question">{{count($quiz->questions)}}
                             </a>
                         </td>
+                        <td>{{$quiz->timeLimit ?? 0}} minutes</td>
                         <td>
                             @if ($quiz->isActive == true)
                             <a href="#" class="btn btn-sm btn-success" onclick="if(confirm('Are you sure you want to deactivate this quiz?')) {

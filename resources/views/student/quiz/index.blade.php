@@ -1,53 +1,63 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <nav class="breadcrumb">
-                    <a class="breadcrumb-item" href="{{route('student.dashboard')}}">Course</a>
-                    <span class="breadcrumb-item active">{{$course->name}}</span>
-                    <span class="breadcrumb-item active">Section</span>
-                    <span class="breadcrumb-item active">{{$section->name}}</span>
-                    <span class="breadcrumb-item active">Quiz</span>
-                </nav>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="text-oswald">{{$course->name}} / {{$section->name}}</h3>
         </div>
-        <div class="row mt-lg-3 justify-content-center">
-            <div class="col-xl-12 col-md-12 mb-5 pb-5">
-                {{-- @if (count($->section) > 0) --}}
-                    
-                <div class="card mt-5">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                    <th>#</th>
-                                    <th>Quiz</th>
-                                    <th>Time limit</th>
-                                    <th>Score</th>
-                                    <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($section->quizzes as $key => $quiz)
-                                        <tr>
-                                            <th>{{$key+1}}</th>
-                                            <td><a href="">{{$quiz->title}}</a></td>
-                                            <td>{{$quiz->timeLimit}} minutes</td>
-                                            <td>none</td>
-                                            <td>
-                                                <a href="{{route('student.quiz.show', [$course->id, $section->id, $quiz->id])}}">Take</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    </div>
+
+    <div class="row mt-lg-3">
+        <div class="col-lg-4 col-sm-4">
+            <div class="card">
+                <div class="text-white blue text-center py-4 px-4">
+                    <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($section->quizzes)}}</strong></h2>
+                    <h2 class="text-uppercase text-white text-oswald">Quizzes</h2>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xl-12 col-md-12 mb-5 pb-5">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Quiz</th>
+                        <th>Questions</th>
+                        <th>Result</th>
+                        <th>Time limit</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($section->quizzes as $key => $quiz)
+                    <tr>
+                        <th>{{$key+1}}</th>
+                        <td><a href="">{{$quiz->title}}</a></td>
+                        <td>{{count($quiz->questions)}}</td>
+                        <td>{{$quiz->takes()->result ?? ''}}</td>
+                        <td>{{$quiz->timeLimit ?? 0}} minutes</td>
+                        {{-- <td>{{$quiz->takes()->result ?? ''}}/{{count($quiz->questions)}}</td> --}}
+                        <td>
+                            @if ($quiz->checktakes())
+                                <p class="green-text"><i class="fa fa-check"></i></p>
+                            @else    
+                            <a class="blue-text" href="{{route('student.quiz.show', [$course->id, $section->id, $quiz->id])}}">Take</a>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+@include('partials.notification')
 @endsection

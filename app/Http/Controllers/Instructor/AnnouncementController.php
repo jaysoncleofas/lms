@@ -57,7 +57,7 @@ class AnnouncementController extends Controller
         $course = $user->courses()->findOrFail($course_id);
 
         $request->validate([
-            'message' => 'required|string|max:255',
+            'message' => 'required|string',
         ]);
 
         $announcement = new Announcement;
@@ -124,7 +124,7 @@ class AnnouncementController extends Controller
         $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
         $request->validate([
-            'message' => 'required|string|max:255',
+            'message' => 'required|string',
         ]);
 
         $announcement->message = $request->message;

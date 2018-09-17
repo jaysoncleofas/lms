@@ -16,6 +16,7 @@
 
 .sw-theme-dots .sw-container {
     min-height: 300px;
+    background: white;
 }
 
 .sw-theme-dots .step-content {
@@ -26,7 +27,7 @@
 }
 
 .sw-theme-dots .sw-toolbar {
-    background: #fff;
+    /* background: #fff; */
     border-radius: 0 !important;
     padding-left: 10px;
     padding-right: 10px;
@@ -39,18 +40,18 @@
 
 .sw-theme-dots .sw-toolbar-bottom {
     border-top-color: #ddd !important;
-    border-bottom-color: #ddd !important;
+    border-bottom-color: #ddd !important;t
 }
 
 .sw-theme-dots > ul.step-anchor {
-    position: relative;
-    background: #fff;
-    border: 0px solid #ccc !important;
+    /* position: relative; */
+    /* background: #fff;
+    border: 0px solid #ccc !important; */
     list-style: none;
 }
 
 .sw-theme-dots > ul.step-anchor:before {
-    content: " ";
+    /* content: " "; */
     position: absolute;
     top: 70px;
     bottom: 0;
@@ -67,9 +68,9 @@
 }
 /* Anchors styles */
 .sw-theme-dots > ul.step-anchor > li > a {
-    position: relative;
+    /* position: relative; */
     text-align: center;
-    font-weight: bold;
+    /* font-weight: bold; */
     background: transparent;
     border: none;
     color: #ccc;

@@ -7,7 +7,7 @@
             <h3 class="text-oswald">Dashboard</h3>
         </div>
     </div>
-    <div class="row mt-lg-3">
+    <div class="row mt-3">
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">

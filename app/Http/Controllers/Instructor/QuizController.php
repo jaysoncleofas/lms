@@ -61,6 +61,7 @@ class QuizController extends Controller
          $quiz->instructor_id = $user->id;
          $quiz->course_id = $course->id;
          $quiz->title = $request->title;
+         $quiz->timeLimit = $request->minutes ?? 20;
          $quiz->save();
 
          $quiz->sections()->sync($request->sections, false);
@@ -122,6 +123,7 @@ class QuizController extends Controller
          ]);
 
          $quiz->title = $request->title;
+         $quiz->timeLimit = $request->minutes;
          $quiz->save();
 
          if (isset($request->sections)) {

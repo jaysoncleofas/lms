@@ -306,3 +306,8 @@ button{
     vertical-align: bottom;
     border-bottom: none; 
 }
+
+.mdb-feed .news .excerpt .added-text {
+    // margin-bottom: .6rem;
+    max-width: none !important; 
+}

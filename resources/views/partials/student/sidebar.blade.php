@@ -24,7 +24,7 @@
                             <a href="{{route('student.quiz.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('quiz',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i> Quiz<i class="fa fa-angle-right pull-right"></i></a>
                         </li>
                         <li>
-                            <a href="{{route('instructor.assignment.index', $course->id)}}" class="{{Nav::hasSegment('assignment',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignment<i class="fa fa-angle-right pull-right"></i></a>
+                            <a href="{{route('student.assignment.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('assignment',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignment<i class="fa fa-angle-right pull-right"></i></a>
                         </li>
                     @endif
                     {{-- <li>

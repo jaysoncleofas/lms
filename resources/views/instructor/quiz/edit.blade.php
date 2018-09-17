@@ -17,14 +17,22 @@
             </div>
             <form class="" action="{{route('instructor.quiz.update', [$course->id, $quiz->id])}}" method="post">
                 @csrf {{method_field('PUT')}}
-                <div class="form-row">
-                    <div class="col-md-12">
+                   
                         <div class="md-form">
                             <input type="text" name="title" value="{{$quiz->title}}" class="form-control">
                             <label for="">Title</label>
                         </div>
-                    </div>
-                    <div class="col-md-12 mt-3">
+                 
+                    <div class="md-form">
+                            <input type="number" name="minutes" value="{{$quiz->timeLimit}}" class="form-control {{$errors->has('minutes') ? 'is-invalid' : ''}}">
+                            <label for="">Minutes</label>
+                            @if ($errors->has('minutes'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('minutes') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+
                         <p class="mb-0">Assign Section</p>
                         <div class="md-form mt-0">
                             <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
@@ -33,8 +41,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                </div>
+
                 <button type="submit" name="button" class="btn btn-primary btn-sm pull-right mt-5">Update</button>
             </form>
         </div>

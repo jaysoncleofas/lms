@@ -71,6 +71,12 @@ Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->gro
 
     Route::get('/course/{course}/section/{section}/quiz', 'StudentController@quiz_index')->name('quiz.index');
     Route::get('/course/{course}/section/{section}/quiz/{quiz}', 'StudentController@quiz_show')->name('quiz.show');
+
+    Route::get('/course/{course}/section/{section}/assignment', 'StudentController@assignment_index')->name('assignment.index');
+    Route::get('/course/{course}/section/{section}/assignment/{assignment}', 'StudentController@assignment_show')->name('assignment.show');
+
+    Route::post('/course/{course}/section/{section}/quiz/{quiz}/take', 'TakeController@store')->name('take.store');
+    Route::get('/course/{course}/section/{section}/quiz/{quiz}/take/{take}/result', 'TakeController@result')->name('take.result');
 });
 
 Route::middleware('auth')->group(function () {

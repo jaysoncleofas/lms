@@ -28,6 +28,16 @@
                     @endif
                 </div>
 
+                <div class="md-form">
+                    <input type="number" name="minutes" value="{{old('minutes')}}" class="form-control {{$errors->has('minutes') ? 'is-invalid' : ''}}">
+                    <label for="">Minutes</label>
+                    @if ($errors->has('minutes'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('minutes') }}</strong>
+                    </span>
+                    @endif
+                </div>
+
                 <p class="mb-0">Assign Section</p>
                 <div class="md-form mt-0">
                     <select class="multiple-select form-control" multiple="multiple" name="sections[]" required style="width:100% !important;">

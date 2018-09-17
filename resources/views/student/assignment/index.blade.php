@@ -12,34 +12,40 @@
         <div class="col-lg-4 col-sm-4">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
-                    <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($section->lessons)}}</strong></h2>
-                    <h2 class="text-uppercase text-white text-oswald">Lessons</h2>
+                    <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($section->assignments)}}</strong></h2>
+                    <h2 class="text-uppercase text-white text-oswald">Assignments</h2>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xl-12 col-md-12 mb-5 pb-5">
+
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Lesson</th>
-                        <th>File</th>
+                        <th>#</th>
+                        <th>Assignment</th>
+                        <th>Time limit</th>
+                        <th>Score</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($section->lessons as $key => $lesson)
+                    @foreach ($section->assignments as $key => $assignment)
                     <tr>
-                        <th scope="row">{{$key+1}}</th>
-                        <td>{{$lesson->title}}</td>
-                        <td><a class="blue-text" href="{{route('student.lesson.download', [$course->id, $section->id, $lesson->id])}}">{{substr($lesson->upload_file, 20)}}</a></td>
-                        <td><a class="blue-text" href="{{route('student.lesson.show',[$course->id, $section->id, $lesson->id])}}">View</a></td>
+                        <th>{{$key+1}}</th>
+                        <td><a href="">{{$assignment->title}}</a></td>
+                        <td>{{$assignment->timeLimit}} minutes</td>
+                        <td>none</td>
+                        <td>
+                            <a href="{{route('student.assignment.show', [$course->id, $section->id, $assignment->id])}}">Take</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>

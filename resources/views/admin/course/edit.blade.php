@@ -10,7 +10,7 @@
         <div class="col-xl-6 col-md-6">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Update Course</h3>
-                <a href="{{route('admin.course.index')}}" class="btn btn-danger btn-sm">Back</a>
+                <a href="{{route('admin.course.index')}}" class="btn btn-danger">Back</a>
             </div>
 
             <form action="{{route('admin.course.update', $course->id)}}" method="post">
@@ -59,7 +59,7 @@
                     </select>
                 </div>
 
-                <button type="submit" name="button" class="btn btn-primary pull-right mt-4 btn-sm">Update</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
             </form>
         </div>
     </div>

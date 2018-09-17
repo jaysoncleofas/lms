@@ -15,7 +15,7 @@
                         <p><i class="fa fa-file"></i> <a href="{{route('student.lesson.download', [$course->id, $section->id, $lesson->id])}}">{{substr($lesson->upload_file,
                                 20)}}</a>
                             <p>
-                                <a href="{{route('student.lesson.index', [$course->id, $section->id])}}" class="btn btn-danger btn-sm">Back</a>
+                                <a href="{{route('student.lesson.index', [$course->id, $section->id])}}" class="btn btn-danger">Back</a>
 
                     </div>
 

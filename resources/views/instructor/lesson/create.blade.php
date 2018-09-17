@@ -14,7 +14,7 @@
 
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Add Lesson</h3>
-                <a href="{{route('instructor.lesson.index', $course->id)}}" class="btn btn-danger btn-sm">Back</a>
+                <a href="{{route('instructor.lesson.index', $course->id)}}" class="btn btn-danger">Back</a>
             </div>
 
             <form class="" action="{{route('instructor.lesson.store', $course->id)}}" method="post" enctype="multipart/form-data">
@@ -52,7 +52,7 @@
 
                 <div class="md-form">
                     <div class="file-field">
-                        <div class="btn btn-primary btn-sm float-left">
+                        <div class="btn btn-primary float-left">
                             <span>Choose file</span>
                             <input type="file" name="upload_file">
                         </div>
@@ -69,7 +69,7 @@
                     @endif
                 </div>
 
-                <button type="submit" name="button" class="btn btn-primary pull-right btn-sm mt-5">Save</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-5">Save</button>
             </form>
 
         </div>

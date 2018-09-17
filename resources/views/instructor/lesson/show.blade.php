@@ -5,7 +5,7 @@
 
             <div class="row px-3 d-flex justify-content-between align-items-center">
                     <h3 class="text-oswald">{{$course->name}} / Lesson</h3>
-                    <a href="{{route('instructor.lesson.index', $course->id)}}" class="btn btn-danger btn-sm">Back</a>
+                    <a href="{{route('instructor.lesson.index', $course->id)}}" class="btn btn-danger">Back</a>
                 </div>
 
         <div class="row mt-lg-3">

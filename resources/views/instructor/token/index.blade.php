@@ -44,7 +44,7 @@
                         <td>{{date('F j, Y',strtotime($token->created_at))}}</td>
                         <td>
                             @if ($token->status == 1)
-                            <a href="#" class="btn btn-sm btn-success" onclick="if(confirm('Are you sure you want to deactivate this token?')) {
+                            <a href="#" class="btn btn-success btn-sm" onclick="if(confirm('Are you sure you want to deactivate this token?')) {
                                                                 event.preventDefault();
                                                                 $('#deactivate-form-{{$token->id}}').submit();
                                                               }">
@@ -56,7 +56,7 @@
                                 <input type="hidden" name="status" value="0">
                             </form>
                             @else
-                            <a href="#" class="btn btn-sm btn-danger" onclick="if(confirm('Are you sure you want to activate this token?')) {
+                            <a href="#" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure you want to activate this token?')) {
                                                                 event.preventDefault();
                                                                 $('#activate-form-{{$token->id}}').submit();
                                                               }">

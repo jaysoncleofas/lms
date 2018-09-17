@@ -13,7 +13,7 @@
         <div class="col-xl-6 col-md-6 mb-4">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Update Quiz</h3>
-                <a href="{{route('instructor.quiz.index', $course->id)}}" class="btn btn-danger btn-sm">Back</a>
+                <a href="{{route('instructor.quiz.index', $course->id)}}" class="btn btn-danger">Back</a>
             </div>
             <form class="" action="{{route('instructor.quiz.update', [$course->id, $quiz->id])}}" method="post">
                 @csrf {{method_field('PUT')}}
@@ -42,7 +42,7 @@
                             </select>
                         </div>
 
-                <button type="submit" name="button" class="btn btn-primary btn-sm pull-right mt-5">Update</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-5">Update</button>
             </form>
         </div>
     </div>

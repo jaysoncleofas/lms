@@ -10,7 +10,7 @@
         <div class="col-xl-6 col-md-6 mb-5 pb-5">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Add Section</h3>
-                <a href="{{route('instructor.section.index', $course->id)}}" class="btn btn-danger btn-sm">Back</a>
+                <a href="{{route('instructor.section.index', $course->id)}}" class="btn btn-danger">Back</a>
             </div>
 
             <form action="{{route('instructor.section.store', $course->id)}}" method="post">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" name="button" class="btn btn-primary pull-right btn-sm mt-4">Save</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Save</button>
             </form>
         </div>
     </div>

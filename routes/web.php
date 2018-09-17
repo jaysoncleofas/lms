@@ -36,7 +36,7 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
 
     Route::resource('/course/{course}/announcement', 'Instructor\AnnouncementController')->except(['show']);
 
-    Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController')->except(['show']);
+    Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController');
 
     Route::get('/course/{course}/lesson/download/{lesson}', 'Instructor\LessonController@download')->name('lesson.download');
     Route::put('/course/{course}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');

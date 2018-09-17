@@ -16,7 +16,7 @@
         <div class="col-xl-9 col-md-9 mb-4">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Update Question</h3>
-                <a href="{{route('instructor.question.assignmentIndex', [$course->id, $assignment->id])}}" class="btn btn-primary btn-sm">Questions</a>
+                <a href="{{route('instructor.question.assignmentIndex', [$course->id, $assignment->id])}}" class="btn btn-primary">Questions</a>
             </div>
 
             <form class="" action="{{route('instructor.question.assignmentUpdate', [$course->id, $assignment->id, $question->id])}}"
@@ -77,7 +77,7 @@
                     <label for="">Option</label>
                 </div>
 
-                <button type="submit" name="button" class="btn btn-primary btn-sm pull-right btn-sm mt-4">Update</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
             </form>
 
         </div>

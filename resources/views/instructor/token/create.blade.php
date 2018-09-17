@@ -14,7 +14,7 @@
             <div class="col-xl-6 col-md-6 mb-4">
                     <div class="row px-3 d-flex justify-content-between align-items-center">
                             <h3 class="text-oswald">Generate Token</h3>
-                            <a href="{{route('instructor.token.index', $course->id)}}" class="btn btn-danger btn-sm">Back</a>
+                            <a href="{{route('instructor.token.index', $course->id)}}" class="btn btn-danger">Back</a>
                         </div>
                         <form class="" action="{{route('instructor.token.store', $course->id)}}" method="post">
                             {{ csrf_field() }}
@@ -34,7 +34,7 @@
                                         @endif
                                     </div>
        
-                            <button type="submit" name="button" class="btn btn-primary btn-sm pull-right">Generate</button>
+                            <button type="submit" name="button" class="btn btn-primary pull-right">Generate</button>
                         </form>
             
             </div>

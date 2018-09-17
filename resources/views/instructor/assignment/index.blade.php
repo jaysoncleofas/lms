@@ -45,7 +45,7 @@
                         </td>
                         <td>
                             <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}"
-                                class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Add question">{{count($assignment->questions)}}
+                                class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Add question">{{count($assignment->questions)}}
                             </a>
                         </td>
                         <td>
@@ -53,7 +53,7 @@
                         </td>
                         <td>
                             @if ($assignment->isActive == true)
-                            <a href="#" class="btn btn-sm btn-success" onclick="if(confirm('Are you sure you want to deactivate this assignment?')) {
+                            <a href="#" class="btn btn-success btn-sm" onclick="if(confirm('Are you sure you want to deactivate this assignment?')) {
                                                                                 event.preventDefault();
                                                                                 $('#deactivate-form-{{$assignment->id}}').submit();
                                                                               }">
@@ -65,7 +65,7 @@
                                 <input type="hidden" name="status" value="0">
                             </form>
                             @else
-                            <a href="#" class="btn btn-sm btn-danger" onclick="if(confirm('Are you sure you want to activate this assignment?')) {
+                            <a href="#" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure you want to activate this assignment?')) {
                                                                                 event.preventDefault();
                                                                                 $('#activate-form-{{$assignment->id}}').submit();
                                                                               }">

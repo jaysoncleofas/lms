@@ -13,7 +13,7 @@
                             <div class="md-form">
                                 <img class="img-fluid img-preview">
                                 <div class="file-field">
-                                    <div class="btn btn-primary btn-sm float-left">
+                                    <div class="btn btn-primary float-left">
                                         <span>Choose file</span>
                                         <input type="file" name="file_upload" onchange="previewFile()">
                                     </div>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="md-form">
-                                <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+                                <button type="submit" class="btn btn-primary">Upload</button>
                             </div>
                         </div>
                     </form>

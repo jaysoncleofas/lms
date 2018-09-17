@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(File::class);
     }
+
+    public function takes()
+    {
+        return $this->hasMany('App\Take');
+    }
 }

@@ -6,7 +6,7 @@
         <div class="col-xl-9 col-md-9">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Add Instructor</h3>
-                <a href="{{route('admin.instructor.index')}}" class="btn btn-danger btn-sm">Back</a>
+                <a href="{{route('admin.instructor.index')}}" class="btn btn-danger">Back</a>
             </div>
             <form action="{{route('admin.instructor.store')}}" method="post">
                 {{ csrf_field() }}
@@ -87,7 +87,7 @@
                     @endif
                 </div>
 
-                <button type="submit" name="button" class="btn btn-primary pull-right mt-4 btn-sm">Save</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Save</button>
             </form>
         </div>
 

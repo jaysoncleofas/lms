@@ -44,7 +44,7 @@
                         <td>{{$user->firstName.' '.$user->lastName}}</td>
                         <td>{{$user->email}}</td>
                         <td>
-                            <a href="" class="blue-text">View</a>
+                            <a href="{{route('instructor.student.show', [$course->id, $section->id, $user->id])}}" class="blue-text">View</a>
                         </td>
                     </tr>
                     @endforeach

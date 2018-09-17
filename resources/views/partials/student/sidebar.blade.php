@@ -2,7 +2,7 @@
         <ul class="custom-scrollbar">
             <li>
                 <div class="logo-wrapper waves-light">
-                    <a href="#"><img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" class="img-fluid flex-center img-logo"></a>
+                    <a href="#"><img src="{{asset('images/logo.png')}}" class="img-fluid flex-center img-logo"></a>
                 </div>
             </li>
             <li>
@@ -27,9 +27,6 @@
                             <a href="{{route('student.assignment.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('assignment',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignment<i class="fa fa-angle-right pull-right"></i></a>
                         </li>
                     @endif
-                    {{-- <li>
-                        <a href="{{route('my_files')}}" class="{{Nav::isRoute('my_files')}} collapsible-header waves-effect arrow-r"><i class="fa fa-folder"></i> Files<i class="fa fa-angle-right pull-right"></i></a>
-                    </li> --}}
                 </ul>
             </li>
         </ul>

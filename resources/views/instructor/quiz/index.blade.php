@@ -52,7 +52,7 @@
                         <td>{{$quiz->timeLimit ?? 0}} minutes</td>
                         <td>
                             @if ($quiz->isActive == true)
-                            <a href="#" class="btn btn-sm btn-success" onclick="if(confirm('Are you sure you want to deactivate this quiz?')) {
+                            <a href="#" class="btn btn-success btn-sm" onclick="if(confirm('Are you sure you want to deactivate this quiz?')) {
                                                                 event.preventDefault();
                                                                 $('#deactivate-form-{{$quiz->id}}').submit();
                                                               }">
@@ -64,7 +64,7 @@
                                 <input type="hidden" name="status" value="0">
                             </form>
                             @else
-                            <a href="#" class="btn btn-sm btn-danger" onclick="if(confirm('Are you sure you want to activate this quiz?')) {
+                            <a href="#" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure you want to activate this quiz?')) {
                                                                 event.preventDefault();
                                                                 $('#activate-form-{{$quiz->id}}').submit();
                                                               }">

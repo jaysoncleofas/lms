@@ -10,11 +10,16 @@ class Take extends Model
 
     public function quiz()
     {
-        return $this->belongsToMany('App\Quiz');
+        return $this->belongsTo('App\Quiz');
     }
 
     public function assignment()
     {
         return $this->belongsToMany('App\Assignment');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo('App\User');
     }
 }

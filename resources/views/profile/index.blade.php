@@ -15,11 +15,11 @@
                         <div class="md-form">
                             <img class="img-fluid img-preview z-depth-1">
                             <div class="file-field">
-                                <div class="btn btn-primary btn-sm float-left">
+                                <div class="btn btn-primary float-left">
                                     <span>Choose file</span>
                                     <input type="file" name="avatar" onchange="previewFile()">
                                 </div>
-                                <a class="btn btn-danger btn-sm float-left" onclick="if(confirm('Are you sure you want to delete this instructor?')) {
+                                <a class="btn btn-danger float-left" onclick="if(confirm('Are you sure you want to delete this instructor?')) {
                                             event.preventDefault();
                                             $('#remove-profile-pic-{{$user->id}}').submit();
                                           }">
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" name="button" class="btn btn-primary pull-right mt-4 btn-sm">Update</button>
+                    <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
                 </div>
             </div>
         </form>

@@ -18,7 +18,7 @@
         <div class="col-xl-6 col-md-6 mb-5 pb-5">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Post Announcement</h3>
-                <a href="{{route('instructor.announcement.index', $course->id)}}" class="btn btn-danger btn-sm">Back</a>
+                <a href="{{route('instructor.announcement.index', $course->id)}}" class="btn btn-danger">Back</a>
             </div>
             <form class="" action="{{route('instructor.announcement.store', $course->id)}}" method="post">
                 {{ csrf_field() }}
@@ -43,7 +43,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary pull-right mt-5 btn-sm">Post</button>
+                <button type="submit" class="btn btn-primary pull-right mt-5">Post</button>
 
             </form>
 

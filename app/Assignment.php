@@ -32,4 +32,6 @@ class Assignment extends Model
     {
         return $this->hasMany('App\Take')->orderBy('created_at', 'desc')->where('section_id', $section_id)->first();
     }
+    
+    
 }

@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <h3 class="text-oswald">Course</h3>
-        <a href="{{route('admin.course.create')}}" class="btn btn-primary btn-sm">Add course</a>
+        <a href="{{route('admin.course.create')}}" class="btn btn-primary">Add course</a>
     </div>
     <div class="row mt-lg-3">
         <div class="col-xl-12 col-md-12 mb-4">

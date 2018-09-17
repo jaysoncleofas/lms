@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\Section;
+use App\Quiz;
+use App\Course;
+use App\Assignment;
+use carbon\Carbon;
 
 class StudentController extends Controller
 {
@@ -52,9 +56,19 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($course_id, $section_id, $student_id)
     {
-        //
+        $user = Auth::user();
+        $course = $user->courses()->findOrFail($course_id);
+        $section = Section::where('instructor_id', $user->id)->where('course_id', $course->id)->findOrFail($section_id);
+
+        $student = $section->users()->findOrFail($student_id);
+
+        $quizzes = Quiz::where('instructor_id', $section->instructor_id)->where('course_id', $course->id)->where('isActive', true)->get();
+
+        $assignments = Assignment::where('instructor_id', $section->instructor_id)->where('course_id', $course->id)->where('isActive', true)->get();
+
+        return view('instructor.student.show', compact('course', 'section', 'student', 'quizzes', 'assignments'));
     }
 
     /**

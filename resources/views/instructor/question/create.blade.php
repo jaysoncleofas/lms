@@ -16,7 +16,7 @@
         <div class="col-xl-9 col-md-9 mb-4">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Add Question</h3>
-                <a href="{{route('instructor.question.index', [$course->id, $quiz->id])}}" class="btn btn-primary btn-sm">Questions</a>
+                <a href="{{route('instructor.question.index', [$course->id, $quiz->id])}}" class="btn btn-primary">Questions</a>
             </div>
             <form class="" action="{{route('instructor.question.store', [$course->id, $quiz->id])}}" method="post"
                 enctype="multipart/form-data">
@@ -76,7 +76,7 @@
                     <label for="">Option</label>
                 </div>
 
-                <button type="submit" name="button" class="btn btn-primary btn-sm pull-right btn-sm mt-4">Save</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Save</button>
             </form>
 
         </div>

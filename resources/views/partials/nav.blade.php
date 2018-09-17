@@ -18,7 +18,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{Auth::user()->avatar ? asset('storage/avatars/'.Auth::user()->avatar) : asset('images/profile_pic.png')}}" class="rounded-circle z-depth-1" style="height:30px;width:30px;" alt=""> <span class="clearfix d-none d-sm-inline-block">{{Auth::user()->firstName.' '.Auth::user()->lastName}}</span>
+                        <img src="{{Auth::user()->avatar ? asset('storage/avatars/'.Auth::user()->avatar) : asset('images/profile_pic.png')}}" class="img-fluid rounded-circle z-depth-1" style="height:30px;width:30px;" alt=""> <span class="clearfix d-none d-sm-inline-block">{{Auth::user()->firstName.' '.Auth::user()->lastName}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{route('profile.index')}}">Profile</a>

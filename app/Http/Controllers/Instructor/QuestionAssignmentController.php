@@ -170,7 +170,7 @@ class QuestionAssignmentController extends Controller
          $course = $user->courses()->findOrFail($course_id);
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
          $question = Question::where('assignment_id', $assignment->id)->findOrFail($question_id);
-
+        
          $question->delete();
 
          session()->flash('status', 'Successfully Deleted!');

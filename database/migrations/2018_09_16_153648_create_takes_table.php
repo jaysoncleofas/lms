@@ -18,6 +18,7 @@ class CreateTakesTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('quiz_id')->unsigned()->nullable();
             $table->integer('assignment_id')->unsigned()->nullable();
+            $table->integer('section_id')->unsigned()->nullable();
             $table->text('result')->nullable();
             $table->timestamps();
         });

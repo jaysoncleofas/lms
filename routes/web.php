@@ -31,6 +31,7 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
 
 Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@instructor_dashboard')->name('dashboard');
+    Route::put('/course/{course}/section/{section}/status', 'Instructor\SectionController@status')->name('section.status');
     Route::resource('/course/{course}/section', 'Instructor\SectionController')->except('show');
 
     Route::resource('/course/{course}/announcement', 'Instructor\AnnouncementController')->except(['show']);
@@ -80,6 +81,10 @@ Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->gro
 
     Route::post('/course/{course}/section/{section}/assignment/{assignment}/take', 'TakeController@store_assignment')->name('take.store_assignment');
     Route::get('/course/{course}/section/{section}/assignment/{assignment}/take/{take}/result', 'TakeController@result_assignment')->name('take.result_assignment');
+
+    Route::post('/dashboard/register-token', 'StudentController@check_token')->name('check_token');
+    Route::get('/dashboard/register-token/{token}', 'StudentController@course_add')->name('course.add');
+    Route::post('/dashboard/register/{section}', 'StudentController@register_store')->name('register.store');
 });
 
 Route::middleware('auth')->group(function () {

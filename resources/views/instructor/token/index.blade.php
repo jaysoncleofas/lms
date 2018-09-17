@@ -40,7 +40,7 @@
                     @foreach ($tokens as $token)
                     <tr>
                         <td>{{$token->token}}</td>
-                        <td>{{$token->section->name}}</td>
+                        <td>{{$token->section->name ?? ''}}</td>
                         <td>{{date('F j, Y',strtotime($token->created_at))}}</td>
                         <td>
                             @if ($token->status == 1)

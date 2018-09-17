@@ -9,6 +9,7 @@ use App\Section;
 use Auth;
 use App\Lesson;
 use App\Take;
+use App\Token;
 use DateTime;
 use carbon\Carbon;
 
@@ -72,7 +73,7 @@ class StudentController extends Controller
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
-        $checkTake = Take::where('user_id', $user->id)->where('quiz_id', $quiz_id)->first();
+        $checkTake = Take::where('user_id', $user->id)->where('quiz_id', $quiz_id)->where('section_id', $section_id)->first();
 
         if($checkTake)
         {
@@ -123,7 +124,7 @@ class StudentController extends Controller
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
-        $checkTake = Take::where('user_id', $user->id)->where('assignment_id', $assignment_id)->first();
+        $checkTake = Take::where('user_id', $user->id)->where('assignment_id', $assignment_id)->where('section_id', $section_id)->first();
 
         if($checkTake)
         {
@@ -156,6 +157,59 @@ class StudentController extends Controller
         }
 
         return view('student.assignment.show', compact('user','course', 'section', 'assignment'));
+    }
+
+    // check_token
+    public function check_token(Request $request)
+    {
+        $token = Token::where('token', $request->token)->where('status', true)->first();
+
+        if(isset($token)){
+            if($token->token == $request->token){
+                return redirect()->route('student.course.add', $token->token);
+            } 
+        }
+        session()->flash('status', 'Invalid token!');
+                session()->flash('type', 'error');
+                return redirect()->back();
+    }
+
+    public function course_add($token)
+    {
+        $section = Token::where('token', $token)->where('status', true)->firstOrFail();
+
+        if(isset($section)){
+            if($section->token == $token){
+                return view('student.course.add', compact('section'));
+            } 
+            session()->flash('status', 'Invalid token!');
+            session()->flash('type', 'error');
+            return redirect()->back();
+        }
+    }
+
+    public function register_store(Request $request, $section)
+    {
+        $user = Auth::user();
+        
+        $checkSection = $user->sections()->where('section_id', $section)->where('user_id', $user->id)->first();
+
+        // return $checkSection;
+
+        if($checkSection){
+            session()->flash('status', 'Already registered!');
+            session()->flash('type', 'error');
+            return redirect()->route('student.dashboard');
+        }
+
+        $user->sections()->sync($request->sections, false);
+
+
+
+        session()->flash('status', 'Success!');
+        session()->flash('type', 'success');
+        return redirect()->route('student.dashboard');
+
     }
 
 }

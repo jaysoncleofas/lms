@@ -8,7 +8,7 @@
             <li>
                 <ul class="collapsible collapsible-accordion">
                     <li>
-                        <a href="{{route('student.dashboard')}}" class="{{Nav::isRoute('student.dashboard')}} collapsible-header waves-effect arrow-r"><i class="fa fa-list"></i> Courses<i class="fa fa-angle-right pull-right"></i></a>
+                        <a href="{{route('student.dashboard')}}" class="{{Nav::hasSegment('dashboard',2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-list"></i> Courses<i class="fa fa-angle-right pull-right"></i></a>
                     </li>
                     @if (Nav::hasSegment('section', 4))
                         <li>

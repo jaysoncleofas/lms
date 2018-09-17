@@ -38,10 +38,10 @@
                         <th>{{$key+1}}</th>
                         <td><a href="">{{$assignment->title}}</a></td>
                         <td>{{count($assignment->questions)}}</td>
-                        <td>{{$assignment->takes()->result ?? ''}}</td>
+                        <td>{{$assignment->takes($section->id)->result ?? ''}}</td>
                         <td>{{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}}</td>
                         <td>
-                            @if ($assignment->checktakes())
+                            @if ($assignment->checktakes($section->id))
                                 <p class="green-text"><i class="fa fa-check"></i></p>
                             @elseif(count($assignment->questions) == 0)
                                 <p class="red-text">Unavailable</p>

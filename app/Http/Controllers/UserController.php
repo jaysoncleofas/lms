@@ -100,7 +100,7 @@ class UserController extends Controller
                 return redirect()->route('change.password.index');
               } else {
                 session()->flash('status', 'Invalid Current Password');
-                session()->flash('type', 'success');
+                session()->flash('type', 'error');
                 return redirect()->route('change.password.index');
               }
 

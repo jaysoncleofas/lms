@@ -19,7 +19,7 @@
 
         <div class="col-lg-12 col-md-12 mb-4">
             @if ($quiz->timeLimit > 0)
-            <h4 class="text-oswald" id="divCounter"></h4>
+            <h4 class="text-oswald text-center"><span id="divCounter"></span> minutes</h4>
             @endif
 
                     <form id="take-quiz-form-{{$quiz->id}}" action="{{route('student.take.store', [$course->id, $section->id, $quiz->id])}}" method="POST">

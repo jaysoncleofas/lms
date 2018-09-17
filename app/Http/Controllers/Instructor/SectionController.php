@@ -20,8 +20,9 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($id);
-        $sections = Section::where('course_id', $id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->get();
-        return view('instructor.section.index', compact('course', 'sections'));
+        $sections = Section::where('course_id', $id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', true)->get();
+        $sections2 = Section::where('course_id', $id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', false)->get();
+        return view('instructor.section.index', compact('course', 'sections', 'sections2'));
     }
 
     /**
@@ -137,9 +138,26 @@ class SectionController extends Controller
         $section->lessons()->detach();
         $section->quizzes()->detach();
         $section->assignments()->detach();
+        $section->users()->detach();
+        $section->tokens()->delete();
         $section->delete();
 
         session()->flash('status', 'Successfully Deleted!');
+        session()->flash('type', 'success');
+
+        return redirect()->route('instructor.section.index', $course->id);
+    }
+
+    public function status(Request $request, $course_id, $section_id)
+    {
+        $user = Auth::user();
+        $course = $user->courses()->findOrFail($course_id);
+        $section = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->findOrFail($section_id);
+
+        $section->isActive = $request->status == 1 ? true : false;
+        $section->save();
+
+        session()->flash('status', 'Successfully updated!');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.section.index', $course->id);

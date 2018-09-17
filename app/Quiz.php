@@ -20,13 +20,13 @@ class Quiz extends Model
         return $this->hasMany('App\Question')->inRandomOrder();
     }
 
-    public function checktakes()
+    public function checktakes($section_id)
     {
-        return $this->hasMany('App\Take')->where('user_id', auth()->user()->id)->first();
+        return $this->hasMany('App\Take')->where('user_id', auth()->user()->id)->where('section_id', $section_id)->first();
     }
 
-    public function takes()
+    public function takes($section_id)
     {
-        return $this->hasMany('App\Take')->orderBy('created_at', 'desc')->first();
+        return $this->hasMany('App\Take')->orderBy('created_at', 'desc')->where('section_id', $section_id)->first();
     }
 }

@@ -18,6 +18,7 @@ class TakeController extends Controller
         // return $request->input('questions', []);
         $take = Take::create([
             'user_id' => Auth::id(),
+            'section_id' => $section_id,
             'quiz_id' => $quiz_id,
             'result'  => $result,
         ]);
@@ -69,6 +70,7 @@ class TakeController extends Controller
         // return $request->input('questions', []);
         $take = Take::create([
             'user_id' => Auth::id(),
+            'section_id' => $section_id,
             'assignment_id' => $assignment_id,
             'result'  => $result,
         ]);

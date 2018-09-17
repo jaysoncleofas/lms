@@ -38,11 +38,11 @@
                         <th>{{$key+1}}</th>
                         <td><a href="">{{$quiz->title}}</a></td>
                         <td>{{count($quiz->questions)}}</td>
-                        <td>{{$quiz->takes()->result ?? ''}}</td>
+                        <td>{{$quiz->takes($section->id)->result ?? ''}}</td>
                         <td>{{$quiz->timeLimit ?? 0}} minutes</td>
                         {{-- <td>{{$quiz->takes()->result ?? ''}}/{{count($quiz->questions)}}</td> --}}
                         <td>
-                            @if ($quiz->checktakes())
+                            @if ($quiz->checktakes($section->id))
                                 <p class="green-text"><i class="fa fa-check"></i></p>
                             @elseif(count($quiz->questions) == 0)    
                             

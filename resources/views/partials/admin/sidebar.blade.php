@@ -19,6 +19,10 @@
                     <a href="{{route('admin.instructor.index')}}" class="{{Nav::hasSegment('instructor', 2)}} collapsible-header waves-effect arrow-r"><i
                             class="fa fa-users"></i> Instructor<i class="fa fa-angle-right pull-right"></i></a>
                 </li>
+                <li>
+                    <a href="{{route('admin.student.index')}}" class="{{Nav::hasSegment('student', 2)}} collapsible-header waves-effect arrow-r"><i
+                            class="fa fa-users"></i> Student<i class="fa fa-angle-right pull-right"></i></a>
+                </li>
             </ul>
         </li>
     </ul>

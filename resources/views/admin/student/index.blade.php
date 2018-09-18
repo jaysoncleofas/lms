@@ -15,9 +15,10 @@
             <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Registered Since</td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile Number</th>
+                        <th>Registered Since</th>
                         {{-- <td>Birth Date</td> --}}
                         {{-- <td>Action</td> --}}
                     </tr>
@@ -27,6 +28,7 @@
                     <tr>
                         <td>{{$student->firstName.' '.$student->lastName}}</td>
                         <td>{{$student->email}}</td>
+                        <td>{{$student->mobileNumber}}</td>
                         <td>{{date('F j, Y',strtotime($student->created_at))}}</td>
                         {{-- <td>{{date('F j, Y',strtotime($instructor->birthDate))}}</td> --}}
                         {{-- <td>

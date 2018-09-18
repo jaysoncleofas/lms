@@ -32,7 +32,7 @@
                     <?php $i++; ?>
                     @endforeach
                 </ul>
-    
+
 
                 <div>
                     <?php $i = 1; ?>
@@ -79,9 +79,9 @@
                     </div>
                     <?php $i++; ?>
                     @endforeach
-                  
+
                 </div>
-              
+
             </div>
         </form>
 
@@ -98,17 +98,17 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        
+
         // Smart Wizard
         $('#smartwizard').smartWizard({
-              selected: 0,  // Initial selected step, 0 = first step 
+              selected: 0,  // Initial selected step, 0 = first step
               keyNavigation:true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
               autoAdjustHeight:true, // Automatically adjust content height
               cycleSteps: false, // Allows to cycle the navigation of steps
               backButtonSupport: true, // Enable the back button support
               useURLhash: true, // Enable selection of the step based on url hash
               lang: {  // Language variables
-                  next: 'Next', 
+                  next: 'Next',
                   previous: 'Previous'
               },
               toolbarSettings: {
@@ -119,27 +119,27 @@
                   toolbarExtraButtons: [
               $('<button></button>').text('Finish')
                             .addClass('btn btn-info')
-                            .on('click', function(){ 
+                            .on('click', function(){
 
                                 if(confirm('Are you sure you want to finish this quiz?')) {
-        
-                                                                $('#take-quiz-form-{{$quiz->id}}').submit();     
+
+                                                                $('#take-quiz-form-{{$quiz->id}}').submit();
                                                               }
 
                                                               else {
 
                                                                   return false;
                                                               }
-                                             
+
                             })
                         ]
-              }, 
+              },
               anchorSettings: {
                   anchorClickable: true, // Enable/Disable anchor navigation
                   enableAllAnchors: false, // Activates all anchors clickable all times
                   markDoneStep: true, // add done css
                   enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-              },            
+              },
               contentURL: null, // content url, Enables Ajax content loading. can set as data data-content-url on anchor
               disabledSteps: [],    // Array Steps disabled
               errorSteps: [],    // Highlight step with errors
@@ -148,67 +148,66 @@
               transitionSpeed: '400'
         });
 
-        $('.step-anchor').removeClass('nav-tabs'); 
-        $('.sw-btn-group-extra').addClass('mt-3'); 
-        $('.sw-btn-group').addClass('mt-3'); 
+        $('.step-anchor').removeClass('nav-tabs');
+        $('.sw-btn-group-extra').addClass('mt-3');
+        $('.sw-btn-group').addClass('mt-3');
 
-        
 
-        
+
+
     });
 
 
   </script>
-    
+
     <script>
         //var hoursleft = 0;
-var minutesleft = {{$quiz->timeLimit}}; //give minutes you wish
-var secondsleft = 00; // give seconds you wish
-var finishedtext = "Countdown finished!";
-var end1_{{$quiz->id}};
-if(localStorage.getItem("end1_{{$quiz->id}}")) {
-end1_{{$quiz->id}} = new Date(localStorage.getItem("end1_{{$quiz->id}}"));
-} else {
-end1_{{$quiz->id}} = new Date();
-end1_{{$quiz->id}}.setMinutes(end1_{{$quiz->id}}.getMinutes()+minutesleft);
-end1_{{$quiz->id}}.setSeconds(end1_{{$quiz->id}}.getSeconds()+secondsleft);
+        var minutesleft = {{$quiz->timeLimit}}; //give minutes you wish
+        var secondsleft = 00; // give seconds you wish
+        var finishedtext = "Countdown finished!";
+        var end1_{{$quiz->id}};
+        if(localStorage.getItem("end1_{{$quiz->id}}")) {
+        end1_{{$quiz->id}} = new Date(localStorage.getItem("end1_{{$quiz->id}}"));
+        } else {
+        end1_{{$quiz->id}} = new Date();
+        end1_{{$quiz->id}}.setMinutes(end1_{{$quiz->id}}.getMinutes()+minutesleft);
+        end1_{{$quiz->id}}.setSeconds(end1_{{$quiz->id}}.getSeconds()+secondsleft);
 
-}
-var counter = function () {
-var now = new Date();
-var diff = end1_{{$quiz->id}} - now;
+        }
+        var counter = function () {
+        var now = new Date();
+        var diff = end1_{{$quiz->id}} - now;
 
-diff = new Date(diff);
+        diff = new Date(diff);
 
-var milliseconds = parseInt((diff%1000)/100)
-    var sec = parseInt((diff/1000)%60)
-    var mins = parseInt((diff/(1000*60))%60)
-    //var hours = parseInt((diff/(1000*60*60))%24);
+        var milliseconds = parseInt((diff%1000)/100)
+            var sec = parseInt((diff/1000)%60)
+            var mins = parseInt((diff/(1000*60))%60)
+            //var hours = parseInt((diff/(1000*60*60))%24);
 
-if (mins < 10) {
-    mins = "0" + mins;
-}
-if (sec < 10) { 
-    sec = "0" + sec;
-}     
-if(now >= end1_{{$quiz->id}}) {     
-    clearTimeout(interval);
-   // localStorage.setItem("end", null);
-     localStorage.removeItem("end1_{{$quiz->id}}");
-     localStorage.clear();
-    document.getElementById('divCounter').innerHTML = finishedtext;
-    //  if(confirm("TIME UP!")){
+        if (mins < 10) {
+            mins = "0" + mins;
+        }
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
+        if(now >= end1_{{$quiz->id}}) {
+            clearTimeout(interval);
+           // localStorage.setItem("end", null);
+             localStorage.removeItem("end1_{{$quiz->id}}");
+             localStorage.clear();
+            document.getElementById('divCounter').innerHTML = finishedtext;
+            //  if(confirm("TIME UP!")){
 
-         document.getElementById('take-quiz-form-{{$quiz->id}}').submit();
-    //  }
-} else {
-    var value = mins + ":" + sec;
-    localStorage.setItem("end1_{{$quiz->id}}", end1_{{$quiz->id}});
-    document.getElementById('divCounter').innerHTML = value;
-}
-}
-var interval = setInterval(counter, 1000);
-
+                 document.getElementById('take-quiz-form-{{$quiz->id}}').submit();
+            //  }
+        } else {
+            var value = mins + ":" + sec;
+            localStorage.setItem("end1_{{$quiz->id}}", end1_{{$quiz->id}});
+            document.getElementById('divCounter').innerHTML = value;
+        }
+        }
+        var interval = setInterval(counter, 1000);
 
     </script>
 @endsection

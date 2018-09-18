@@ -18,25 +18,25 @@
                         </div>
                         <form class="" action="{{route('instructor.token.store', $course->id)}}" method="post">
                             {{ csrf_field() }}
-      
+
                                     <div class="md-form">
-                                        <select class="mdb-select {{$errors->has('section') ? 'is-invalid' : ''}}" name="section">
+                                        <select class="mdb-select {{$errors->has('section') ? 'is-invalid' : ''}}" name="section" id="section">
                                             <option selected disabled>Select</option>
                                             @foreach ($sections as $section)
                                                 <option value="{{$section->id}}">{{$section->name}}</option>
                                             @endforeach
                                         </select>
-                                        <label>Section</label>
+                                        <label for="section">Section</label>
                                         @if ($errors->has('section'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('section') }}</strong>
                                         </span>
                                         @endif
                                     </div>
-       
+
                             <button type="submit" name="button" class="btn btn-primary pull-right">Generate</button>
                         </form>
-            
+
             </div>
         </div>
     </div>

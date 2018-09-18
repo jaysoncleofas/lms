@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($sections)}}</strong></h2>
-                    <h2 class="text-uppercase text-white text-oswald">Section{{count($sections) == 1 ? '' : 's'}}</h2>
+                    <h2 class="text-uppercase text-white text-oswald">Section{{count($sections) > 1 ? 's' : ''}}</h2>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <a href="{{route('instructor.student.index', [$course->id,$section->id])}}" class="card-title text-oswald">{{$section->name}}</a>
                     <br><br>
-                    <p><i class="fa fa-users"></i> {{count($section->users)}} student{{count($section->users) == 1 ? '' : 's'}}</p>
+                    <p><i class="fa fa-users"></i> {{count($section->users)}} student{{count($section->users) > 1 ? 's' : ''}}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <a href="{{route('instructor.section.edit', [$course->id, $section->id])}}" class="px-2 blue-text waves-effect">Edit</a>
@@ -95,7 +95,7 @@
                     <form id="delete-section-form-{{$section->id}}" action="{{ route('instructor.section.destroy', [$course->id, $section->id]) }}"
                         method="post">
                         @csrf {{method_field('DELETE')}}
-    
+
                     </form>
                 </div>
             </div>

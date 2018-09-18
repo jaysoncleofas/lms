@@ -66,6 +66,16 @@
                     @endif
                 </div>
 
+                <div class="md-form">
+                    <input type="text" name="mobileNumber" id="mobileNumber" class="form-control {{$errors->has('mobileNumber') ? 'is-invalid' : ''}}"
+                        value="{{$instructor->mobileNumber}}">
+                    <label for="mobileNumber">Mobile Number</label>
+                    @if ($errors->has('mobileNumber'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('mobileNumber') }}</strong>
+                    </span>
+                    @endif
+                </div>
 
                 <div class="md-form">
                     <input type="text" id="username" name="username" class="form-control {{$errors->has('username') ? 'is-invalid' : ''}}"

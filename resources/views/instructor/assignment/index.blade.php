@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($assignments)}}</strong></h2>
-                    <h2 class="text-uppercase text-white text-oswald">Assignments</h2>
+                    <h2 class="text-uppercase text-white text-oswald">Assignment{{count($assignments) > 1 ? 's' : ''}}</h2>
                 </div>
             </div>
         </div>
@@ -44,9 +44,7 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}"
-                                class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Add question">{{count($assignment->questions)}}
-                            </a>
+                            <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}" class="btn btn-info btn-sm">{{count($assignment->questions)}}</a>
                         </td>
                         <td>
                             {{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}}

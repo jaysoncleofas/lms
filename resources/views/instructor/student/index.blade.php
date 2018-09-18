@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($section->users)}}</strong></h2>
-                    <h2 class="text-uppercase text-white text-oswald">Students</h2>
+                    <h2 class="text-uppercase text-white text-oswald">Student{{count($section->users) > 1 ? 's' : ''}}</h2>
                 </div>
             </div>
         </div>
@@ -33,9 +33,10 @@
             <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Action</td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile Number</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@
                     <tr>
                         <td>{{$user->firstName.' '.$user->lastName}}</td>
                         <td>{{$user->email}}</td>
+                        <td>{{$user->mobileNumber}}</td>
                         <td>
                             <a href="{{route('instructor.student.show', [$course->id, $section->id, $user->id])}}" class="blue-text">View</a>
                         </td>

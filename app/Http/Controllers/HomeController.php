@@ -105,6 +105,7 @@ class HomeController extends Controller
             'middleName'=> $request->middleName,
             'lastName'  => $request->lastName,
             'birthDate' => $request->formatted_birthDate_submit,
+            'mobileNumber'     => $request->mobileNumber,
             'username'  => $request->username,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),

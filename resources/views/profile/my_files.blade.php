@@ -11,13 +11,12 @@
                         @csrf
                         <div class="col-md-12">
                             <div class="md-form">
-                                <img class="img-fluid img-preview">
                                 <div class="file-field">
-                                    <div class="btn btn-primary float-left">
+                                    <div class="btn btn-primary btn-sm float-left">
                                         <span>Choose file</span>
-                                        <input type="file" name="file_upload" onchange="previewFile()">
+                                        <input type="file" name="file_upload">
                                     </div>
-                                    <div class="file-path-wrapper pr-3">
+                                    <div class="file-path-wrapper">
                                         <input class="file-path" type="text" placeholder="File name" readonly>
                                     </div>
                                 </div>

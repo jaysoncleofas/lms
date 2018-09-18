@@ -11,8 +11,8 @@
                     <div class="form-row">
                         <div class="col-lg-12">
                             <div class="md-form">
-                                <input type="password" name="oldpassword" class="form-control {{$errors->has('oldpassword') ? 'is-invalid' : ''}}">
-                                <label>Current Password</label>
+                                <input type="password" name="oldpassword" id="oldpassword" class="form-control {{$errors->has('oldpassword') ? 'is-invalid' : ''}}">
+                                <label for="oldpassword">Current Password</label>
                                 @if ($errors->has('oldpassword'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('oldpassword') }}</strong>
@@ -25,7 +25,7 @@
                         <div class="col-12">
                             <div class="md-form">
                                 <input type="password" name="password" id="password" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
-                                <label>New Password</label>
+                                <label for="password">New Password</label>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>

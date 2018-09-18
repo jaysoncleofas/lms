@@ -18,7 +18,7 @@
 
     <div class="row mt-5">
         <div class="col-xl-12 col-md-12 mb-4">
-            <h4 class="text-oswald">Quizzes</h4>
+            <h4 class="text-oswald">Quiz{{count($quizzes) > 1 ? 'zes' : ''}}</h4>
             <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
@@ -49,7 +49,7 @@
 
     <div class="row mt-5">
             <div class="col-xl-12 col-md-12 mb-4">
-                <h4 class="text-oswald">Assignments</h4>
+                <h4 class="text-oswald">Assignment{{count($assignments) > 1 ? 's' : ''}}</h4>
                 <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                     <thead>
                         <tr>
@@ -79,7 +79,7 @@
                         @endforeach
                     </tbody>
                 </table>
-    
+
             </div>
         </div>
 </div>

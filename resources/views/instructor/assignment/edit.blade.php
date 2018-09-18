@@ -19,12 +19,17 @@
                 @csrf {{method_field('PUT')}}
 
                 <div class="md-form">
-                    <input type="text" name="title" value="{{$assignment->title}}" class="form-control">
-                    <label for="">Title</label>
+                    <input type="text" name="title" id="title" value="{{$assignment->title}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
+                    <label for="title">Title</label>
+                    @if ($errors->has('title'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('title') }}</strong>
+                    </span>
+                    @endif
                 </div>
 
                 <div class="md-form mb-3">
-                        <input type="text" name="deadline" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->expireDate))}}">
+                        <input type="text" name="deadline" id="deadline" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->expireDate))}}">
                         <label for="deadline">Deadline</label>
                         @if ($errors->has('deadline'))
                         <span class="invalid-feedback" role="alert">
@@ -35,7 +40,7 @@
 
                 <p class="mb-0">Assign Section</p>
                 <div class="md-form mt-0">
-                    <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
+                    <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach

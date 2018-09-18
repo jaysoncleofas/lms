@@ -21,8 +21,8 @@
                 @csrf {{method_field('PUT')}}
 
                 <div class="md-form">
-                    <input type="text" name="title" value="{{$lesson->title}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
-                    <label for="">Title</label>
+                    <input type="text" id="title" name="title" value="{{$lesson->title}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
+                    <label for="title">Title</label>
                     @if ($errors->has('title'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('title') }}</strong>
@@ -31,9 +31,9 @@
                 </div>
 
                 <div class="md-form">
-                    <textarea name="description" class="md-textarea form-control {{$errors->has('description') ? 'is-invalid' : ''}}"
+                    <textarea name="description" id="description" class="md-textarea form-control {{$errors->has('description') ? 'is-invalid' : ''}}"
                         rows="8" cols="80">{{$lesson->description}}</textarea>
-                    <label for="">Description</label>
+                    <label for="description">Description</label>
                     @if ($errors->has('description'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('description') }}</strong>
@@ -43,7 +43,7 @@
 
                 <p class="mb-0">Assign Section</p>
                 <div class="md-form mt-0">
-                    <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
+                    <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach
@@ -57,7 +57,7 @@
                             <input type="file" name="upload_file">
                         </div>
                         <div class="file-path-wrapper pr-3">
-                            <input class="file-path" type="text" name="upload_file" placeholder="Upload file" value="{{substr($lesson->upload_file, 20)}}"
+                            <input class="file-path" type="text" name="upload_file" id="upload_file" placeholder="Upload file" value="{{substr($lesson->upload_file, 20)}}"
                                 readonly>
                         </div>
                     </div>

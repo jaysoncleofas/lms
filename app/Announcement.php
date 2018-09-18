@@ -10,7 +10,7 @@ class Announcement extends Model
         'instructor_id',
         'course_id',
         'section_id',
-        'content'
+        'message'
     ];
 
     public function instructor()

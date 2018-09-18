@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($quizzes)}}</strong></h2>
-                    <h2 class="text-uppercase text-white text-oswald">Quizzes</h2>
+                    <h2 class="text-uppercase text-white text-oswald">Quiz{{count($quizzes) > 1 ? 'zes' : ''}}</h2>
                 </div>
             </div>
         </div>
@@ -46,8 +46,7 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info">{{count($quiz->questions)}}
-                            </a>
+                            <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info">{{count($quiz->questions)}}</a>
                         </td>
                         <td>{{$quiz->timeLimit ?? 0}} minutes</td>
                         <td>

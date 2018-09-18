@@ -24,8 +24,8 @@
                 @csrf {{method_field('PUT')}}
 
                 <div class="md-form">
-                    <input type="text" name="question" value="{{$question->question}}" class="form-control {{$errors->has('question') ? 'is-invalid' : ''}}">
-                    <label for="">Question</label>
+                    <input type="text" name="question" id="question" value="{{$question->question}}" class="form-control {{$errors->has('question') ? 'is-invalid' : ''}}">
+                    <label for="question">Question</label>
                     @if ($errors->has('question'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('question') }}</strong>
@@ -41,7 +41,7 @@
                             <input type="file" name="image" onchange="previewFile()">
                         </div>
                         <div class="file-path-wrapper pr-3">
-                            <input class="file-path" type="text" placeholder="Upload question image" readonly>
+                            <input class="file-path" type="text" name="image" placeholder="Upload question image" readonly>
                         </div>
                     </div>
 
@@ -53,8 +53,8 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="correct" value="{{$question->correct}}" class="form-control {{$errors->has('correct') ? 'is-invalid' : ''}}">
-                    <label for="">Correct answer</label>
+                    <input type="text" name="correct" id="correct" value="{{$question->correct}}" class="form-control {{$errors->has('correct') ? 'is-invalid' : ''}}">
+                    <label for="correct">Correct answer</label>
                     @if ($errors->has('correct'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('correct') }}</strong>
@@ -63,18 +63,18 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="option_one" value="{{$question->option_one}}" class="form-control">
-                    <label for="">Option</label>
+                    <input type="text" name="option_one" id="option_one" value="{{$question->option_one}}" class="form-control">
+                    <label for="option_one">Option</label>
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="option_two" value="{{$question->option_two}}" class="form-control">
-                    <label for="">Option</label>
+                    <input type="text" name="option_two" id="option_two" value="{{$question->option_two}}" class="form-control">
+                    <label for="option_two">Option</label>
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="option_three" value="{{$question->option_three}}" class="form-control">
-                    <label for="">Option</label>
+                    <input type="text" name="option_three" id="option_three" value="{{$question->option_three}}" class="form-control">
+                    <label for="option_three">Option</label>
                 </div>
 
                 <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>

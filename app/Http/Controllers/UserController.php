@@ -58,6 +58,7 @@ class UserController extends Controller
             'birthDate' => $request->formatted_birthDate_submit,
             'username'  => $request->username,
             'email'     => $request->email,
+            'mobileNumber'     => $request->mobileNumber,
             'avatar'     => $name ?? 'profile_pic.png',
             // 'password'  => $request->password == '' ? bcrypt('secrect') : bcrypt($request->password),
         ]);

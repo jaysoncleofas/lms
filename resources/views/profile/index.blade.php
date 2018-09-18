@@ -25,12 +25,7 @@
                                           }">
                                     <span>Remove</span>
                                 </a>
-
-                                {{-- <div class="file-path-wrapper pr-3">
-                                    <input class="file-path" type="text" placeholder="Upload profile picture" readonly>
-                                </div> --}}
                             </div>
-
 
                             @if ($errors->has('image'))
                                 <span class="invalid-feedback" role="alert">
@@ -44,8 +39,8 @@
                     <div class="form-row">
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" name="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{$user->firstName}}">
-                                <label>First name</label>
+                                <input type="text" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{$user->firstName}}">
+                                <label for="firstName">First name</label>
                                 @if ($errors->has('firstName'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('firstName') }}</strong>
@@ -55,14 +50,14 @@
                         </div>
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" name="middleName" class="form-control" value="{{$user->middleName}}">
-                                <label>Middle name</label>
+                                <input type="text" name="middleName" id="middleName" class="form-control" value="{{$user->middleName}}">
+                                <label for="middleName">Middle name</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" name="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{$user->lastName}}">
-                                <label>Last name</label>
+                                <input type="text" name="lastName" id="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{$user->lastName}}">
+                                <label for="lastName">Last name</label>
                                 @if ($errors->has('lastName'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('lastName') }}</strong>
@@ -74,8 +69,8 @@
                     <div class="form-row">
                         <div class="col-lg-12">
                             <div class="md-form">
-                                <input placeholder="Select date" type="text" name="birthDate" class="form-control datepicker {{$errors->has('birthDate') ? 'is-invalid' : ''}}" value="{{date('j F, Y',strtotime($user->birthDate))}}">
-                                <label>Date of Birth</label>
+                                <input placeholder="Select date" type="text" name="birthDate" id="birthDate" class="form-control datepicker {{$errors->has('birthDate') ? 'is-invalid' : ''}}" value="{{date('j F, Y',strtotime($user->birthDate))}}">
+                                <label for="birthDate">Date of Birth</label>
                                 @if ($errors->has('birthDate'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('birthDate') }}</strong>
@@ -85,8 +80,8 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="md-form">
-                                <input type="email" name="email" class="form-control {{$errors->has('email') ? 'is-invalid' : ''}}" value="{{$user->email}}">
-                                <label>Email Address</label>
+                                <input type="email" name="email" id="email" class="form-control {{$errors->has('email') ? 'is-invalid' : ''}}" value="{{$user->email}}">
+                                <label for="email">Email Address</label>
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -95,11 +90,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="md-form">
+                        <input type="text" name="mobileNumber" id="mobileNumber" class="form-control {{$errors->has('mobileNumber') ? 'is-invalid' : ''}}"
+                            value="{{$user->mobileNumber}}">
+                        <label for="mobileNumber">Mobile Number</label>
+                        @if ($errors->has('mobileNumber'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('mobileNumber') }}</strong>
+                        </span>
+                        @endif
+                    </div>
                     <div class="form-row">
                         <div class="col-12">
                             <div class="md-form">
-                                <input type="text" name="username" class="form-control {{$errors->has('username') ? 'is-invalid' : ''}}" value="{{$user->username}}">
-                                <label>Username</label>
+                                <input type="text" name="username" id="username" class="form-control {{$errors->has('username') ? 'is-invalid' : ''}}" value="{{$user->username}}">
+                                <label for="username">Username</label>
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('username') }}</strong>

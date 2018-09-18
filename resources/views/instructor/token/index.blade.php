@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($tokens)}}</strong></h2>
-                    <h2 class="text-uppercase text-white text-oswald">Tokens</h2>
+                    <h2 class="text-uppercase text-white text-oswald">Token{{count($tokens) > 1 ? 's' : ''}}</h2>
                 </div>
             </div>
         </div>

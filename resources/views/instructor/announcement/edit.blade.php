@@ -25,25 +25,25 @@
                 {{ csrf_field() }} {{method_field('PUT')}}
                 <!-- Add comment -->
                 <div class="md-form mb-3">
-                    <textarea type="text" id="form7" name="content" class="form-control md-textarea {{$errors->has('content') ? 'is-invalid' : ''}}"
+                    <textarea type="text" id="message" name="message" class="form-control md-textarea {{$errors->has('message') ? 'is-invalid' : ''}}"
                         rows="3">{{$announcement->message}}</textarea>
-                    <label for="form7">Message</label>
-                    @if ($errors->has('content'))
+                    <label for="message">Message</label>
+                    @if ($errors->has('message'))
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('content') }}</strong>
+                        <strong>{{ $errors->first('message') }}</strong>
                     </span>
                     @endif
                 </div>
-        
+
                     <p class="mb-0">Assign Section</p>
                     <div class="md-form mt-0">
-                        <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
+                        <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" style="width:100% !important;">
                             @foreach ($sections as $section2)
                             <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                
+
                     <button type="submit" class="btn btn-primary mt-5 pull-right">Update</button>
             </form>
 

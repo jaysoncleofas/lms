@@ -17,7 +17,7 @@
                     <tr>
                         <td>Name</td>
                         <td>Email</td>
-                        <td>Username</td>
+                        <td>Mobile Number</td>
                         {{-- <td>Birth Date</td> --}}
                         <td>Action</td>
                     </tr>
@@ -27,7 +27,7 @@
                     <tr>
                         <td>{{$instructor->firstName.' '.$instructor->lastName}}</td>
                         <td>{{$instructor->email}}</td>
-                        <td>{{$instructor->username}}</td>
+                        <td>{{$instructor->mobileNumber}}</td>
                         {{-- <td>{{date('F j, Y',strtotime($instructor->birthDate))}}</td> --}}
                         <td>
                             <a href="{{route('admin.instructor.edit', $instructor->id)}}" class="blue-text">Update</a>

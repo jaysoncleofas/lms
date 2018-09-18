@@ -17,9 +17,9 @@
                 {{ csrf_field() }} {{method_field('PUT')}}
 
                 <div class="md-form">
-                    <input type="text" name="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
+                    <input type="text" id="name" name="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
                         value="{{$course->name}}">
-                    <label>Course Name</label>
+                    <label for="name">Course Name</label>
                     @if ($errors->has('name'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('name') }}</strong>
@@ -28,9 +28,9 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="code" class="form-control {{$errors->has('code') ? 'is-invalid' : ''}}"
+                    <input type="text" name="code" id="code" class="form-control {{$errors->has('code') ? 'is-invalid' : ''}}"
                         value="{{$course->code}}">
-                    <label>Course code</label>
+                    <label for="code">Course code</label>
                     @if ($errors->has('code'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('code') }}</strong>
@@ -39,9 +39,9 @@
                 </div>
 
                 <div class="md-form">
-                    <textarea type="text" name="description" class="md-textarea form-control {{$errors->has('description') ? 'is-invalid' : ''}}"
+                    <textarea type="text" name="description" id="description" class="md-textarea form-control {{$errors->has('description') ? 'is-invalid' : ''}}"
                         rows="3">{{$course->description}}</textarea>
-                    <label>Description</label>
+                    <label for="description">Description</label>
                     @if ($errors->has('description'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('description') }}</strong>
@@ -51,7 +51,7 @@
 
                 <p>Assign Instructors</p>
                 <div class="md-form">
-                    <select class="multiple-select form-control" multiple="multiple" name="instructors[]" required
+                    <select class="multiple-select form-control" multiple="multiple" id="instructors" name="instructors[]" required
                         style="width:100% !important;">
                         @foreach ($instructors as $instructor)
                         <option value="{{ $instructor->id }}">{{ $instructor->firstName.' '.$instructor->lastName }}</option>

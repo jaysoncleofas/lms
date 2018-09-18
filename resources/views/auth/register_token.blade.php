@@ -8,11 +8,11 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('check_token') }}">
                         @csrf
-                        <h4 class="mb-4 text-oswald">Register</h4>
+                        <h4 class="mb-4 text-oswald text-center">Register</h4>
                         {{-- <div class="col-md-12"> --}}
                             <div class="md-form">
-                                <input type="text" name="classToken" class="form-control {{$errors->has('classToken') ? 'is-invalid' : ''}}" value="{{old('classToken')}}">
-                                <label>Token</label>
+                                <input type="text" name="classToken" id="classToken" class="form-control {{$errors->has('classToken') ? 'is-invalid' : ''}}" value="{{old('classToken')}}">
+                                <label for="classToken">Token</label>
                                 @if ($errors->has('classToken'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('classToken') }}</strong>
@@ -27,4 +27,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+@include('partials.notification')
 @endsection

@@ -27,6 +27,7 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
     Route::get('/dashboard', 'HomeController@admin_dashboard')->name('dashboard');
     Route::resource('/course', 'Admin\CourseController');
     Route::resource('/instructor', 'Admin\InstructorController');
+    Route::resource('/student', 'Admin\StudentController');
 });
 
 Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {

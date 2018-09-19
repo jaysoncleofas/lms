@@ -297,6 +297,20 @@ thead {
   max-width: none !important;
 }
 
+.intro-2 {
+  background: url(/images/bg_1.jpeg?a0ed81c5f56f83b793541a6be6cbc3ce) no-repeat center fixed;
+  background-size: cover;
+}
+
+.full-bg-img {
+  background: -webkit-gradient(linear, 45deg, from(rgba(42, 27, 161, 0.6)), to(rgba(29, 210, 177, 0.6)));
+  background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.6), rgba(29, 210, 177, 0.6) 100%);
+}
+
+.card-login {
+  background-color: rgba(229, 228, 255, 0.9);
+}
+
 /*!
  * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors

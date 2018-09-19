@@ -30,7 +30,7 @@
                     @endif
                 </div>
 
-                <div class="md-form">
+                <div class="md-form mb-3">
                     <textarea name="description" id="description" class="md-textarea form-control pt-0 {{$errors->has('description') ? 'is-invalid' : ''}}"
                         rows="8" cols="80">{{old('title')}}</textarea>
                     <label for="description">Description</label>
@@ -51,6 +51,7 @@
                 </div>
 
                 <div class="md-form">
+                    <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip</span>
                     <div class="file-field">
                         <div class="btn btn-primary float-left">
                             <span>Choose file</span>

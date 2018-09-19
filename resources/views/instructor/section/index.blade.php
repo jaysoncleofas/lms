@@ -84,7 +84,7 @@
                             event.preventDefault();
                             $('#deactivate-form-{{$section->id}}').submit();
                           }">
-                        Active
+                        Activate
                         </a>
                         <form id="deactivate-form-{{$section->id}}" action="{{ route('instructor.section.status', [$course->id, $section->id]) }}"
                         method="post">

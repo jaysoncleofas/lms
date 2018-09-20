@@ -70,8 +70,7 @@
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
     $('.multiple-select').select2();
-    $('.multiple-select').select2().val({!!json_encode($course - > users() - > allRelatedIds()) !!
-    }).trigger('change');
+    $('.multiple-select').select2().val({!!json_encode($course->users()->allRelatedIds())!!}).trigger('change');
     $('.datepicker').pickadate({
         max: new Date(),
         formatSubmit: 'yyyy-mm-dd',

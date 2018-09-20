@@ -11,10 +11,10 @@
             </div>
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
                 <li class="nav-item">
-                    <a href="{{route('my_files')}}" class="nav-link" data-toggle="tooltip" data-placement="left" title="Files"><i class="fa fa-file"></i> </a>
+                    <a href="{{route('my_files')}}" class="nav-link"><i class="fa fa-file"></i> </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('message.index')}}" class="nav-link" data-toggle="tooltip" data-placement="left" title="Messages"><i class="fa fa-envelope"></i> </a>
+                    <a href="{{route('message.index')}}" class="nav-link"><i class="fa fa-envelope"></i> </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

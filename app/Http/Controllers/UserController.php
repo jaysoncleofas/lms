@@ -26,7 +26,6 @@ class UserController extends Controller
             'firstName' => 'required|string|max:255',
             'lastName'  => 'required|string|max:255',
             'middleName'=> 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            'mobileNumber'=> 'nullable|digits:11',
             'birthDate' => 'required|max:255',
         ]);
 
@@ -39,6 +38,12 @@ class UserController extends Controller
         if ($request->username != $user->username) {
             $request->validate([
                 'username'  => 'required|string|unique:users|max:255',
+            ]);
+        }
+
+        if ($request->mobileNumber != $user->mobileNumber) {
+            $request->validate([
+                'mobileNumber'=> 'nullable|digits:11|unique:users',
             ]);
         }
 

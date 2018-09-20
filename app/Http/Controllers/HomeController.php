@@ -98,7 +98,7 @@ class HomeController extends Controller
             'username'  => 'required|alpha_dash|unique:users|max:255',
             'email'     => 'required|string|email|unique:users|max:255',
             'password'  => 'required|string|min:6|confirmed',
-            'mobileNumber'=> 'nullable|alpha_num|digits:11',
+            'mobileNumber'=> 'nullable|alpha_num|digits:11|unique:users',
         ]);
 
         $user = User::create([

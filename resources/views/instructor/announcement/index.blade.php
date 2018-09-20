@@ -17,7 +17,7 @@
     <div class="row mt-5 justify-content-center">
         <div class="col-xl-8 col-md-8 mb-5 pb-5">
             <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Announcement</h3>
+                <h3 class="text-oswald">Announcement{{count($announcements) > 1 ? 's' : ''}}</h3>
                 <a href="{{route('instructor.announcement.create', $course->id)}}" class="btn btn-primary">Post</a>
             </div>
 

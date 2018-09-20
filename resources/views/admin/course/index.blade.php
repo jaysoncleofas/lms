@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald">Course</h3>
+        <h3 class="text-oswald">Course{{count($courses) > 1 ? 's' : ''}}</h3>
         <a href="{{route('admin.course.create')}}" class="btn btn-primary">Add course</a>
     </div>
     <div class="row mt-lg-3">

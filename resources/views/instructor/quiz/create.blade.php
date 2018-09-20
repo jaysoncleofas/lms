@@ -19,8 +19,8 @@
                 @csrf
 
                 <div class="md-form">
-                    <input type="text" name="title" value="{{old('title')}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
-                    <label for="">Title</label>
+                    <input type="text" name="title" id="title" value="{{old('title')}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
+                    <label for="title">Title</label>
                     @if ($errors->has('title'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('title') }}</strong>
@@ -29,8 +29,8 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="number" name="minutes" value="{{old('minutes')}}" class="form-control {{$errors->has('minutes') ? 'is-invalid' : ''}}">
-                    <label for="">Minutes</label>
+                    <input type="number" name="minutes" id="minutes" value="{{old('minutes')}}" class="form-control {{$errors->has('minutes') ? 'is-invalid' : ''}}">
+                    <label for="minutes">Minutes</label>
                     @if ($errors->has('minutes'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('minutes') }}</strong>
@@ -40,7 +40,7 @@
 
                 <p class="mb-0">Assign Section</p>
                 <div class="md-form mt-0">
-                    <select class="multiple-select form-control" multiple="multiple" name="sections[]" required style="width:100% !important;">
+                    <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach

@@ -18,6 +18,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mdb-pro.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/lms.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
 <body>
@@ -29,7 +30,7 @@
             @elseif (Auth::check() && Auth::user()->role == 'instructor')
                 @include('partials.instructor.sidebar')
             @elseif (Auth::check() && Auth::user()->role == 'student')
-                @include('partials.student.sidebar')        
+                @include('partials.student.sidebar')
             @endif
 
         </header>

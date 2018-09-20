@@ -31,8 +31,9 @@ class HomeController extends Controller
     {
         $instructor_total = User::where('role', 'instructor')->count();
         $course_total = Course::count();
+        $student_total = User::where('role', 'student')->count();
 
-        return view('admin.dashboard', compact('instructor_total', 'course_total'));
+        return view('admin.dashboard', compact('instructor_total', 'course_total', 'student_total'));
     }
 
     public function instructor_dashboard()
@@ -52,7 +53,7 @@ class HomeController extends Controller
         if(isset($token)){
             if($token->token == $request->classToken){
                 return redirect()->route('privacy_policy', $token->token);
-            } 
+            }
         }
         session()->flash('status', 'Invalid token!');
                 session()->flash('type', 'error');
@@ -66,7 +67,7 @@ class HomeController extends Controller
         if(isset($section)){
             if($section->token == $token){
                 return view('auth.register', compact('section'));
-            } 
+            }
             session()->flash('status', 'Invalid token!');
             session()->flash('type', 'error');
             return redirect()->back();
@@ -80,7 +81,7 @@ class HomeController extends Controller
         if(isset($section)){
             if($section->token == $token){
                 return view('auth.privacy_policy', compact('section'));
-            } 
+            }
             session()->flash('status', 'Invalid token!');
             session()->flash('type', 'error');
             return redirect()->back();
@@ -104,6 +105,7 @@ class HomeController extends Controller
             'middleName'=> $request->middleName,
             'lastName'  => $request->lastName,
             'birthDate' => $request->formatted_birthDate_submit,
+            'mobileNumber'     => $request->mobileNumber,
             'username'  => $request->username,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),

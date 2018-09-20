@@ -11,8 +11,8 @@
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="md-form">
-                            <input type="email" name="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
-                            <label>Email Address</label>
+                            <input type="email" name="email" id="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                            <label for="email">Email Address</label>
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('email') }}</strong>
@@ -21,17 +21,17 @@
                         </div>
                         <div class="md-form">
                             <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                            <label>Password</label>
+                            <label for="password">Password</label>
                             @if ($errors->has('password'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('password') }}</strong>
                                 </span>
-                            @endif      
+                            @endif
                         </div>
 
                         <div class="md-form">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            <label>Confirm Password</label>      
+                            <label for="password-confirm">Confirm Password</label>
                         </div>
 
                         <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Reset Password</button>
@@ -43,7 +43,7 @@
 </div>
 @endsection
 
-{{-- 
+{{--
 
 @extends('layouts.app')
 

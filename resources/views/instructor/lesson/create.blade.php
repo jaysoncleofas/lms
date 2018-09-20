@@ -21,8 +21,8 @@
                 @csrf
 
                 <div class="md-form">
-                    <input type="text" name="title" value="{{old('title')}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
-                    <label for="">Title</label>
+                    <input type="text" name="title" id="title" value="{{old('title')}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
+                    <label for="title">Title</label>
                     @if ($errors->has('title'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('title') }}</strong>
@@ -30,10 +30,10 @@
                     @endif
                 </div>
 
-                <div class="md-form">
-                    <textarea name="description" class="md-textarea form-control pt-0 {{$errors->has('description') ? 'is-invalid' : ''}}"
+                <div class="md-form mb-3">
+                    <textarea name="description" id="description" class="md-textarea form-control pt-0 {{$errors->has('description') ? 'is-invalid' : ''}}"
                         rows="8" cols="80">{{old('title')}}</textarea>
-                    <label for="">Description</label>
+                    <label for="description">Description</label>
                     @if ($errors->has('description'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('description') }}</strong>
@@ -43,7 +43,7 @@
 
                 <p class="mb-0">Assign Section</p>
                 <div class="md-form mt-0">
-                    <select class="multiple-select form-control" multiple="multiple" name="sections[]" required style="width:100% !important;">
+                    <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach
@@ -51,6 +51,7 @@
                 </div>
 
                 <div class="md-form">
+                    <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip</span>
                     <div class="file-field">
                         <div class="btn btn-primary float-left">
                             <span>Choose file</span>
@@ -58,7 +59,7 @@
                         </div>
                         <div class="file-path-wrapper pr-3">
                             <input class="file-path {{$errors->has('upload_file') ? 'is-invalid' : ''}}" type="text"
-                                name="upload_file" placeholder="Upload upload_file" readonly>
+                                name="upload_file" id="upload_file" placeholder="Upload upload_file" readonly>
                         </div>
                     </div>
 

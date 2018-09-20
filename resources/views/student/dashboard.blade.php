@@ -4,8 +4,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12 d-flex justify-content-between">
-            <h3 class="text-oswald">Courses / Sections</h3>
-            <a data-toggle="modal" data-target="#basicExampleModal" class="btn btn-primary">Token</a>
+            <h3 class="text-oswald">Course / Section</h3>
+            <a data-toggle="modal" data-target="#basicExampleModal" class="btn btn-primary">Enroll Course</a>
         </div>
     </div>
     <div class="row mt-3">
@@ -31,7 +31,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Register token</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Enroll Course</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

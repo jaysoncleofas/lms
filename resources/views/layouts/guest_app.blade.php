@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mdb-pro.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/lms.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">

@@ -7,29 +7,31 @@
 @section('content')
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald">Instructor{{count($instructors) > 1 ? 's' : ''}}</h3>
-        <a href="{{route('admin.instructor.create')}}" class="btn btn-primary">Add instructor</a>
+        <h3 class="text-oswald">Student{{count($students) > 1 ? 's' : ''}}</h3>
+        {{-- <a href="{{route('admin.instructor.create')}}" class="btn btn-primary">Add instructor</a> --}}
     </div>
     <div class="row mt-lg-3">
         <div class="col-xl-12 col-md-12 mb-4">
             <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Mobile Number</td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile Number</th>
+                        <th>Registered Since</th>
                         {{-- <td>Birth Date</td> --}}
-                        <td>Action</td>
+                        {{-- <td>Action</td> --}}
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($instructors as $instructor)
+                    @foreach ($students as $student)
                     <tr>
-                        <td>{{$instructor->firstName.' '.$instructor->lastName}}</td>
-                        <td>{{$instructor->email}}</td>
-                        <td>{{$instructor->mobileNumber}}</td>
+                        <td>{{$student->firstName.' '.$student->lastName}}</td>
+                        <td>{{$student->email}}</td>
+                        <td>{{$student->mobileNumber}}</td>
+                        <td>{{date('F j, Y',strtotime($student->created_at))}}</td>
                         {{-- <td>{{date('F j, Y',strtotime($instructor->birthDate))}}</td> --}}
-                        <td>
+                        {{-- <td>
                             <a href="{{route('admin.instructor.edit', $instructor->id)}}" class="blue-text">Update</a>
                             |
                             <a class="text-danger" onclick="if(confirm('Are you sure you want to delete this instructor?')) {
@@ -43,7 +45,7 @@
                                 @csrf {{method_field('DELETE')}}
 
                             </form>
-                        </td>
+                        </td> --}}
                     </tr>
                     @endforeach
                 </tbody>

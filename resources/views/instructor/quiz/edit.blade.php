@@ -17,15 +17,20 @@
             </div>
             <form class="" action="{{route('instructor.quiz.update', [$course->id, $quiz->id])}}" method="post">
                 @csrf {{method_field('PUT')}}
-                   
+
                         <div class="md-form">
-                            <input type="text" name="title" value="{{$quiz->title}}" class="form-control">
-                            <label for="">Title</label>
+                            <input type="text" id="title" name="title" value="{{$quiz->title}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
+                            <label for="title">Title</label>
+                            @if ($errors->has('title'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('title') }}</strong>
+                            </span>
+                            @endif
                         </div>
-                 
+
                     <div class="md-form">
-                            <input type="number" name="minutes" value="{{$quiz->timeLimit}}" class="form-control {{$errors->has('minutes') ? 'is-invalid' : ''}}">
-                            <label for="">Minutes</label>
+                            <input type="number" id="minutes" name="minutes" value="{{$quiz->timeLimit}}" class="form-control {{$errors->has('minutes') ? 'is-invalid' : ''}}">
+                            <label for="minutes">Minutes</label>
                             @if ($errors->has('minutes'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('minutes') }}</strong>
@@ -35,7 +40,7 @@
 
                         <p class="mb-0">Assign Section</p>
                         <div class="md-form mt-0">
-                            <select class="multiple-select form-control" multiple="multiple" name="sections[]" style="width:100% !important;">
+                            <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" style="width:100% !important;">
                                 @foreach ($sections as $section2)
                                 <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                                 @endforeach

@@ -18,9 +18,9 @@
                 <div class="form-row">
                     <div class="col-12">
                         <div class="md-form">
-                            <input type="text" name="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
+                            <input type="text" name="name" is="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
                                 value="{{old('name')}}">
-                            <label>Section Name</label>
+                            <label for="name">Section Name</label>
                             @if ($errors->has('name'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('name') }}</strong>

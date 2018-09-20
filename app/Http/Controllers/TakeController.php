@@ -35,13 +35,13 @@ class TakeController extends Controller
                 $status = 1;
                 $result++;
             }
-            TakeAnswer::create([
-                'user_id'     => Auth::id(),
-                'take_id'     => $take->id,
-                'question_id' => $question,
-                'option'   => $request->input('answers.'.$question),
-                'correct'     => $status,
-            ]);
+            // TakeAnswer::create([
+            //     'user_id'     => Auth::id(),
+            //     'take_id'     => $take->id,
+            //     'question_id' => $question,
+            //     'option'   => $request->input('answers.'.$question),
+            //     'correct'     => $status,
+            // ]);
         }
 
         $take->update(['result' => $result]);
@@ -87,13 +87,13 @@ class TakeController extends Controller
                 $status = 1;
                 $result++;
             }
-            TakeAnswer::create([
-                'user_id'     => Auth::id(),
-                'take_id'     => $take->id,
-                'question_id' => $question,
-                'option'   => $request->input('answers.'.$question),
-                'correct'     => $status,
-            ]);
+            // TakeAnswer::create([
+            //     'user_id'     => Auth::id(),
+            //     'take_id'     => $take->id,
+            //     'question_id' => $question,
+            //     'option'   => $request->input('answers.'.$question),
+            //     'correct'     => $status,
+            // ]);
         }
 
         $take->update(['result' => $result]);

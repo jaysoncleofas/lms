@@ -95,10 +95,10 @@ class HomeController extends Controller
             'middleName'=> 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
             'lastName'  => 'required|regex:/^[\pL\s\-]+$/u|max:255',
             'birthDate' => 'required|max:255',
-            'username'  => 'required|string|unique:users|max:255',
+            'username'  => 'required|alpha_dash|unique:users|max:255',
             'email'     => 'required|string|email|unique:users|max:255',
             'password'  => 'required|string|min:6|confirmed',
-            'mobileNumber'=> 'nullable|digits:11',
+            'mobileNumber'=> 'nullable|alpha_num|digits:11',
         ]);
 
         $user = User::create([

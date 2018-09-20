@@ -52,7 +52,8 @@ class InstructorController extends Controller
             'birthDate' => $request->formatted_birthDate_submit,
             'username'  => $request->username,
             'email'     => $request->email,
-            'password'  => $request->password == '' ? bcrypt('secrect') : bcrypt($request->password),
+            'mobileNumber'     => $request->mobileNumber,
+            'password'  => $request->password == '' ? bcrypt('secret') : bcrypt($request->password),
         ]);
 
         session()->flash('status', 'Successfully added!');
@@ -115,7 +116,7 @@ class InstructorController extends Controller
             ]);
         }
 
-        
+
         if ($request->mobileNumber != $user->mobileNumber) {
             $request->validate([
                 'mobileNumber'=> 'nullable|digits:11|unique:users',
@@ -135,6 +136,7 @@ class InstructorController extends Controller
             'birthDate' => $request->formatted_birthDate_submit,
             'username'  => $request->username,
             'email'     => $request->email,
+            'mobileNumber'     => $request->mobileNumber,
             'password'  => $request->password == '' ? $user->password : bcrypt($request->password),
         ]);
 

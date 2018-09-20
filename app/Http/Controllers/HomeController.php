@@ -10,6 +10,8 @@ use Auth;
 use App\Token;
 use Hash;
 use App\Section;
+use App\Http\Requests\UserRequest;
+
 class HomeController extends Controller
 {
     /**
@@ -88,7 +90,7 @@ class HomeController extends Controller
         }
     }
 
-    public function register(Request $request, $section)
+    public function register(UserRequest $request, $section)
     {
         $request->validate([
             'firstName' => 'required|regex:/^[\pL\s\-]+$/u|max:255',

@@ -38,6 +38,26 @@
                     @endif
                 </div>
 
+                <div class="md-form mb-3">
+                    <input type="text" name="startDate" id="startDate" placeholder="Select date" class="datepicker form-control" value="{{old('startDate')}}">
+                    <label for="startDate">Start Date</label>
+                    @if ($errors->has('startDate'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('startDate') }}</strong>
+                    </span>
+                    @endif
+                </div>
+
+                <div class="md-form mb-3">
+                    <input type="text" name="expireDate" id="expireDate" placeholder="Select date" class="datepicker form-control" value="{{old('expireDate')}}">
+                    <label for="expireDate">Expire Date</label>
+                    @if ($errors->has('expireDate'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('expireDate') }}</strong>
+                    </span>
+                    @endif
+                </div>
+
                 <p class="mb-0">Assign Section</p>
                 <div class="md-form mt-0">
                     <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
@@ -60,5 +80,10 @@
 <script>
     $('.multiple-select').select2();
     $('.multiple-select').select2().val({!!json_encode(old('sections')) !!}).trigger('change');
+    $('.datepicker').pickadate({
+        min: new Date(),
+        formatSubmit: 'yyyy-mm-dd',
+        hiddenPrefix: 'formatted_',
+    });
 </script>
 @endsection

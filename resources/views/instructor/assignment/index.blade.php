@@ -29,7 +29,8 @@
                         <th>Title</th>
                         <th>Sections</th>
                         <th>Questions</th>
-                        <th>Deadline</th>
+                        <th>Start Date</th>
+                        <th>Expire Date</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -47,7 +48,10 @@
                             <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}" class="btn btn-info btn-sm">{{count($assignment->questions)}}</a>
                         </td>
                         <td>
-                            {{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}}
+                            {{$assignment->startDate ? $assignment->startDate->toFormattedDateString() : ''}}
+                        </td>
+                        <td>
+                            {{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : ''}}
                         </td>
                         <td>
                             @if ($assignment->isActive == true)

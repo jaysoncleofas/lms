@@ -38,6 +38,26 @@
                             @endif
                         </div>
 
+                        <div class="md-form mb-3">
+                            <input type="text" name="startDate" id="startDate" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($quiz->startDate))}}">
+                            <label for="startDate">Start Date</label>
+                            @if ($errors->has('startDate'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('startDate') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+
+                        <div class="md-form mb-3">
+                            <input type="text" name="expireDate" id="expireDate" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($quiz->expireDate))}}">
+                            <label for="expireDate">Expire Date</label>
+                            @if ($errors->has('expireDate'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('expireDate') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+
                         <p class="mb-0">Assign Section</p>
                         <div class="md-form mt-0">
                             <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" style="width:100% !important;">
@@ -59,6 +79,9 @@
 <script>
     $('.multiple-select').select2();
     $('.multiple-select').select2().val({!!json_encode($quiz->sections()->allRelatedIds()) !!}).trigger('change');
-
+    $('.datepicker').pickadate({
+        formatSubmit: 'yyyy-mm-dd',
+        hiddenPrefix: 'formatted_',
+    });
 </script>
 @endsection

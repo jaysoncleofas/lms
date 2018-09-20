@@ -9,6 +9,7 @@ use App\Course;
 use App\User;
 use App\Section;
 use App\Assignment;
+use carbon\Carbon;
 
 class AssignmentController extends Controller
 {
@@ -50,19 +51,22 @@ class AssignmentController extends Controller
      */
      public function store(Request $request, $course_id)
      {
+
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
 
          $request->validate([
              'title' => 'required|string|max:255',
-             'deadline' => 'required|string|max:255',
+             'startDate' => 'required|string|max:255',
+             'expireDate' => 'required|string|max:255',
          ]);
 
          $assignment = new Assignment;
          $assignment->instructor_id = $user->id;
          $assignment->course_id = $course->id;
          $assignment->title = $request->title;
-         $assignment->expireDate = $request->formatted_deadline_submit;
+         $assignment->startDate = $request->formatted_startDate_submit;
+         $assignment->expireDate = $request->formatted_expireDate_submit;
          $assignment->save();
 
          $assignment->sections()->sync($request->sections, false);
@@ -121,11 +125,13 @@ class AssignmentController extends Controller
 
          $request->validate([
              'title' => 'required|string|max:255',
-             'deadline' => 'required|string|max:255',
+             'startDate' => 'required|string|max:255',
+             'expireDate' => 'required|string|max:255',
          ]);
 
          $assignment->title = $request->title;
-         $assignment->expireDate = $request->formatted_deadline_submit;
+         $assignment->startDate = $request->formatted_startDate_submit;
+         $assignment->expireDate = $request->formatted_expireDate_submit;
          $assignment->save();
 
          if (isset($request->sections)) {
@@ -165,15 +171,15 @@ class AssignmentController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
- 
+
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
- 
+
          $assignment->isActive = $request->status == 1 ? true : false;
          $assignment->save();
- 
+
          session()->flash('status', 'Successfully updated!');
          session()->flash('type', 'success');
- 
+
          return redirect()->route('instructor.assignment.index', $course->id);
      }
 }

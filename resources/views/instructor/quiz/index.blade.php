@@ -31,6 +31,8 @@
                         <th>Sections</th>
                         <th>Questions</th>
                         <th>Time Limit</th>
+                        <th>Start Date</th>
+                        <th>Expire Date</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -49,6 +51,12 @@
                             <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info">{{count($quiz->questions)}}</a>
                         </td>
                         <td>{{$quiz->timeLimit ?? 0}} minutes</td>
+                        <td>
+                            {{$quiz->startDate ? $quiz->startDate->toFormattedDateString() : ''}}
+                        </td>
+                        <td>
+                            {{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}
+                        </td>
                         <td>
                             @if ($quiz->isActive == true)
                             <a href="#" class="btn btn-success btn-sm" onclick="if(confirm('Are you sure you want to deactivate this quiz?')) {

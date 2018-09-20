@@ -62,7 +62,7 @@ class LessonController extends Controller
 
          if ($request->hasFile('upload_file')) {
             $request->validate([
-                'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:1000',
+                'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:25000',
             ]);
                     $lessonfile = $request->upload_file;
                     $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
@@ -150,7 +150,7 @@ class LessonController extends Controller
 
          if ($request->hasFile('upload_file')) {
             $request->validate([
-                'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:1000',
+                'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:5000',
             ]);
                     $lessonfile = $request->upload_file;
                     $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());

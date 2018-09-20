@@ -25,8 +25,13 @@
                     </div>
                     <div class="col-sm-12 col-lg-4">
                         <div class="md-form">
-                            <input type="text" name="middleName" id="middleName" class="form-control" value="{{old('middleName')}}">
+                            <input type="text" name="middleName" id="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{old('middleName')}}">
                             <label for="middleName">Middle name</label>
+                            @if ($errors->has('middleName'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('middleName') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-12 col-lg-4">
@@ -89,7 +94,7 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="password" name="password" id="password" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
+                    <input type="password" name="password" id="password" placeholder="Leave empty, default is secret" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
                     <label for="password">Password</label>
                     @if ($errors->has('password'))
                     <span class="invalid-feedback" role="alert">

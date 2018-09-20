@@ -30,7 +30,7 @@
                     <?php $i++; ?>
                     @endforeach
                 </ul>
-    
+
 
                 <div>
                     <?php $i = 1; ?>
@@ -77,9 +77,9 @@
                     </div>
                     <?php $i++; ?>
                     @endforeach
-                  
+
                 </div>
-              
+
             </div>
         </form>
 
@@ -95,17 +95,17 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        
+
         // Smart Wizard
         $('#smartwizard').smartWizard({
-              selected: 0,  // Initial selected step, 0 = first step 
+              selected: 0,  // Initial selected step, 0 = first step
               keyNavigation:true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
               autoAdjustHeight:true, // Automatically adjust content height
               cycleSteps: false, // Allows to cycle the navigation of steps
               backButtonSupport: true, // Enable the back button support
               useURLhash: true, // Enable selection of the step based on url hash
               lang: {  // Language variables
-                  next: 'Next', 
+                  next: 'Next',
                   previous: 'Previous'
               },
               toolbarSettings: {
@@ -116,27 +116,27 @@
                   toolbarExtraButtons: [
               $('<button></button>').text('Finish')
                             .addClass('btn btn-info')
-                            .on('click', function(){ 
+                            .on('click', function(){
 
                                 if(confirm('Are you sure you want to finish this assignment?')) {
-        
-                                                                $('#take-assignment-form-{{$assignment->id}}').submit();     
+
+                                                                $('#take-assignment-form-{{$assignment->id}}').submit();
                                                               }
 
                                                               else {
 
                                                                   return false;
                                                               }
-                                             
+
                             })
                         ]
-              }, 
+              },
               anchorSettings: {
                   anchorClickable: true, // Enable/Disable anchor navigation
                   enableAllAnchors: false, // Activates all anchors clickable all times
                   markDoneStep: true, // add done css
                   enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-              },            
+              },
               contentURL: null, // content url, Enables Ajax content loading. can set as data data-content-url on anchor
               disabledSteps: [],    // Array Steps disabled
               errorSteps: [],    // Highlight step with errors
@@ -145,12 +145,21 @@
               transitionSpeed: '400'
         });
 
-        $('.step-anchor').removeClass('nav-tabs'); 
-        $('.sw-btn-group-extra').addClass('mt-3'); 
-        $('.sw-btn-group').addClass('mt-3'); 
+        $('.step-anchor').removeClass('nav-tabs');
+        $('.sw-btn-group-extra').addClass('mt-3');
+        $('.sw-btn-group').addClass('mt-3');
 
     });
 
+    window.onbeforeunload = function() {
+
+                    return true;
+
+            };
+
+            $('#take-assignment-form-{{$assignment->id}}').on('submit', function(){
+                window.onbeforeunload = null;
+            });
 
   </script>
 @endsection

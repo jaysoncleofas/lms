@@ -26,7 +26,8 @@
                     <tr>
                         <th>#</th>
                         <th>Assignment</th>
-                        {{-- <th>Questions</th> --}}
+                        <th>Start Date</th>
+                        <th>Expire Date</th>
                         <th>Result</th>
                         <th>Deadline</th>
                         <th>Action</th>
@@ -37,8 +38,13 @@
                     <tr>
                         <th>{{$key+1}}</th>
                         <td><a href="">{{$assignment->title}}</a></td>
-                        {{-- <td>{{count($assignment->questions)}}</td> --}}
-                        <td> <h4 class="text-oswald">{{$assignment->takes($section->id)->result ?? ''}}/{{count($assignment->questions)}}</h4> </td>
+                        <td>
+                            {{$assignment->startDate ? $assignment->startDate->toFormattedDateString() : ''}}
+                        </td>
+                        <td>
+                            {{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : ''}}
+                        </td>
+                        <td> <h4 class="text-oswald">{{$assignment->checktakes($section->id)->result ?? ''}}/{{count($assignment->questions)}}</h4> </td>
                         <td>{{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}}</td>
                         <td>
                             @if ($assignment->checktakes($section->id))

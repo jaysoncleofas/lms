@@ -20,7 +20,7 @@ class StudentController extends Controller
 
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
@@ -31,7 +31,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
@@ -42,7 +42,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->whereHas('lessons', function ($query) use ($lesson_id) {
             $query->where('lesson_id', $lesson_id);
@@ -57,7 +57,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
@@ -69,7 +69,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
@@ -77,14 +77,16 @@ class StudentController extends Controller
 
         if($checkTake)
         {
-            session()->flash('status', 'Invalid');  
-            session()->flash('type', 'error');  
+            session()->flash('status', 'Invalid');
+            session()->flash('type', 'error');
             return view('student.quiz.index', compact('user','course', 'section'));
         }
 
         $quiz = $section->quizzes()->findOrFail($quiz_id);
 
-        return view('student.quiz.show', compact('user','course', 'section', 'quiz', 'temp'));
+        $csqu = $course->id.''.$section->id.''.$quiz->id.''.$user->id;
+
+        return view('student.quiz.show', compact('user','course', 'section', 'quiz', 'csqu'));
     }
 
     public function lesson_download($course_id, $section_id, $lesson_id){
@@ -98,7 +100,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
@@ -109,7 +111,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
@@ -120,7 +122,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
+        $section = Section::where('isActive', true)->where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
@@ -128,8 +130,8 @@ class StudentController extends Controller
 
         if($checkTake)
         {
-            session()->flash('status', 'Invalid');  
-            session()->flash('type', 'error');  
+            session()->flash('status', 'Invalid');
+            session()->flash('type', 'error');
             return view('student.assignment.index', compact('user','course', 'section'));
         }
 
@@ -140,8 +142,8 @@ class StudentController extends Controller
         //     $date = new Carbon($assignment->expireDate);
 
         //     if($date->isPast()) {
-        //         session()->flash('status', 'Expired deadline');  
-        //         session()->flash('type', 'error');  
+        //         session()->flash('status', 'Expired deadline');
+        //         session()->flash('type', 'error');
         //         return view('student.assignment.index', compact('user','course', 'section'));
         //     }
         // }
@@ -151,8 +153,8 @@ class StudentController extends Controller
         $date = new Carbon($assignment->expireDate);
 
         if($date->isPast()) {
-            session()->flash('status', 'Expired deadline');  
-            session()->flash('type', 'error');  
+            session()->flash('status', 'Expired deadline');
+            session()->flash('type', 'error');
             return view('student.assignment.index', compact('user','course', 'section'));
         }
 
@@ -162,12 +164,14 @@ class StudentController extends Controller
     // check_token
     public function check_token(Request $request)
     {
-        $token = Token::where('token', $request->token)->where('status', true)->first();
+        $token = Token::where('token', $request->token)->where('status', true)->whereHas('section', function($e){
+            $e->where('isActive', true);
+        })->first();
 
         if(isset($token)){
             if($token->token == $request->token){
                 return redirect()->route('student.course.add', $token->token);
-            } 
+            }
         }
         session()->flash('status', 'Invalid token!');
                 session()->flash('type', 'error');
@@ -181,7 +185,7 @@ class StudentController extends Controller
         if(isset($section)){
             if($section->token == $token){
                 return view('student.course.add', compact('section'));
-            } 
+            }
             session()->flash('status', 'Invalid token!');
             session()->flash('type', 'error');
             return redirect()->back();
@@ -191,7 +195,7 @@ class StudentController extends Controller
     public function register_store(Request $request, $section)
     {
         $user = Auth::user();
-        
+
         $checkSection = $user->sections()->where('section_id', $section)->where('user_id', $user->id)->first();
 
         // return $checkSection;

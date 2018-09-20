@@ -26,8 +26,13 @@
                     </div>
                     <div class="col-sm-12 col-lg-4">
                         <div class="md-form">
-                            <input type="text" id="middleName" name="middleName" class="form-control" value="{{$instructor->middleName}}">
+                            <input type="text" id="middleName" name="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{$instructor->middleName ? $instructor->middleName : old('middleName')}}">
                             <label for="middleName">Middle name</label>
+                            @if ($errors->has('middleName'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('middleName') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-12 col-lg-4">
@@ -68,7 +73,7 @@
 
                 <div class="md-form">
                     <input type="text" name="mobileNumber" id="mobileNumber" class="form-control {{$errors->has('mobileNumber') ? 'is-invalid' : ''}}"
-                        value="{{$instructor->mobileNumber}}">
+                        value="{{$instructor->mobileNumber ? $instructor->mobileNumber : old('mobileNumber')}}">
                     <label for="mobileNumber">Mobile Number</label>
                     @if ($errors->has('mobileNumber'))
                     <span class="invalid-feedback" role="alert">

@@ -19,6 +19,7 @@ class CreateAssignmentsTable extends Migration
             $table->unsignedInteger('course_id');
             $table->string('title');
             $table->boolean('isActive')->default(true);
+            $table->date('startDate')->nullable();
             $table->date('expireDate')->nullable();
             $table->timestamps();
         });

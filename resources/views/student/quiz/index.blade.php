@@ -17,6 +17,9 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-8 col-sm-8">
+            <p class="text-italize text-info"> <i class="fa fa-info"></i> When you take a quiz, time limit will start, when time limit expire unanswered questions will be automaticaly submitted even if you leave the quiz area.</p>
+        </div>
     </div>
     <div class="row">
         <div class="col-xl-12 col-md-12 mb-5 pb-5">
@@ -26,7 +29,8 @@
                     <tr>
                         <th>#</th>
                         <th>Quiz</th>
-                        {{-- <th>Questions</th> --}}
+                        <th>Start Date</th>
+                        <th>Expire Date</th>
                         <th>Result</th>
                         <th>Time limit</th>
                         <th>Action</th>
@@ -37,16 +41,22 @@
                     <tr>
                         <th>{{$key+1}}</th>
                         <td><a href="">{{$quiz->title}}</a></td>
-                        {{-- <td>{{count($quiz->questions)}}</td> --}}
-                        <td><h4 class="text-oswald">{{$quiz->takes($section->id)->result ?? ''}}/{{count($quiz->questions)}}</h4></td>
+                        <td>
+                            {{$quiz->startDate ? $quiz->startDate->toFormattedDateString() : ''}}
+                        </td>
+                        <td>
+                            {{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}
+                        </td>
+                        <td><h4 class="text-oswald">{{$quiz->checktakes($section->id)->result ?? ''}}/{{count($quiz->questions)}}</h4></td>
                         <td>{{$quiz->timeLimit ?? 0}} minutes</td>
                         {{-- <td>{{$quiz->takes()->result ?? ''}}/{{count($quiz->questions)}}</td> --}}
                         <td>
                             @if ($quiz->checktakes($section->id))
                                 <p class="green-text"><i class="fa fa-check"></i></p>
+                            @elseif(Carbon\Carbon::parse($quiz->expireDate)->isPast())
+                                <p class="red-text">Expired</p>
                             @elseif(count($quiz->questions) == 0)
-
-                            <p class="red-text">unavailable</p>
+                            <p class="red-text">Unavailable</p>
                             @else
                             <a class="blue-text" href="{{route('student.quiz.show', [$course->id, $section->id, $quiz->id])}}">Take</a>
                             @endif

@@ -28,12 +28,22 @@
                     @endif
                 </div>
 
-                <div class="md-form mb-3">
-                        <input type="text" name="deadline" id="deadline" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->expireDate))}}">
-                        <label for="deadline">Deadline</label>
-                        @if ($errors->has('deadline'))
+                    <div class="md-form mb-3">
+                        <input type="text" name="startDate" id="startDate" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->startDate))}}">
+                        <label for="startDate">Start Date</label>
+                        @if ($errors->has('startDate'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('deadline') }}</strong>
+                            <strong>{{ $errors->first('startDate') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+
+                    <div class="md-form mb-3">
+                        <input type="text" name="expireDate" id="expireDate" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->expireDate))}}">
+                        <label for="expireDate">Expire Date</label>
+                        @if ($errors->has('expireDate'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('expireDate') }}</strong>
                         </span>
                         @endif
                     </div>

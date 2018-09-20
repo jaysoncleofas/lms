@@ -15,14 +15,14 @@
                         <div class="md-form">
                             <img class="img-fluid img-preview z-depth-1">
                             <div class="file-field">
-                                <div class="btn btn-primary float-left">
+                                <div class="btn btn-primary btn-sm float-left">
                                     <span>Choose file</span>
                                     <input type="file" name="avatar" onchange="previewFile()">
                                 </div>
-                                <a class="btn btn-danger float-left" onclick="if(confirm('Are you sure you want to delete this instructor?')) {
+                                <a class="btn btn-danger btn-sm float-left" onclick="
                                             event.preventDefault();
                                             $('#remove-profile-pic-{{$user->id}}').submit();
-                                          }">
+                                          ">
                                     <span>Remove</span>
                                 </a>
                             </div>
@@ -50,8 +50,13 @@
                         </div>
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" name="middleName" id="middleName" class="form-control" value="{{$user->middleName}}">
+                                <input type="text" name="middleName" id="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{$user->middleName ? $user->middleName : old('middleName')}}">
                                 <label for="middleName">Middle name</label>
+                                @if ($errors->has('middleName'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('middleName') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                         <div class="col">
@@ -92,7 +97,7 @@
                     </div>
                     <div class="md-form">
                         <input type="text" name="mobileNumber" id="mobileNumber" class="form-control {{$errors->has('mobileNumber') ? 'is-invalid' : ''}}"
-                            value="{{$user->mobileNumber}}">
+                            value="{{$user->mobileNumber ? $user->mobileNumber : old('mobileNumber')}}">
                         <label for="mobileNumber">Mobile Number</label>
                         @if ($errors->has('mobileNumber'))
                         <span class="invalid-feedback" role="alert">

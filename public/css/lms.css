@@ -294,7 +294,7 @@ button{
   }
 
 
-  .table tbody tr:nth-child(even) {
+  .table tbody tr:nth-child(odd) {
     background-color: #e6f5fe;
   }
 

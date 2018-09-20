@@ -66,9 +66,8 @@
                                     </div>
                                 @else
                                     @foreach($choices as $key => $option)
-                                    <br>
                                     @if (!empty($option))
-                                        <div class="form-check form-check-inline">
+                                        <div class="form-check">
                                         <input type="radio" name="answers[{{ $question->id }}]" value="{{ $option }}" class="form-check-input"
                                             id="choices{{ $key.''.$question->id }}">
                                         <label class="form-check-label" for="choices{{ $key.''.$question->id }}">{{ $option
@@ -167,18 +166,18 @@
         var minutesleft = {{$quiz->timeLimit}}; //give minutes you wish
         var secondsleft = 00; // give seconds you wish
         var finishedtext = "Countdown finished!";
-        var end1_{{$quiz->id}};
-        if(localStorage.getItem("end1_{{$quiz->id}}")) {
-        end1_{{$quiz->id}} = new Date(localStorage.getItem("end1_{{$quiz->id}}"));
+        var end1_{{$csqu}};
+        if(localStorage.getItem("end1_{{$csqu}}")) {
+        end1_{{$csqu}} = new Date(localStorage.getItem("end1_{{$csqu}}"));
         } else {
-        end1_{{$quiz->id}} = new Date();
-        end1_{{$quiz->id}}.setMinutes(end1_{{$quiz->id}}.getMinutes()+minutesleft);
-        end1_{{$quiz->id}}.setSeconds(end1_{{$quiz->id}}.getSeconds()+secondsleft);
+        end1_{{$csqu}} = new Date();
+        end1_{{$csqu}}.setMinutes(end1_{{$csqu}}.getMinutes()+minutesleft);
+        end1_{{$csqu}}.setSeconds(end1_{{$csqu}}.getSeconds()+secondsleft);
 
         }
         var counter = function () {
         var now = new Date();
-        var diff = end1_{{$quiz->id}} - now;
+        var diff = end1_{{$csqu}} - now;
 
         diff = new Date(diff);
 
@@ -193,10 +192,10 @@
         if (sec < 10) {
             sec = "0" + sec;
         }
-        if(now >= end1_{{$quiz->id}}) {
+        if(now >= end1_{{$csqu}}) {
             clearTimeout(interval);
            // localStorage.setItem("end", null);
-             localStorage.removeItem("end1_{{$quiz->id}}");
+             localStorage.removeItem("end1_{{$csqu}}");
              localStorage.clear();
             document.getElementById('divCounter').innerHTML = finishedtext;
             //  if(confirm("TIME UP!")){
@@ -205,11 +204,22 @@
             //  }
         } else {
             var value = mins + ":" + sec;
-            localStorage.setItem("end1_{{$quiz->id}}", end1_{{$quiz->id}});
+            localStorage.setItem("end1_{{$csqu}}", end1_{{$csqu}});
             document.getElementById('divCounter').innerHTML = value;
         }
         }
         var interval = setInterval(counter, 1000);
+
+
+        window.onbeforeunload = function() {
+
+                        return true;
+
+                };
+
+                $('#take-quiz-form-{{$quiz->id}}').on('submit', function(){
+                    window.onbeforeunload = null;
+                });
 
     </script>
 @endsection

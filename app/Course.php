@@ -19,7 +19,7 @@ class Course extends Model
 
     public function sections()
     {
-        return $this->hasMany('App\Section');
+        return $this->hasMany('App\Section')->where('isActive', true);;
     }
 
     public function tokens()

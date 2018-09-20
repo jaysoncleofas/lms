@@ -55,6 +55,9 @@ class QuizController extends Controller
 
          $request->validate([
              'title' => 'required|string|max:255',
+             'startDate' => 'required|string|max:255',
+             'expireDate' => 'required|string|max:255',
+             'minutes' => 'required|string|max:255',
          ]);
 
          $quiz = new Quiz;
@@ -62,6 +65,8 @@ class QuizController extends Controller
          $quiz->course_id = $course->id;
          $quiz->title = $request->title;
          $quiz->timeLimit = $request->minutes ?? 20;
+         $quiz->startDate = $request->formatted_startDate_submit;
+         $quiz->expireDate = $request->formatted_expireDate_submit;
          $quiz->save();
 
          $quiz->sections()->sync($request->sections, false);
@@ -120,10 +125,15 @@ class QuizController extends Controller
 
          $request->validate([
              'title' => 'required|string|max:255',
+             'startDate' => 'required|string|max:255',
+             'expireDate' => 'required|string|max:255',
+             'minutes' => 'required|string|max:255',
          ]);
 
          $quiz->title = $request->title;
          $quiz->timeLimit = $request->minutes;
+         $quiz->startDate = $request->formatted_startDate_submit;
+         $quiz->expireDate = $request->formatted_expireDate_submit;
          $quiz->save();
 
          if (isset($request->sections)) {
@@ -164,15 +174,15 @@ class QuizController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
- 
+
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
- 
+
          $quiz->isActive = $request->status == 1 ? true : false;
          $quiz->save();
- 
+
          session()->flash('status', 'Successfully updated!');
          session()->flash('type', 'success');
- 
+
          return redirect()->route('instructor.quiz.index', $course->id);
      }
 }

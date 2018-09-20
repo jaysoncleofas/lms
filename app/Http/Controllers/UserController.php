@@ -130,7 +130,7 @@ class UserController extends Controller
 
         if ($request->hasFile('file_upload')) {
            $request->validate([
-               'file_upload' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:1000',
+               'file_upload' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:10000',
            ]);
 
            $fileUpload = $request->file_upload;

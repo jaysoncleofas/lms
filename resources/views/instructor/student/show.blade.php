@@ -34,7 +34,7 @@
                     <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$quiz->title}}</td>
-                        <td>{{$quiz->takes($section->id)->result ?? ''}}/{{count($quiz->questions)}}</td>
+                        <td>{{$quiz->takes($section->id, $student->id)->result ?? ''}}/{{count($quiz->questions)}}</td>
                         {{-- <td>{{$user->email}}</td> --}}
                         {{-- <td>
                             <a href="{{route('instructor.student.show', [$course->id, $section->id, $user->id])}}" class="blue-text">View</a>
@@ -65,7 +65,7 @@
                         <tr>
                             <td>{{$key+1}}</td>
                             <td>{{$assignment->title}}</td>
-                            <td>{{$assignment->takes($section->id)->result ?? ''}}/{{count($assignment->questions)}}</td>
+                            <td>{{$assignment->takes($section->id, $student->id)->result ?? ''}}/{{count($assignment->questions)}}</td>
                             {{-- <td>
                                 {{date('F j, Y',strtotime($assignment->takes($section->id)->created_at ?? ''))}}
                             </td> --}}

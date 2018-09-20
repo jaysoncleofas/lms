@@ -17,7 +17,7 @@ class Token extends Model
 
     public function section()
     {
-        return $this->belongsTo('App\Section');
+        return $this->belongsTo('App\Section')->where('isActive', true);;
     }
 
     public function course()

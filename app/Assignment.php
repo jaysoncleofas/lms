@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assignment extends Model
 {
-    protected $fillable = [
-      'instructor_id',
-      'course_id',
-      'title',
-      'isActive'
+    protected $guarded = [
+      'id'
     ];
+
+    protected $dates = ['expireDate', 'startDate'];
 
     public function sections()
     {
-        return $this->belongsToMany('App\Section');
+        return $this->belongsToMany('App\Section')->where('isActive', true);;
     }
 
     public function questions()
@@ -28,10 +27,10 @@ class Assignment extends Model
         return $this->hasMany('App\Take')->where('user_id', auth()->user()->id)->where('section_id', $section_id)->first();
     }
 
-    public function takes($section_id)
+    public function takes($section_id, $student_id)
     {
-        return $this->hasMany('App\Take')->orderBy('created_at', 'desc')->where('section_id', $section_id)->first();
+        return $this->hasMany('App\Take')->where('user_id', $student_id)->orderBy('created_at', 'desc')->where('section_id', $section_id)->first();
     }
-    
-    
+
+
 }

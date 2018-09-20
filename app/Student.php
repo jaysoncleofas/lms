@@ -22,6 +22,6 @@ class Student extends Model
 
     public function sections()
     {
-        return $this->belongsToMany('App\Section');
+        return $this->belongsToMany('App\Section')->where('isActive', true);;
     }
 }

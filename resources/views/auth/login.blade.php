@@ -28,7 +28,7 @@
                 <main class="py-4">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-lg-5 my-5">
+                            <div class="col-lg-5 col-sm-10 col-md-8 my-5">
                                 <div class="card card-login">
                                     <div class="card-body">
                                         <div class="row justify-content-center">
@@ -37,8 +37,8 @@
                                         <form action="{{route('login')}}" method="post">
                                             @csrf
                                             <div class="md-form">
-                                                <input type="email" name="email" id="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
-                                                <label for="email">Email Address</label>
+                                                <input type="text" name="email" id="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                                                <label for="email">Email or Username</label>
                                                 @if ($errors->has('email'))
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $errors->first('email') }}</strong>

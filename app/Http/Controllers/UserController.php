@@ -25,6 +25,8 @@ class UserController extends Controller
         $request->validate([
             'firstName' => 'required|string|max:255',
             'lastName'  => 'required|string|max:255',
+            'middleName'=> 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
+            'mobileNumber'=> 'nullable|digits:11',
             'birthDate' => 'required|max:255',
         ]);
 

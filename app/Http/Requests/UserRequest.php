@@ -24,11 +24,13 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstName' => 'required|string|max:255',
-            'lastName'  => 'required|string|max:255',
+            'firstName' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'lastName'  => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'middleName'  => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
             'birthDate' => 'required|max:255',
             'username'  => 'required|string|unique:users|max:255',
             'email'     => 'required|string|email|unique:users|max:255',
+            'mobileNumber'=> 'nullable|digits:11',
         ];
     }
 }

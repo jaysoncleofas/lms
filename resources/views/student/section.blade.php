@@ -44,7 +44,9 @@
                         <td>{{$section->instructor->firstName}} {{$section->instructor->lastName}}</td>
                         <td>{{$section->instructor->email}}</td>
                         <td class="text-capitalize">{{$section->instructor->role}}</td>
-                        <td><a class="blue-text" data-toggle="modal" data-target="#basicExampleModal">Message</a></td>
+                        <td>
+                            {{-- <a class="blue-text" data-toggle="modal" data-target="#basicExampleModal">Message</a> --}}
+                        </td>
                     </tr>
                     @foreach ($section->users as $key => $student)
                     <tr>

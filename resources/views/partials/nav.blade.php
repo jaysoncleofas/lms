@@ -13,9 +13,9 @@
                 <li class="nav-item">
                     <a href="{{route('my_files')}}" class="nav-link"><i class="fa fa-file"></i> </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{route('message.index')}}" class="nav-link"><i class="fa fa-envelope"></i> </a>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{Auth::user()->avatar ? asset('storage/avatars/'.Auth::user()->avatar) : asset('images/profile_pic.png')}}" class="img-fluid rounded-circle z-depth-1" style="height:30px;width:30px;" alt=""> <span class="clearfix d-none d-sm-inline-block">{{Auth::user()->firstName.' '.Auth::user()->lastName}}</span>

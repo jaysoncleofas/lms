@@ -55,7 +55,13 @@
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach
                     </select>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="checkbox">
+                        <label class="form-check-label" for="checkbox">Send to all</label>
+                    </div>
                 </div>
+
 
                 <div class="md-form">
                     <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip</span>
@@ -88,8 +94,17 @@
 @section('script')
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
-    $('.multiple-select').select2();
-    $('.multiple-select').select2().val({!!json_encode(old('sections')) !!}).trigger('change');
 
+$('.multiple-select').select2();
+$('.multiple-select').select2().val({!!json_encode(old('sections')) !!}).trigger('change');
+
+$("#checkbox").on('click',function(){
+    if($("#checkbox").is(':checked') ){
+        $('.multiple-select').select2('destroy').find('option').prop('selected', 'selected').end().select2();
+    }else{
+        $('.multiple-select').select2('destroy').find('option').prop('selected', false).end().select2();
+     }
+});
+    
 </script>
 @endsection

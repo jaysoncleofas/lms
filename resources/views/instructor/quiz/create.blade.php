@@ -65,6 +65,10 @@
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach
                     </select>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="checkbox">
+                        <label class="form-check-label" for="checkbox">Send to all</label>
+                    </div>
                 </div>
 
                 <button type="submit" name="button" class="btn btn-primary pull-right mt-5">Save</button>
@@ -80,6 +84,13 @@
 <script>
     $('.multiple-select').select2();
     $('.multiple-select').select2().val({!!json_encode(old('sections')) !!}).trigger('change');
+    $("#checkbox").on('click',function(){
+        if($("#checkbox").is(':checked') ){
+            $('.multiple-select').select2('destroy').find('option').prop('selected', 'selected').end().select2();
+        }else{
+            $('.multiple-select').select2('destroy').find('option').prop('selected', false).end().select2();
+        }
+    });
     $('.datepicker').pickadate({
         min: new Date(),
         formatSubmit: 'yyyy-mm-dd',

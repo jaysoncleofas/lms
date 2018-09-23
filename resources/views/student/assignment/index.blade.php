@@ -45,18 +45,21 @@
                                 {{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : ''}}
                             </td>
                             <td>
-                                {{ $assignment->checkpasses($section->id) ? $assignment->checkpasses($section->id)->created_at->toFormattedDateString() : ''}}
+                                @if($assignment->passes($section->id, Auth::id()))
+                                    {{$assignment->passes($section->id, Auth::id())->created_at->toFormattedDateString()}}
+                                @endif
+                                sa
                             </td>
                             <td>
-                                @if ($assignment->checkpasses($section->id))
+                                @if ($assignment->passes($section->id, Auth::id()))
                                     <p class="green-text">Completed</p>
                                 @else 
                                     <p class="red-text">No Assignment</p>
                                 @endif
                             </td>
                             <td>
-                                @if ($assignment->checkpasses($section->id))
-                                    <a href="{{route('student.pass.result_assignment', [$course->id, $section->id, $assignment->id, $assignment->pass($section->id, Auth::id())->id])}}" class="blue-text">View</a>
+                                @if ($assignment->passes($section->id, Auth::id()))
+                                    <a href="{{route('student.pass.result_assignment', [$course->id, $section->id, $assignment->id, $assignment->pass($section->id, Auth::id())])}}" class="blue-text">View</a>
                                 @elseif(Carbon\Carbon::parse($assignment->startDate)->isFuture())
                                     <p class="red-text">Not Yet Available</p>
                                 @elseif(Carbon\Carbon::parse($assignment->expireDate)->isPast())

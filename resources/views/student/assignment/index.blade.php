@@ -47,8 +47,7 @@
                             <td>
                                 @if($assignment->passes($section->id, Auth::id()))
                                     {{$assignment->passes($section->id, Auth::id())->created_at->toFormattedDateString()}}
-                                @endif
-                                sa
+                                @endif    
                             </td>
                             <td>
                                 @if ($assignment->passes($section->id, Auth::id()))
@@ -59,7 +58,7 @@
                             </td>
                             <td>
                                 @if ($assignment->passes($section->id, Auth::id()))
-                                    <a href="{{route('student.pass.result_assignment', [$course->id, $section->id, $assignment->id, $assignment->pass($section->id, Auth::id())])}}" class="blue-text">View</a>
+                                    <a href="{{route('student.pass.result_assignment', [$course->id, $section->id, $assignment->id, $assignment->passes($section->id, Auth::id())->id])}}" class="blue-text">View</a>
                                 @elseif(Carbon\Carbon::parse($assignment->startDate)->isFuture())
                                     <p class="red-text">Not Yet Available</p>
                                 @elseif(Carbon\Carbon::parse($assignment->expireDate)->isPast())

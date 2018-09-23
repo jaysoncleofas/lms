@@ -102,5 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/my-files/{file}', 'UserController@files_destroy')->name('my_files.destroy');
 
     Route::post('/new-message', 'MessageController@store')->name('message.store');
+    Route::post('/new-message/reply/{convo}', 'MessageController@reply')->name('message.reply');
     Route::get('/messages', 'MessageController@index')->name('message.index');
+    Route::get('/messages/convo/{convo}', 'MessageController@show')->name('message.show');
 });

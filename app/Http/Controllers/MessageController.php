@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Convo;
 use Auth;
 use App\User;
+use carbon\Carbon;
 
 class MessageController extends Controller
 {
@@ -57,8 +58,6 @@ class MessageController extends Controller
             $convo->save();
         }
 
-
-
         $message = new Message;
         $message->convo_id = $convo->id;
         $message->user_id = $user->id;
@@ -77,9 +76,14 @@ class MessageController extends Controller
      * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show($convo_id)
     {
-        //
+        $me = Auth::user();
+        $conversation = Convo::findOrFail($convo_id);
+        
+        $messages = Message::where('convo_id', $convo_id)->get();
+
+        return view('message.show', compact('conversation', 'messages', 'me'));
     }
 
     /**
@@ -114,5 +118,27 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         //
+    }
+
+    public function reply(Request $request, $convo_id)
+    {
+        $request->validate([
+            'message' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+
+        $convo = Convo::findOrFail($convo_id);
+
+        $message = new Message;
+        $message->convo_id = $convo->id;
+        $message->user_id = $user->id;
+        $message->message = $request->message;
+        $message->save();
+
+        session()->flash('status', 'Successfully Sent!');
+        session()->flash('type', 'success');
+
+        return redirect()->back();
     }
 }

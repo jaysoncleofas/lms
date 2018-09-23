@@ -64,7 +64,7 @@
 
 
                 <div class="md-form">
-                    <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip</span>
+                    <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip, max:10MB</span>
                     <div class="file-field">
                         <div class="btn btn-primary float-left">
                             <span>Choose file</span>

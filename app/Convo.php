@@ -12,4 +12,19 @@ class Convo extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function to_user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Message');
+    }
+
+    public function getLatestMessage()
+    {
+        return $this->hasMany('App\Message')->latest();
+    }
 }

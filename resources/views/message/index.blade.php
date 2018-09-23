@@ -4,22 +4,25 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-12">
-                <h3 class="text-oswald">My messages</h3>
+                <h3 class="text-oswald">My Conversations</h3>
 
                 <div class="row">
                     <div class="col-lg-12">
                         <!-- Messages -->
                         <div class="list-group">
                             @foreach ($convos as $convo)
-                                {{$convo->user->firstName}}
-                                <a href="#" class="list-group-item list-group-item-action media">
-                                    <img class="mr-3 avatar-sm float-left" src="https://secure.gravatar.com/avatar/8c051fd54e4c811e02bbc78d50549280?s=150&amp;d=mm&amp;r=g">
+                                
+                            <a href="{{route('message.show', $convo->id)}}" class="list-group-item list-group-item-action media">
+                                    {{-- <img class="mr-3 avatar-sm float-left" src="{{}}"> --}}
                                     <div class="d-flex justify-content-between mb-1 ">
-                                        <hp class="mb-1"><strong>Michal Szymanski</strong></hp>
-                                        <small>14 July</small>
+                                        @if ($convo->user->id != auth()->user()->id)
+                                            <hp class="mb-1"><strong>{{$convo->user->name()}}</strong></hp>
+                                            <small>{{$convo->created_at->toDayDateTimeString()}}</small>
+                                        @else
+                                            <hp class="mb-1"><strong>{{$convo->to_user->name()}}</strong></hp>
+                                            <small>{{$convo->created_at->toDayDateTimeString()}}</small>
+                                        @endif
                                     </div>
-                                    <p class="text-truncate"><span class="badge red">MDB Team</span> <strong>Michal: </strong> Donec id elit non
-                                        mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
                                 </a>
                             @endforeach
                         </div>

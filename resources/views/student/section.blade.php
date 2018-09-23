@@ -28,37 +28,39 @@
     </div>
     <div class="row mt-lg-3 justify-content-center">
         <div class="col-xl-12 col-md-12 mb-5 pb-5">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Email Address</th>
-                        <th>Roles</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>{{$section->instructor->firstName}} {{$section->instructor->lastName}}</td>
-                        <td>{{$section->instructor->email}}</td>
-                        <td class="text-capitalize">{{$section->instructor->role}}</td>
-                        <td>
-                            {{-- <a class="blue-text" data-toggle="modal" data-target="#basicExampleModal">Message</a> --}}
-                        </td>
-                    </tr>
-                    @foreach ($section->users as $key => $student)
-                    <tr>
-                        <td>{{$key+2}}</td>
-                        <td>{{$student->firstName}} {{$student->lastName}}</td>
-                        <td>{{$student->email}}</td>
-                        <td class="text-capitalize">{{$student->role}}</td>
-                        <td></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email Address</th>
+                            <th>Roles</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>{{$section->instructor->firstName}} {{$section->instructor->lastName}}</td>
+                            <td>{{$section->instructor->email}}</td>
+                            <td class="text-capitalize">{{$section->instructor->role}}</td>
+                            <td>
+                                <a class="blue-text" data-toggle="modal" data-target="#basicExampleModal">Message</a>
+                            </td>
+                        </tr>
+                        @foreach ($section->users as $key => $student)
+                        <tr>
+                            <td>{{$key+2}}</td>
+                            <td>{{$student->firstName}} {{$student->lastName}}</td>
+                            <td>{{$student->email}}</td>
+                            <td class="text-capitalize">{{$student->role}}</td>
+                            <td></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -69,7 +71,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Message to {{$section->instructor->firstName}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">New Message to {{$section->instructor->name()}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

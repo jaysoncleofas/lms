@@ -59,7 +59,8 @@
                                     <td>{{$passes->section->name}}</td>
                                     <td><a class="blue-text" href="{{route('instructor.student.show', [$course->id, $passes->section->id, $passes->user->id])}}">{{$passes->user->name()}}</a></td>
                                     <td>{{$passes->created_at->toDayDateTimeString()}}</td>
-                                    <td><a href="" class="blue-text">View</a></td>
+                                    <td><a href="{{route('instructor.assignment.submit', [$course->id, $assignment->id, $passes->section->id, $passes->id ])}}" class="blue-text">View</a></td>
+                                    {{-- /course/{course}/assignment/{assignment}/section/{section}/submit/{submit} --}}
                                 </tr>
                             @endforeach
                         </tbody>

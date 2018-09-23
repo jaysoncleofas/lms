@@ -11,6 +11,7 @@ use App\Section;
 use App\Assignment;
 use carbon\Carbon;
 use Purifier;
+use App\Pass;
 
 class AssignmentController extends Controller
 {
@@ -108,6 +109,19 @@ class AssignmentController extends Controller
         }
 
         return view('instructor.assignment.show', compact('course', 'assignment', 'section22', 'sections'));
+    }
+
+    public function show_submit($course_id, $assignment_id, $section_id, $submit_id)
+    {
+        $user = Auth::user();
+        $course = $user->courses()->findOrFail($course_id);
+        $section = Section::where('course_id', $course->id)->findOrFail($section_id);
+
+        $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
+        
+        $submit = Pass::where('assignment_id', $assignment->id)->where('section_id', $section_id)->findOrFail($submit_id);
+
+        return view('instructor.student.assignment_show', compact('course', 'section', 'assignment', 'submit'));
     }
 
     /**

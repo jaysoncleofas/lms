@@ -22,14 +22,24 @@ class Assignment extends Model
         return $this->hasMany('App\Question')->inRandomOrder();
     }
 
-    public function checktakes($section_id)
+    public function checkpasses($section_id)
     {
-        return $this->hasMany('App\Take')->where('user_id', auth()->user()->id)->where('section_id', $section_id)->first();
+        return $this->hasMany('App\Pass')->where('user_id', auth()->user()->id)->where('section_id', $section_id)->first();
     }
 
-    public function takes($section_id, $student_id)
+    public function pass($section_id, $student_id)
     {
-        return $this->hasMany('App\Take')->where('user_id', $student_id)->orderBy('created_at', 'desc')->where('section_id', $section_id)->first();
+        return $this->hasOne('App\Pass')->where('user_id', $student_id)->where('section_id', $section_id)->first();
+    }
+
+    public function passAss()
+    {
+        return $this->hasOne('App\Pass');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
     }
 
 

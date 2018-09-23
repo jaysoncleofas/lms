@@ -32,4 +32,13 @@ class Quiz extends Model
         return $this->hasMany('App\Take')->where('user_id', $student_id)->orderBy('created_at', 'desc')->where('section_id', $section_id)->first();
     }
 
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
+    }
+
+    public function takeQuiz()
+    {
+        return $this->hasOne('App\Take');
+    }
 }

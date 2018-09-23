@@ -10,6 +10,7 @@ use App\User;
 use App\Section;
 use App\Lesson;
 use carbon\Carbon;
+use Purifier;
 
 class LessonController extends Controller
 {
@@ -51,12 +52,12 @@ class LessonController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function store(Request $request, $course_id)
-     {
+     {    
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
 
          $request->validate([
-             'title' => 'required|string|unique:lessons|max:255',
+             'title' => 'required|string|max:255',
              'description' => 'required|string',
          ]);
 
@@ -75,14 +76,24 @@ class LessonController extends Controller
          $lesson->instructor_id = $user->id;
          $lesson->course_id = $course->id;
          $lesson->title = $request->title;
-         $lesson->description = $request->description;
+         $lesson->description = Purifier::clean($request->description);
          $lesson->upload_file = $name ?? "";
          $lesson->save();
 
          $lesson->sections()->sync($request->sections, false);
 
+        // $msg = 'There\'s a new uploaded lesson in your course '.$lesson->course->name;
+
+        //  foreach($lesson->sections as $section){
+        //     foreach($section->users as $user){
+        //         $mobile = $user->mobileNumber;     
+        //         $message = \App\Helpers\SMS::send($mobile, $msg);
+        //     }
+        // }
+        
          session()->flash('status', 'Successfully added!');
          session()->flash('type', 'success');
+         
 
          return redirect()->route('instructor.lesson.index', $course->id);
      }
@@ -163,7 +174,7 @@ class LessonController extends Controller
 
 
          $lesson->title = $request->title;
-         $lesson->description = $request->description;
+         $lesson->description = Purifier::clean($request->description);
          $lesson->save();
 
          if (isset($request->sections)) {

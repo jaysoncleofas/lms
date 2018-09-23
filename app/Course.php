@@ -19,7 +19,27 @@ class Course extends Model
 
     public function sections()
     {
-        return $this->hasMany('App\Section')->where('isActive', true);;
+        return $this->hasMany('App\Section')->where('isActive', true);
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany('App\Assignment');
+    }
+
+    public function announcements()
+    {
+        return $this->hasMany('App\Announcement');
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany('App\Quiz');
     }
 
     public function tokens()

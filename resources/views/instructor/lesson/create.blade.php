@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('styles')
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fwl1zems9tvf6ysxti5p5zrr86dawn4f0zdyzwoel3rjh9ok"></script>
 <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
+<script>
+    tinymce.init({ 
+        selector:'textarea' 
+    });
+    </script>
 @endsection
 
 @section('content')
@@ -31,9 +37,10 @@
                 </div>
 
                 <div class="md-form mb-3">
+                    <p>Content</p>
                     <textarea name="description" id="description" class="md-textarea form-control pt-0 {{$errors->has('description') ? 'is-invalid' : ''}}"
                         rows="8" cols="80">{{old('title')}}</textarea>
-                    <label for="description">Description</label>
+                    {{-- <label for="description">Description</label> --}}
                     @if ($errors->has('description'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('description') }}</strong>

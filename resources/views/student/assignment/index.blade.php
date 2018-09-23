@@ -20,53 +20,61 @@
     </div>
     <div class="row">
         <div class="col-xl-12 col-md-12 mb-5 pb-5">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Assignment</th>
-                        <th>Start Date</th>
-                        <th>Expire Date</th>
-                        <th>Result</th>
-                        <th>Deadline</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($section->assignments as $key => $assignment)
-                    <tr>
-                        <th>{{$key+1}}</th>
-                        <td><a href="">{{$assignment->title}}</a></td>
-                        <td>
-                            {{$assignment->startDate ? $assignment->startDate->toFormattedDateString() : ''}}
-                        </td>
-                        <td>
-                            {{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : ''}}
-                        </td>
-                        <td> <h4 class="text-oswald">{{$assignment->checktakes($section->id)->result ?? ''}}/{{count($assignment->questions)}}</h4> </td>
-                        <td>{{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}}</td>
-                        <td>
-                            @if ($assignment->checktakes($section->id))
-                                <p class="green-text"><i class="fa fa-check"></i></p>
-                            @elseif(count($assignment->questions) == 0)
-                                <p class="red-text">Unavailable</p>
-                            @elseif(Carbon\Carbon::parse($assignment->expireDate)->isPast())
-                                <p class="red-text">Expired</p>
-                            @else
-                                <a class="blue-text" href="{{route('student.assignment.show', [$course->id, $section->id, $assignment->id])}}">Take</a>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Assignment</th>
+                            <th>Start Date</th>
+                            <th>Expire Date</th>
+                            <th>Date Submitted</th>
+                            <th>Result</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($section->assignments as $key => $assignment)
+                        <tr>
+                            <th>{{$key+1}}</th>
+                            <td>{{$assignment->title}}</td>
+                            <td>
+                                {{$assignment->startDate ? $assignment->startDate->toFormattedDateString() : ''}}
+                            </td>
+                            <td>
+                                {{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : ''}}
+                            </td>
+                            <td>
+                                {{ $assignment->passAss ? $assignment->passAss->created_at->toFormattedDateString() : ''}}
+                            </td>
+                            <td>
+                                @if ($assignment->checkpasses($section->id))
+                                    <p class="green-text">Completed</p>
+                                @else 
+                                    <p class="red-text">No Assignment</p>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($assignment->checkpasses($section->id))
+                                    <a href="{{route('student.pass.result_assignment', [$course->id, $section->id, $assignment->id, $assignment->pass($section->id, Auth::id())->id])}}" class="blue-text">View</a>
+                                @elseif(Carbon\Carbon::parse($assignment->startDate)->isFuture())
+                                    <p class="red-text">Not Yet Available</p>
+                                @elseif(Carbon\Carbon::parse($assignment->expireDate)->isPast())
+                                    <p class="red-text">Expired</p>
+                                @else
+                                    <a class="blue-text" href="{{route('student.assignment.show', [$course->id, $section->id, $assignment->id])}}">Pass</a>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 @endsection
 
 @section('script')
-@include('partials.notification')
+    @include('partials.notification')
 @endsection

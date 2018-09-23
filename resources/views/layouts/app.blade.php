@@ -19,6 +19,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mdb-pro.css') }}" rel="stylesheet">
     <link href="{{ asset('css/lms.css') }}" rel="stylesheet">
+
+     {{-- favicon --}}
+     <link rel="icon" sizes="100x100" href="{{ asset('images/ccs_favicon.png') }}" />
+
     @yield('styles')
 </head>
 <body>

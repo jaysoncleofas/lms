@@ -9,6 +9,7 @@ use App\Section;
 use Auth;
 use App\Lesson;
 use App\Take;
+use App\Pass;
 use App\Token;
 use DateTime;
 use carbon\Carbon;
@@ -73,6 +74,14 @@ class StudentController extends Controller
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
+        $quiz = $section->quizzes()->findOrFail($quiz_id);
+
+        if(Carbon::parse($quiz->startDate)->isFuture() || Carbon::parse($quiz->expireDate)->isPast()){
+            session()->flash('status', 'Not Available');
+            session()->flash('type', 'error');
+            return view('student.quiz.index', compact('user','course', 'section'));
+        }
+
         $checkTake = Take::where('user_id', $user->id)->where('quiz_id', $quiz_id)->where('section_id', $section_id)->first();
 
         if($checkTake)
@@ -82,7 +91,6 @@ class StudentController extends Controller
             return view('student.quiz.index', compact('user','course', 'section'));
         }
 
-        $quiz = $section->quizzes()->findOrFail($quiz_id);
 
         $csqu = $course->id.''.$section->id.''.$quiz->id.''.$user->id;
 
@@ -126,11 +134,11 @@ class StudentController extends Controller
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
 
-        $checkTake = Take::where('user_id', $user->id)->where('assignment_id', $assignment_id)->where('section_id', $section_id)->first();
+        $checkPass = Pass::where('user_id', $user->id)->where('assignment_id', $assignment_id)->where('section_id', $section_id)->first();
 
-        if($checkTake)
+        if($checkPass)
         {
-            session()->flash('status', 'Invalid');
+            session()->flash('status', 'You already passed your assignment');
             session()->flash('type', 'error');
             return view('student.assignment.index', compact('user','course', 'section'));
         }

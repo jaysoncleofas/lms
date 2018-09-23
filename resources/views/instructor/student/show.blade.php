@@ -17,69 +17,71 @@
     </div>
 
     <div class="row mt-5">
-        <div class="col-xl-12 col-md-12 mb-4">
+        <div class="col-xl-12 col-md-12 mb-5">
             <h4 class="text-oswald">Quiz{{count($quizzes) > 1 ? 'zes' : ''}}</h4>
-            <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Quiz</th>
-                        <th>Result</th>
-                        {{-- <th>Taken</th> --}}
-                        {{-- <td>Action</td> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($quizzes as $key => $quiz)
-                    <tr>
-                        <td>{{$key+1}}</td>
-                        <td>{{$quiz->title}}</td>
-                        <td>{{$quiz->takes($section->id, $student->id)->result ?? ''}}/{{count($quiz->questions)}}</td>
-                        {{-- <td>{{$user->email}}</td> --}}
-                        {{-- <td>
-                            <a href="{{route('instructor.student.show', [$course->id, $section->id, $user->id])}}" class="blue-text">View</a>
-                        </td> --}}
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table id="example" class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Quiz</th>
+                            <th>Result</th>
+                            <th>Date taken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($quizzes as $key => $quiz)
+                        <tr>
+                            <td>{{$key+1}}</td>
+                            <td>{{$quiz->title}}</td>
+                            <td>
+                                <h4 class="text-oswald {{$quiz->takeQuiz ? 'green-text' : 'red-text'}}">
+                                    {{$quiz->takes($section->id, $student->id)->result ?? ''}}/{{count($quiz->questions)}}
+                                </h4>
+                            </td>
+                            <td>
+                                {{$quiz->takeQuiz ? $quiz->takeQuiz->created_at->toDayDateTimeString() : ''}}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>
 
     <div class="row mt-5">
-            <div class="col-xl-12 col-md-12 mb-4">
+            <div class="col-xl-12 col-md-12 mb-5">
                 <h4 class="text-oswald">Assignment{{count($assignments) > 1 ? 's' : ''}}</h4>
-                <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Assignment</th>
-                            <th>Result</th>
-                            {{-- <th>Taken</th> --}}
-                            {{-- <td>Action</td> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($assignments as $key => $assignment)
-                        <tr>
-                            <td>{{$key+1}}</td>
-                            <td>{{$assignment->title}}</td>
-                            <td>{{$assignment->takes($section->id, $student->id)->result ?? ''}}/{{count($assignment->questions)}}</td>
-                            {{-- <td>
-                                {{date('F j, Y',strtotime($assignment->takes($section->id)->created_at ?? ''))}}
-                            </td> --}}
-
-                                {{-- {{$assignment->expireDate ? date('F j, Y',strtotime($assignment->expireDate)) : ''}} --}}
-                            {{-- <td>{{$user->email}}</td> --}}
-                            {{-- <td>
-                                <a href="{{route('instructor.student.show', [$course->id, $section->id, $user->id])}}" class="blue-text">View</a>
-                            </td> --}}
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
+                <div class="table-responsive">
+                        <table id="example" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Assignment</th>
+                                        <th>Result</th>
+                                        <th>Date Submitted</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($assignments as $key => $assignment)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$assignment->title}}</td>
+                                        <td>
+                                            @if ($assignment->passAss)
+                                                <p class="green-text">Completed</p>
+                                            @else
+                                                    <p class="red-text">No Assignment</p>
+                                            @endif
+                                        </td>
+                                        <td>{{ $assignment->passAss ? $assignment->passAss->created_at->toDayDateTimeString() : ''}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                </div>
             </div>
         </div>
 </div>

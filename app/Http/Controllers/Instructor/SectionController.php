@@ -25,6 +25,15 @@ class SectionController extends Controller
         return view('instructor.section.index', compact('course', 'sections', 'sections2'));
     }
 
+    public function deactivated($course_id)
+    {
+        $user = Auth::user();
+        $course = $user->courses()->findOrFail($course_id);
+        $sections = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', true)->get();
+        $sections2 = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', false)->get();
+        return view('instructor.section.deactivated', compact('course', 'sections', 'sections2'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -138,14 +147,17 @@ class SectionController extends Controller
         $section->lessons()->detach();
         $section->quizzes()->detach();
         $section->assignments()->detach();
+        $section->announcements()->detach();
         $section->users()->detach();
         $section->tokens()->delete();
+        $section->takes()->delete();
+        $section->passes()->delete();
         $section->delete();
 
         session()->flash('status', 'Successfully Deleted!');
         session()->flash('type', 'success');
 
-        return redirect()->route('instructor.section.index', $course->id);
+        return redirect()->back();
     }
 
     public function status(Request $request, $course_id, $section_id)

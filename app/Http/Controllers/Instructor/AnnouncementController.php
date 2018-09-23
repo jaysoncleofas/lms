@@ -68,6 +68,15 @@ class AnnouncementController extends Controller
 
         $announcement->sections()->sync($request->sections, false);
 
+        $msg = 'There\'s a new announcement posted in your course '.$announcement->course->name;
+
+    //     foreach($announcement->sections as $section){
+    //        foreach($section->users as $user){
+    //            $mobile = $user->mobileNumber;     
+    //            $message = \App\Helpers\SMS::send($mobile, $msg);
+    //        }
+    //    }
+
         session()->flash('status', 'Successfully posted!');
         session()->flash('type', 'success');
 

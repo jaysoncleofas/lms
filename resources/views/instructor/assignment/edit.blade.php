@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('styles')
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fwl1zems9tvf6ysxti5p5zrr86dawn4f0zdyzwoel3rjh9ok"></script>
 <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
+<script>
+    tinymce.init({ 
+        selector:'textarea' 
+    });
+    </script>
 @endsection
 
 @section('content')
@@ -10,7 +16,7 @@
         <h3 class="text-oswald">{{$course->name}}</h3>
     </div>
     <div class="row justify-content-center mt-5">
-        <div class="col-xl-6 col-md-6 mb-4">
+        <div class="col-xl-11 col-md-11 mb-4">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Update Assignment</h3>
                 <a href="{{route('instructor.assignment.index', $course->id)}}" class="btn btn-danger">Back</a>
@@ -28,28 +34,45 @@
                     @endif
                 </div>
 
-                    <div class="md-form mb-3">
-                        <input type="text" name="startDate" id="startDate" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->startDate))}}">
-                        <label for="startDate">Start Date</label>
-                        @if ($errors->has('startDate'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('startDate') }}</strong>
-                        </span>
-                        @endif
-                    </div>
+                <div class="md-form mb-3">
+                    <p>Content</p>
+                    <textarea name="content" id="content" class="md-textarea form-control pt-0 {{$errors->has('content') ? 'is-invalid' : ''}}"
+                        rows="15">{{ $assignment->content }}</textarea>
+                    {{-- <label for="content">Description</label> --}}
+                    @if ($errors->has('content'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('content') }}</strong>
+                    </span>
+                    @endif
+                </div>
 
-                    <div class="md-form mb-3">
-                        <input type="text" name="expireDate" id="expireDate" placeholder="Select date" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->expireDate))}}">
-                        <label for="expireDate">Expire Date</label>
-                        @if ($errors->has('expireDate'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('expireDate') }}</strong>
-                        </span>
-                        @endif
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="md-form mb-3">
+                            <input type="text" name="startDate" id="startDate" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->startDate))}}">
+                            <label for="startDate">Start Date</label>
+                            @if ($errors->has('startDate'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('startDate') }}</strong>
+                            </span>
+                            @endif
+                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="md-form mb-3">
+                            <input type="text" name="expireDate" id="expireDate" class="datepicker form-control" value="{{date('j F, Y',strtotime($assignment->expireDate))}}">
+                            <label for="expireDate">Expire Date</label>
+                            @if ($errors->has('expireDate'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('expireDate') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
 
                 <p class="mb-0">Assign Section</p>
-                <div class="md-form mt-0">
+                <div class="md-form mt-2">
                     <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>

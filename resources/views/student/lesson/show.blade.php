@@ -23,8 +23,7 @@
                         <div class="col-md-8">
                             <h2 class="text-center text-oswald py-4">{{$lesson->title}}</h2>
 
-                            <p class="text-justify">{{$lesson->description}}</p>
-
+                            <p class="text-justify">{!! $lesson->description !!}</p>
 
                         </div>
                     </div>

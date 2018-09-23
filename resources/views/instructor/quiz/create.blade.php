@@ -10,7 +10,7 @@
         <h3 class="text-oswald">{{$course->name}}</h3>
     </div>
     <div class="row justify-content-center mt-5">
-        <div class="col-xl-6 col-md-6 mb-4">
+        <div class="col-xl-8 col-md-8 mb-4">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Add Quiz</h3>
                 <a href="{{route('instructor.quiz.index', $course->id)}}" class="btn btn-danger">Back</a>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="md-form mb-3">
-                    <input type="text" name="startDate" id="startDate" placeholder="Select date" class="datepicker form-control" value="{{old('startDate')}}">
+                    <input type="text" name="startDate" id="startDate" class="datepicker form-control" value="{{old('startDate')}}">
                     <label for="startDate">Start Date</label>
                     @if ($errors->has('startDate'))
                     <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="md-form mb-3">
-                    <input type="text" name="expireDate" id="expireDate" placeholder="Select date" class="datepicker form-control" value="{{old('expireDate')}}">
+                    <input type="text" name="expireDate" id="expireDate" class="datepicker form-control" value="{{old('expireDate')}}">
                     <label for="expireDate">Expire Date</label>
                     @if ($errors->has('expireDate'))
                     <span class="invalid-feedback" role="alert">

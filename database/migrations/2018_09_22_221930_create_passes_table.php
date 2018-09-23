@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTakesTable extends Migration
+class CreatePassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTakesTable extends Migration
      */
     public function up()
     {
-        Schema::create('takes', function (Blueprint $table) {
+        Schema::create('passes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
-            $table->integer('quiz_id')->unsigned()->nullable();
-            // $table->integer('assignment_id')->unsigned()->nullable();
+            $table->integer('assignment_id')->unsigned()->nullable();
             $table->integer('section_id')->unsigned()->nullable();
-            $table->text('result')->nullable();
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTakesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('takes');
+        Schema::dropIfExists('passes');
     }
 }

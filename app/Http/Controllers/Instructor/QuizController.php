@@ -9,6 +9,7 @@ use App\Course;
 use App\User;
 use App\Section;
 use App\Quiz;
+use Purifier;
 
 class QuizController extends Controller
 {
@@ -70,6 +71,15 @@ class QuizController extends Controller
          $quiz->save();
 
          $quiz->sections()->sync($request->sections, false);
+
+         $msg = 'There\'s a new quiz in your course '.$quiz->course->name;
+
+        //  foreach($quiz->sections as $section){
+        //     foreach($section->users as $user){
+        //         $mobile = $user->mobileNumber;     
+        //         $message = \App\Helpers\SMS::send($mobile, $msg);
+        //     }
+        // }
 
          session()->flash('status', 'Successfully added!');
          session()->flash('type', 'success');

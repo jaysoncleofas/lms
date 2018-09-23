@@ -2,8 +2,6 @@
 
 @section('styles')
 <link href="{{ asset('SmartWizard/dist/css/smart_wizard_theme_dots.css') }}" rel="stylesheet">
-{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/tl-ph.js" rel="stylesheet"> --}}
-
 @endsection
 
 @section('content')
@@ -11,23 +9,23 @@
     <div class="row">
         <div class="col-lg-12">
             <h3 class="text-oswald">{{$course->name}} / {{$section->name}}</h3>
-            <h4 class="text-oswald">Quiz / {{$quiz->title}}</h4>
+            <h4 class="text-oswald">Assignmment / {{$assignment->title}}</h4>
         </div>
     </div>
 
     <div class="row mt-lg-3 justify-content-center">
 
         <div class="col-lg-12 col-md-12 mb-4">
-            @if ($quiz->timeLimit > 0)
-            <h4 class="text-oswald text-center"><span id="divCounter"></span> minutes</h4>
+            @if ($assignment->timeLimit > 0)
+            <h4 class="text-oswald" id="divCounter"></h4>
             @endif
 
-                    <form id="take-quiz-form-{{$quiz->id}}" action="{{route('student.take.store', [$course->id, $section->id, $quiz->id])}}" method="POST">
-                            @csrf
+        <form id="take-assignment-form-{{$assignment->id}}" action="{{route('student.take.store_assignment', [$course->id, $section->id, $assignment->id])}}" method="POST">
+                @csrf
         <div id="smartwizard">
                 <ul>
                     <?php $i = 1; ?>
-                    @foreach($quiz->questions as $question)
+                    @foreach($assignment->questions as $question)
                     <li><a href="#step-{{$i}}">Q {{$i}}</a></li>
                     <?php $i++; ?>
                     @endforeach
@@ -36,7 +34,7 @@
 
                 <div>
                     <?php $i = 1; ?>
-                    @foreach($quiz->questions as $question)
+                    @foreach($assignment->questions as $question)
                     <div id="step-{{$i}}" class="">
                         <h4 class="text-oswald">{{ $i }}. {{$question->question}} ?</h4>
                         <input type="hidden" name="questions[{{ $i }}]" value="{{ $question->id }}">
@@ -48,11 +46,11 @@
                                     $choices = [$question->correct];
                                 } else {
                                     $choices = [
-                                    $question->correct,
-                                    $question->option_one,
-                                    $question->option_two,
-                                    $question->option_three
-                                    ];
+                                        $question->correct,
+                                        $question->option_one,
+                                        $question->option_two,
+                                        $question->option_three
+                                        ];
                                 }
 
                                 shuffle($choices);
@@ -66,15 +64,14 @@
                                     </div>
                                 @else
                                     @foreach($choices as $key => $option)
-                                    @if (!empty($option))
-                                        <div class="form-check">
-                                        <input type="radio" name="answers[{{ $question->id }}]" value="{{ $option }}" class="form-check-input"
-                                            id="choices{{ $key.''.$question->id }}">
-                                        <label class="form-check-label" for="choices{{ $key.''.$question->id }}">{{ $option
-                                            }}</label>
-                                    </div>
-                                    @endif
-
+                                        @if (!empty($option))
+                                            <div class="form-check">
+                                                <input type="radio" name="answers[{{ $question->id }}]" value="{{ $option }}" class="form-check-input"
+                                                    id="choices{{ $key.''.$question->id }}">
+                                                <label class="form-check-label" for="choices{{ $key.''.$question->id }}">{{ $option
+                                                    }}</label>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 @endif
                     </div>
@@ -95,7 +92,6 @@
 
 @section('script')
 <script src="{{asset('SmartWizard/dist/js/jquery.smartWizard.js')}}"></script>
-<script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -122,9 +118,9 @@
                             .addClass('btn btn-info')
                             .on('click', function(){
 
-                                if(confirm('Are you sure you want to finish this quiz?')) {
+                                if(confirm('Are you sure you want to finish this assignment?')) {
 
-                                                                $('#take-quiz-form-{{$quiz->id}}').submit();
+                                                                $('#take-assignment-form-{{$assignment->id}}').submit();
                                                               }
 
                                                               else {
@@ -153,71 +149,17 @@
         $('.sw-btn-group-extra').addClass('mt-3');
         $('.sw-btn-group').addClass('mt-3');
 
-
-
-
     });
 
+    window.onbeforeunload = function() {
+
+                    return true;
+
+            };
+
+            $('#take-assignment-form-{{$assignment->id}}').on('submit', function(){
+                window.onbeforeunload = null;
+            });
 
   </script>
-
-    <script>
-        //var hoursleft = 0;
-        var minutesleft = {{$quiz->timeLimit}}; //give minutes you wish
-        var secondsleft = 00; // give seconds you wish
-        var finishedtext = "Countdown finished!";
-        var end1_{{$csqu}};
-        if(localStorage.getItem("end1_{{$csqu}}")) {
-        end1_{{$csqu}} = new Date(localStorage.getItem("end1_{{$csqu}}"));
-        } else {
-        end1_{{$csqu}} = new Date();
-        end1_{{$csqu}}.setMinutes(end1_{{$csqu}}.getMinutes()+minutesleft);
-        end1_{{$csqu}}.setSeconds(end1_{{$csqu}}.getSeconds()+secondsleft);
-
-        }
-        var counter = function () {
-        var now = new Date();
-        var diff = end1_{{$csqu}} - now;
-
-        diff = new Date(diff);
-
-        var milliseconds = parseInt((diff%1000)/100)
-            var sec = parseInt((diff/1000)%60)
-            var mins = parseInt((diff/(1000*60))%60)
-            //var hours = parseInt((diff/(1000*60*60))%24);
-
-        if (mins < 10) {
-            mins = "0" + mins;
-        }
-        if (sec < 10) {
-            sec = "0" + sec;
-        }
-        if(now >= end1_{{$csqu}}) {
-            clearTimeout(interval);
-           // localStorage.setItem("end", null);
-             localStorage.removeItem("end1_{{$csqu}}");
-             localStorage.clear();
-            document.getElementById('divCounter').innerHTML = finishedtext;
-            //  if(confirm("TIME UP!")){
-
-                 document.getElementById('take-quiz-form-{{$quiz->id}}').submit();
-            //  }
-        } else {
-            var value = mins + ":" + sec;
-            localStorage.setItem("end1_{{$csqu}}", end1_{{$csqu}});
-            document.getElementById('divCounter').innerHTML = value;
-        }
-        }
-        var interval = setInterval(counter, 1000);
-
-
-        window.onbeforeunload = function() {
-                return true;
-        };
-
-        $('#take-quiz-form-{{$quiz->id}}').on('submit', function(){
-            window.onbeforeunload = null;
-        });
-
-    </script>
 @endsection

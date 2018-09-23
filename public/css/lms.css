@@ -89,7 +89,7 @@ div.dataTables_wrapper div.dataTables_length select {
         display: none
     }
     .side-nav.side-nav-light .logo-wrapper {
-        // border-bottom: none !important;
+         /* border-bottom: none !important; */
         height: 65px;
     }
 }
@@ -100,6 +100,10 @@ div.dataTables_wrapper div.dataTables_length select {
     }
     #slide-out {
       z-index: 1031 !important;
+    }
+    .container-fluid{
+        padding-right: 0 !important;
+         padding-left: 0 !important;
     }
 }
 

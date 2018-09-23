@@ -22,4 +22,9 @@ class Announcement extends Model
     {
         return $this->belongsToMany('App\Section')->where('isActive', true);;
     }
+
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
+    }
 }

@@ -156,6 +156,11 @@ class InstructorController extends Controller
     {
         $user = User::findOrFail($id);
         $user->courses()->detach();
+        $user->sections()->delete();
+        $user->announcement()->delete();
+        $user->lessons()->delete();
+        $user->quizzes()->delete();
+        $user->assignments()->delete();
         $user->delete();
 
         session()->flash('status', 'Successfully deleted!');

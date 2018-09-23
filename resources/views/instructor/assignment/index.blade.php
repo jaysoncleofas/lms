@@ -28,7 +28,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Sections</th>
-                        <th>Questions</th>
+                        {{-- <th>Questions</th> --}}
                         <th>Start Date</th>
                         <th>Expire Date</th>
                         <th>Status</th>
@@ -44,9 +44,9 @@
                             {{$section2->name}},
                             @endforeach
                         </td>
-                        <td>
+                        {{-- <td>
                             <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}" class="btn btn-info btn-sm">{{count($assignment->questions)}}</a>
-                        </td>
+                        </td> --}}
                         <td>
                             {{$assignment->startDate ? $assignment->startDate->toFormattedDateString() : ''}}
                         </td>

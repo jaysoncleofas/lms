@@ -22,4 +22,9 @@ class Take extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function section()
+    {
+        return $this->belongsTo('App\Section');
+    }
 }

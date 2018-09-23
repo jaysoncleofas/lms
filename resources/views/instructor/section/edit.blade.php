@@ -9,7 +9,7 @@
         <div class="col-xl-6 col-md-6 mb-5 pb-5">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Update Section</h3>
-                <a href="{{route('instructor.section.index', $course->id)}}" class="btn btn-danger">Back</a>
+                <a href="{{ url()->previous() }}" class="btn btn-danger">Back</a>
             </div>
 
             <form action="{{route('instructor.section.update', [$course->id, $section->id])}}" method="post">

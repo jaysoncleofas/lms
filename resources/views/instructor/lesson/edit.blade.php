@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('styles')
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fwl1zems9tvf6ysxti5p5zrr86dawn4f0zdyzwoel3rjh9ok"></script>
 <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
+<script>
+    tinymce.init({ 
+        selector:'textarea' 
+    });
+    </script>
 @endsection
 
 @section('content')

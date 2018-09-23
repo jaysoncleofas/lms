@@ -56,4 +56,14 @@ class Section extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function takes()
+    {
+        return $this->hasMany('App\Take');
+    }
+
+    public function passes()
+    {
+        return $this->hasMany('App\Pass');
+    }
 }

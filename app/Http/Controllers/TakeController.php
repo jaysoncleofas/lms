@@ -9,11 +9,23 @@ use App\TakeAnswer;
 use App\Question;
 use App\Course;
 use App\Section;
+use App\Pass;
+use Purifier;
 
 class TakeController extends Controller
 {
     public function store(Request $request, $course_id, $section_id, $quiz_id)
     {
+        $checktakes = Take::where('user_id', Auth::id())->where('quiz_id', $quiz_id)->where('section_id', $section_id)->first();
+        
+        if($checktakes)
+        {
+            session()->flash('status', 'Already taken the quiz');
+            session()->flash('type', 'error');
+
+            return redirect()->route('student.quiz.show', [$course_id, $section_id, $quiz_id]);
+        }
+        
         $result = 0;
         // return $request->input('questions', []);
         $take = Take::create([
@@ -68,40 +80,17 @@ class TakeController extends Controller
     {
         $result = 0;
         // return $request->input('questions', []);
-        $take = Take::create([
+        $pass = Pass::create([
             'user_id' => Auth::id(),
             'section_id' => $section_id,
             'assignment_id' => $assignment_id,
-            'result'  => $result,
+            'content'  => Purifier::clean($request->content),
         ]);
 
-
-        foreach ($request->input('questions', []) as $key => $question) {
-            $status = 0;
-            $questionMaster = Question::find($question);
-            if ($request->input('answers.'.$question) != null
-                && $request->input('answers.'.$question) == $questionMaster->correct
-
-                // Question::find($request->input('answers.'.$question))->correct
-            ) {
-                $status = 1;
-                $result++;
-            }
-            // TakeAnswer::create([
-            //     'user_id'     => Auth::id(),
-            //     'take_id'     => $take->id,
-            //     'question_id' => $question,
-            //     'option'   => $request->input('answers.'.$question),
-            //     'correct'     => $status,
-            // ]);
-        }
-
-        $take->update(['result' => $result]);
-
-        return redirect()->route('student.take.result_assignment', [$course_id, $section_id, $assignment_id, $take->id]);
+        return redirect()->route('student.pass.result_assignment', [$course_id, $section_id, $assignment_id, $pass->id]);
     }
 
-    public function result_assignment($course_id, $section_id, $assignment_id, $take_id)
+    public function result_assignment($course_id, $section_id, $assignment_id, $pass_id)
     {
         $user = Auth::user();
         $course = Course::findOrFail($course_id);
@@ -111,8 +100,11 @@ class TakeController extends Controller
 
         $assignment = $section->assignments()->findOrFail($assignment_id);
 
-        $take = Take::where('assignment_id', $assignment->id)->findOrFail($take_id);
+        $pass = Pass::where('assignment_id', $assignment->id)->findOrFail($pass_id);
 
-        return view('student.assignment.result', compact('course', 'section', 'assignment', 'take'));
+        session()->flash('status', 'Assignment submitted!');
+        session()->flash('type', 'success');
+
+        return view('student.assignment.result', compact('course', 'section', 'assignment', 'pass'));
     }
 }

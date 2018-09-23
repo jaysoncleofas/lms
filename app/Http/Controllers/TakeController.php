@@ -87,6 +87,9 @@ class TakeController extends Controller
             'content'  => Purifier::clean($request->content),
         ]);
 
+        session()->flash('status', 'Assignment submitted!');
+        session()->flash('type', 'success');
+
         return redirect()->route('student.pass.result_assignment', [$course_id, $section_id, $assignment_id, $pass->id]);
     }
 
@@ -101,9 +104,6 @@ class TakeController extends Controller
         $assignment = $section->assignments()->findOrFail($assignment_id);
 
         $pass = Pass::where('assignment_id', $assignment->id)->findOrFail($pass_id);
-
-        session()->flash('status', 'Assignment submitted!');
-        session()->flash('type', 'success');
 
         return view('student.assignment.result', compact('course', 'section', 'assignment', 'pass'));
     }

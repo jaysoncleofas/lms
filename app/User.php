@@ -71,4 +71,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Take');
     }
+
+    public function passes()
+    {
+        return $this->hasMany('App\Pass');
+    }
+
+    public function name() 
+    {
+        return ucfirst($this->firstName) . ' ' . ucfirst($this->lastName);
+    }
 }

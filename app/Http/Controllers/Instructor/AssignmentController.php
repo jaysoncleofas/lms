@@ -106,6 +106,7 @@ class AssignmentController extends Controller
         foreach ($sections as $section2) {
             $section22[$section2->id] = $section2->title;
         }
+
         return view('instructor.assignment.show', compact('course', 'assignment', 'section22', 'sections'));
     }
 
@@ -181,7 +182,7 @@ class AssignmentController extends Controller
          $course = $user->courses()->findOrFail($course_id);
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
          
-         $assignment->passAss()->delete();
+         $assignment->passAsses()->delete();
          $assignment->sections()->detach();
          $assignment->delete();
 

@@ -29,7 +29,7 @@ class Quiz extends Model
 
     public function takes($section_id, $student_id)
     {
-        return $this->hasMany('App\Take')->where('user_id', $student_id)->orderBy('created_at', 'desc')->where('section_id', $section_id)->first();
+        return $this->hasMany('App\Take')->where('user_id', $student_id)->where('section_id', $section_id)->first();
     }
 
     public function course()
@@ -37,8 +37,8 @@ class Quiz extends Model
         return $this->belongsTo('App\Course');
     }
 
-    public function takeQuiz()
-    {
-        return $this->hasOne('App\Take');
-    }
+    // public function takeQuiz($section_id, $student_id)
+    // {
+    //     return $this->hasOne('App\Take')->where('user_id', $student_id)->where('section_id', $section_id);
+    // }
 }

@@ -27,14 +27,14 @@ class Assignment extends Model
         return $this->hasMany('App\Pass')->where('user_id', auth()->user()->id)->where('section_id', $section_id)->first();
     }
 
-    public function pass($section_id, $student_id)
+    public function passes($section_id, $student_id)
     {
-        return $this->hasOne('App\Pass')->where('user_id', $student_id)->where('section_id', $section_id)->first();
+        return $this->hasMany('App\Pass')->where('user_id', $student_id)->where('section_id', $section_id)->first();
     }
 
-    public function passAss()
+    public function pass()
     {
-        return $this->hasOne('App\Pass');
+        return $this->hasMany('App\Pass');
     }
 
     public function course()

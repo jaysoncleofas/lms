@@ -19,4 +19,9 @@ class Pass extends Model
     {
         return $this->belongsTo('App\Section');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-lg-12">
             <h3 class="text-oswald">{{$course->name}} / {{$section->name}}</h3>
-            <h4 class="text-oswald">Assignmment / {{$assignment->title}}</h4>
+            <h4 class="text-oswald">Assignmment </h4>
         </div>
     </div>
 
@@ -49,14 +49,13 @@
                     @endif
                 </div>
 
-                <button type="submit" id="passAssignment" class="btn btn-primary pull-right">Pass</button>
+                <button type="submit" id="passAssignment" class="btn btn-primary pull-right">Submit</button>
             </form>
-
-
         </div>
-
-
+    </div>
 </div>
+
+
 @endsection
 
 @section('script')

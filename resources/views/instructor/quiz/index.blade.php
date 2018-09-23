@@ -41,7 +41,11 @@
                     @foreach ($quizzes as $quiz)
                     <tr>
 
-                        <td><a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="blue-text">{{$quiz->title}}</a></td>
+                        <td>
+                            {{-- <a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="blue-text"> --}}
+                            {{$quiz->title}}
+                            {{-- </a> --}}
+                        </td>
                         <td>
                             @foreach ($quiz->sections as $section2)
                             {{$section2->name}},

@@ -45,7 +45,7 @@
                                 {{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : ''}}
                             </td>
                             <td>
-                                {{ $assignment->passAss ? $assignment->passAss->created_at->toFormattedDateString() : ''}}
+                                {{ $assignment->checkpasses($section->id) ? $assignment->checkpasses($section->id)->created_at->toFormattedDateString() : ''}}
                             </td>
                             <td>
                                 @if ($assignment->checkpasses($section->id))
@@ -62,7 +62,7 @@
                                 @elseif(Carbon\Carbon::parse($assignment->expireDate)->isPast())
                                     <p class="red-text">Expired</p>
                                 @else
-                                    <a class="blue-text" href="{{route('student.assignment.show', [$course->id, $section->id, $assignment->id])}}">Pass</a>
+                                    <a class="blue-text" href="{{route('student.assignment.show', [$course->id, $section->id, $assignment->id])}}">Submit</a>
                                 @endif
                             </td>
                         </tr>

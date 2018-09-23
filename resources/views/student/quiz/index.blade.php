@@ -47,7 +47,15 @@
                             <td>
                                 {{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}
                             </td>
-                            <td><h4 class="text-oswald {{$quiz->takeQuiz ? 'green-text' : 'red-text'}}">{{$quiz->checktakes($section->id)->result ?? ''}}/{{count($quiz->questions)}}</h4></td>
+                            <td>
+                                @if($quiz->takes($section->id, Auth::id()))
+                                <h4 class="text-oswald green-text">
+                                    {{$quiz->takes($section->id, Auth::id())->result}}/{{count($quiz->questions)}}
+                                </h4>
+                                @else 
+                                    <p class="red-text">No Quiz</p>
+                                @endif                             
+                            </td>
                             <td>{{$quiz->timeLimit ?? 0}} minutes</td>
                             {{-- <td>{{$quiz->takes()->result ?? ''}}/{{count($quiz->questions)}}</td> --}}
                             <td>

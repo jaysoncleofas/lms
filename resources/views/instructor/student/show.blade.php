@@ -35,12 +35,16 @@
                             <td>{{$key+1}}</td>
                             <td>{{$quiz->title}}</td>
                             <td>
-                                <h4 class="text-oswald {{$quiz->takeQuiz ? 'green-text' : 'red-text'}}">
-                                    {{$quiz->takes($section->id, $student->id)->result ?? ''}}/{{count($quiz->questions)}}
+                                @if($quiz->takes($section->id, $student->id))
+                                <h4 class="text-oswald green-text">
+                                    {{$quiz->takes($section->id, $student->id)->result}}/{{count($quiz->questions)}}
                                 </h4>
+                                @else 
+                                    <p class="red-text">No Quiz</p>
+                                @endif  
                             </td>
                             <td>
-                                {{$quiz->takeQuiz ? $quiz->takeQuiz->created_at->toDayDateTimeString() : ''}}
+                                {{$quiz->takes($section->id, $student->id) ? $quiz->takes($section->id, $student->id)->created_at->toDayDateTimeString() : ''}}
                             </td>
                         </tr>
                         @endforeach
@@ -70,13 +74,15 @@
                                         <td>{{$key+1}}</td>
                                         <td>{{$assignment->title}}</td>
                                         <td>
-                                            @if ($assignment->passAss)
+                                            @if ($assignment->passes($section->id, $student->id))
                                                 <p class="green-text">Completed</p>
                                             @else
-                                                    <p class="red-text">No Assignment</p>
+                                                <p class="red-text">No Assignment</p>
                                             @endif
                                         </td>
-                                        <td>{{ $assignment->passAss ? $assignment->passAss->created_at->toDayDateTimeString() : ''}}</td>
+                                        <td>
+                                            {{$assignment->passes($section->id, $student->id) ? $assignment->passes($section->id, $student->id)->created_at->toDayDateTimeString() : ''}}
+                                        </td> 
                                     </tr>
                                     @endforeach
                                 </tbody>

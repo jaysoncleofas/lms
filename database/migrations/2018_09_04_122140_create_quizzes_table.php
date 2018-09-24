@@ -16,7 +16,9 @@ class CreateQuizzesTable extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('instructor_id');
+            $table->foreign('instructor_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->string('title');
             $table->integer('timeLimit')->nullable();
             $table->date('startDate')->nullable();

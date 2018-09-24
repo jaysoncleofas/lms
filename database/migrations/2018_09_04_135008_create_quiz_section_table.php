@@ -16,10 +16,9 @@ class CreateQuizSectionTable extends Migration
         Schema::create('quiz_section', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('quiz_id');
-            $table->foreign('quiz_id')->references('id')->on('quizzes');
-
+            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
             $table->unsignedInteger('section_id');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
         });
     }
 

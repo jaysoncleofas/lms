@@ -16,8 +16,11 @@ class CreateTokensTable extends Migration
         Schema::create('tokens', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('instructor_id');
-            $table->unsignedInteger('section_id');
+            $table->foreign('instructor_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->unsignedInteger('section_id');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->string('token');
             $table->boolean('status')->default(true);
             $table->timestamps();

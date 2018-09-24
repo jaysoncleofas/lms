@@ -22,6 +22,11 @@ class Course extends Model
         return $this->hasMany('App\Section')->where('isActive', true);
     }
 
+    public function sections2()
+    {
+        return $this->hasMany('App\Section')->where('isActive', true)->where('instructor_id', auth()->user()->id);
+    }
+
     public function lessons()
     {
         return $this->hasMany('App\Lesson');

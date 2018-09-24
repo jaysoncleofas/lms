@@ -16,6 +16,7 @@ class CreateConvosTable extends Migration
         Schema::create('convos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('to_user_id');
             $table->timestamps();
         });

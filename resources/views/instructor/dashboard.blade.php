@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="view overlay text-white text-center">
                             <h2 class="text-uppercase card-title text-oswald mt-4">{{$course->name}}</h2>
-                            <h4 class="black-text text-oswald">{{count($course->sections)}} Section{{count($course->sections) > 1 ? 's' : ''}}</h4>
+                            <h4 class="black-text text-oswald">Section{{count($course->sections) > 1 ? 's' : ''}}</h4>
                         <a href="{{route('instructor.section.index', $course->id)}}">
                             <div class="mask rgba-white-slight">
                             </div>
@@ -33,7 +33,7 @@
                         <p class="text-capitalize">{{ substr(strip_tags($course->description), 0, 200) }}{{ strlen($course->description) > 200 ? "..." : "" }}</p>
                     </div>
                 </div>
-{{-- 
+{{--
             <div class="card">
                 <div class="card-body">
                     <a href="{{route('instructor.section.index', $course->id)}}" class="black-text">

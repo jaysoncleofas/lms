@@ -37,6 +37,11 @@ class Quiz extends Model
         return $this->belongsTo('App\Course');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     // public function takeQuiz($section_id, $student_id)
     // {
     //     return $this->hasOne('App\Take')->where('user_id', $student_id)->where('section_id', $section_id);

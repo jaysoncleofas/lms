@@ -16,10 +16,10 @@ class CreateAnnouncementSectionTable extends Migration
         Schema::create('announcement_section', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('announcement_id');
-            $table->foreign('announcement_id')->references('id')->on('announcements');
+            $table->foreign('announcement_id')->references('id')->on('announcements')->onDelete('cascade');
 
             $table->unsignedInteger('section_id');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
         });
     }
 

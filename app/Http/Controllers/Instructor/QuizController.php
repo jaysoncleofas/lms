@@ -76,7 +76,7 @@ class QuizController extends Controller
 
         //  foreach($quiz->sections as $section){
         //     foreach($section->users as $user){
-        //         $mobile = $user->mobileNumber;     
+        //         $mobile = $user->mobileNumber;
         //         $message = \App\Helpers\SMS::send($mobile, $msg);
         //     }
         // }
@@ -170,7 +170,7 @@ class QuizController extends Controller
          $course = $user->courses()->findOrFail($course_id);
 
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
-
+         $quiz->questions()->delete();
          $quiz->sections()->detach();
          $quiz->delete();
 

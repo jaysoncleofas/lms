@@ -16,8 +16,11 @@ class CreatePassesTable extends Migration
         Schema::create('passes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('assignment_id')->unsigned()->nullable();
+            $table->foreign('assignment_id')->references('id')->on('assignments')->onDelete('cascade');
             $table->integer('section_id')->unsigned()->nullable();
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->text('content')->nullable();
             $table->timestamps();
         });

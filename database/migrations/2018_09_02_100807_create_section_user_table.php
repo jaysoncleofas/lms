@@ -16,10 +16,9 @@ class CreateSectionUserTable extends Migration
         Schema::create('section_user', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('section_id');
-            $table->foreign('section_id')->references('id')->on('sections');
-
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

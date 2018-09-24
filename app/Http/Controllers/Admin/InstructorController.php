@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\User;
+use App\Section;
 
 class InstructorController extends Controller
 {
@@ -156,11 +157,6 @@ class InstructorController extends Controller
     {
         $user = User::findOrFail($id);
         $user->courses()->detach();
-        $user->sections()->delete();
-        $user->announcement()->delete();
-        $user->lessons()->delete();
-        $user->quizzes()->delete();
-        $user->assignments()->delete();
         $user->delete();
 
         session()->flash('status', 'Successfully deleted!');

@@ -16,10 +16,10 @@ class CreateAssignmentSectionTable extends Migration
         Schema::create('assignment_section', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('assignment_id');
-            $table->foreign('assignment_id')->references('id')->on('assignments');
+            $table->foreign('assignment_id')->references('id')->on('assignments')->onDelete('cascade');
 
             $table->unsignedInteger('section_id');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
         });
     }
 

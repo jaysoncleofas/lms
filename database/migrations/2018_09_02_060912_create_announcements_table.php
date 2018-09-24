@@ -16,7 +16,9 @@ class CreateAnnouncementsTable extends Migration
         Schema::create('announcements', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('instructor_id');
+            $table->foreign('instructor_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->text('message');
             $table->timestamps();
         });

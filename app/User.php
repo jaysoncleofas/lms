@@ -77,8 +77,42 @@ class User extends Authenticatable
         return $this->hasMany('App\Pass');
     }
 
-    public function name() 
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany('App\User');
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany('App\Assignment');
+    }
+
+    public function tokens()
+    {
+        return $this->hasMany('App\Token');
+    }
+
+    public function name()
     {
         return ucfirst($this->firstName) . ' ' . ucfirst($this->lastName);
     }
 }
+
+
+// $user->courses()->detach();
+// $user->sections()->delete();
+// $user->announcements()->delete();
+// $user->lessons()->delete();
+// $user->quizzes()->delete();
+// $user->tokens()->delete();
+// $user->files()->delete();
+// $user->convos()->delete();
+// $user->convos()->delete();
+// $user->assignments()->delete();
+// $user->takes()->delete();
+// $user->passes()->delete();

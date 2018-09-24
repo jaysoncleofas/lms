@@ -24,7 +24,7 @@ class AnnouncementController extends Controller
         $course = $user->courses()->findOrFail($course_id);
         // $section = Section::where('course_id', $course->id)->findOrFail($id);
 
-        $announcements = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
+        $announcements = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->paginate(20);
 
         // return view('instructor.announcement.index', compact('course', 'section', 'announcements'));
         return view('instructor.announcement.index', compact('course', 'announcements'));
@@ -72,7 +72,7 @@ class AnnouncementController extends Controller
 
     //     foreach($announcement->sections as $section){
     //        foreach($section->users as $user){
-    //            $mobile = $user->mobileNumber;     
+    //            $mobile = $user->mobileNumber;
     //            $message = \App\Helpers\SMS::send($mobile, $msg);
     //        }
     //    }

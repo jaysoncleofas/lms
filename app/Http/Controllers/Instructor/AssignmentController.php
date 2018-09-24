@@ -78,7 +78,7 @@ class AssignmentController extends Controller
 
         //  foreach($assignment->sections as $section){
         //     foreach($section->users as $user){
-        //         $mobile = $user->mobileNumber;     
+        //         $mobile = $user->mobileNumber;
         //         $message = \App\Helpers\SMS::send($mobile, $msg);
         //     }
         // }
@@ -118,7 +118,7 @@ class AssignmentController extends Controller
         $section = Section::where('course_id', $course->id)->findOrFail($section_id);
 
         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
-        
+
         $submit = Pass::where('assignment_id', $assignment->id)->where('section_id', $section_id)->findOrFail($submit_id);
 
         return view('instructor.student.assignment_show', compact('course', 'section', 'assignment', 'submit'));
@@ -195,8 +195,8 @@ class AssignmentController extends Controller
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
-         
-         $assignment->passAsses()->delete();
+
+         $assignment->pass()->delete();
          $assignment->sections()->detach();
          $assignment->delete();
 

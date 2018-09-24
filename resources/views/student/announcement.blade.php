@@ -21,7 +21,7 @@
         <div class="col-xl-8 col-md-8 mb-5 pb-5">
             @if (count($section->announcements) > 0)
             @foreach ($section->announcements as $announcement)
-            <div class="card mt-5">
+            <div class="card mb-5">
                 <div class="card-body">
                     <div class="mdb-feed">
                         <div class="news">
@@ -44,12 +44,13 @@
             </div>
             @endforeach
             @else
-            <div class="card mt-5">
+            <div class="card my-5">
                 <div class="card-body">
                     <p><i>No announcement yet</i></p>
                 </div>
             </div>
             @endif
+            {{-- {{$announcements->links()}} --}}
         </div>
     </div>
 </div>

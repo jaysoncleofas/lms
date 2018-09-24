@@ -23,7 +23,7 @@
 
             @if (count($announcements) > 0)
             @foreach ($announcements as $announcement)
-            <div class="card mt-5">
+            <div class="card my-5">
                 <div class="card-body">
                     <!-- Newsfeed -->
                     <div class="mdb-feed">
@@ -79,12 +79,13 @@
             </div>
             @endforeach
             @else
-            <div class="card mt-5">
+            <div class="card my-5">
                 <div class="card-body">
                     <p><i>No announcement yet</i></p>
                 </div>
             </div>
             @endif
+            {{$announcements->links()}}
         </div>
     </div>
 </div>

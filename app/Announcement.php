@@ -20,7 +20,7 @@ class Announcement extends Model
 
     public function sections()
     {
-        return $this->belongsToMany('App\Section')->where('isActive', true);;
+        return $this->belongsToMany('App\Section')->where('isActive', true);
     }
 
     public function course()

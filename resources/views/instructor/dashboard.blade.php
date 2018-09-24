@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="view overlay text-white text-center">
                             <h2 class="text-uppercase card-title text-oswald mt-4">{{$course->name}}</h2>
-                            <h4 class="black-text text-oswald">Section{{count($course->sections) > 1 ? 's' : ''}}</h4>
+                            {{-- <h4 class="black-text text-oswald">Section{{count($course->sections) > 1 ? 's' : ''}}</h4> --}}
                         <a href="{{route('instructor.section.index', $course->id)}}">
                             <div class="mask rgba-white-slight">
                             </div>

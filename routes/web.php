@@ -26,6 +26,8 @@ Auth::routes();
 Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@admin_dashboard')->name('dashboard');
     Route::resource('/course', 'Admin\CourseController');
+    Route::get('/instructor/{id}/course/{course}/section/{section}', 'Admin\InstructorController@section')->name('instructor.section');
+    Route::get('/instructor/{id}/course/{course}', 'Admin\InstructorController@course')->name('instructor.course');
     Route::resource('/instructor', 'Admin\InstructorController');
     Route::resource('/student', 'Admin\StudentController');
 });

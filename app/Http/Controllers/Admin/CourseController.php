@@ -140,6 +140,6 @@ class CourseController extends Controller
         session()->flash('status', 'Successfully deleted!');
         session()->flash('type', 'success');
 
-        return redirect()->route('admin.course.index');
+        return redirect()->back();
     }
 }

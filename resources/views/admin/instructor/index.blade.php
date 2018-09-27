@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach ($instructors as $instructor)
                     <tr>
-                        <td>{{$instructor->firstName.' '.$instructor->lastName}}</td>
+                        <td><a class="blue-text" href="{{route('admin.instructor.show', $instructor->id)}}">{{$instructor->firstName.' '.$instructor->lastName}}</a></td>
                         <td>{{$instructor->email}}</td>
                         <td>{{$instructor->username}}</td>
                         <td>{{$instructor->mobileNumber}}</td>

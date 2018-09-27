@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\User;
 use App\Section;
+use App\Course;
 
 class InstructorController extends Controller
 {
@@ -50,7 +51,7 @@ class InstructorController extends Controller
             'firstName' => $request->firstName,
             'middleName' => $request->middleName,
             'lastName'  => $request->lastName,
-            'birthDate' => $request->formatted_birthDate_submit,
+            // 'birthDate' => $request->formatted_birthDate_submit,
             'username'  => $request->username,
             'email'     => $request->email,
             'mobileNumber'     => $request->mobileNumber,
@@ -71,7 +72,27 @@ class InstructorController extends Controller
      */
     public function show($id)
     {
-        //
+        $instructor = User::findOrFail($id);
+
+        return view('admin.instructor.show', compact('instructor'));
+    }
+
+    public function course($instructor_id, $course_id)
+    {
+        $instructor = User::findOrFail($instructor_id);
+        $course = $instructor->courses()->findOrFail($course_id);
+        $sections = Section::where('course_id', $course->id)->where('instructor_id', $instructor->id)->orderBy('name', 'asc')->where('isActive', true)->get();
+
+        return view('admin.instructor.course', compact('instructor', 'course', 'sections'));
+    }
+
+    public function section($instructor_id, $course_id, $section_id)
+    {
+        $instructor = User::findOrFail($instructor_id);
+        $course = $instructor->courses()->findOrFail($course_id);
+        $section = Section::where('course_id', $course->id)->where('instructor_id', $instructor->id)->where('isActive', true)->findOrFail($section_id);
+
+        return view('admin.instructor.section', compact('instructor', 'course', 'section'));
     }
 
     /**
@@ -101,7 +122,7 @@ class InstructorController extends Controller
             'firstName' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
             'lastName'  => 'required|regex:/^[\pL\s\-]+$/u|max:255',
             'middleName'  => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            'birthDate' => 'required|max:255',
+            // 'birthDate' => 'required|max:255',
         ]);
 
         // check if request email is not equal to users email then validate
@@ -134,7 +155,7 @@ class InstructorController extends Controller
             'firstName' => $request->firstName,
             'middleName' => $request->middleName,
             'lastName'  => $request->lastName,
-            'birthDate' => $request->formatted_birthDate_submit,
+            // 'birthDate' => $request->formatted_birthDate_submit,
             'username'  => $request->username,
             'email'     => $request->email,
             'mobileNumber'     => $request->mobileNumber,

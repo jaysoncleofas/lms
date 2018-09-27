@@ -49,7 +49,7 @@
                     </div>
                 </div>
 
-                <div class="md-form">
+                <!-- <div class="md-form">
                     <input placeholder="Select date" type="text" id="birthDate" name="birthDate" class="form-control datepicker {{$errors->has('birthDate') ? 'is-invalid' : ''}}"
                         value="{{date('j F, Y',strtotime($instructor->birthDate))}}">
                     <label for="birthDate">Date of Birth</label>
@@ -58,7 +58,7 @@
                         <strong>{{ $errors->first('birthDate') }}</strong>
                     </span>
                     @endif
-                </div>
+                </div> -->
 
                 <div class="md-form">
                     <input type="email" id="email" name="email" class="form-control {{$errors->has('email') ? 'is-invalid' : ''}}"
@@ -113,7 +113,7 @@
 @endsection
 
 @section('script')
-<script>
+<!-- <script>
     $('.datepicker').pickadate({
         max: new Date(),
         formatSubmit: 'yyyy-mm-dd',
@@ -121,5 +121,5 @@
         selectYears: 50
     });
 
-</script>
+</script> -->
 @endsection

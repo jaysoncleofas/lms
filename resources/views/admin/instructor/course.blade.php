@@ -23,7 +23,14 @@
             @foreach ($sections as $section)
             <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card">
-                    <div class="view overlay text-white text-center py-4">
+                    <div class="justify-content-between d-flex">
+                        @if($section->isActive == 0)
+                            <p class="my-1 mx-1 red-text"><i>Deactivated</i></p>
+                        @else
+                            <p class="my-1 mx-1 green-text"><i>Active</i></p>
+                        @endif
+                    </div>
+                    <div class="view overlay text-white text-center pb-4">
                             <h2 class="text-uppercase card-title text-oswald">{{$section->name}}</h2>
                             <h2 class="text-uppercase text-oswald">{{count($section->users)}} student{{count($section->users) > 1 ? 's' : ''}}</h2>
                         <a href="{{route('admin.instructor.section', [$instructor->id, $course->id, $section->id])}}" class="px-4">

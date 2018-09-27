@@ -81,7 +81,7 @@ class InstructorController extends Controller
     {
         $instructor = User::findOrFail($instructor_id);
         $course = $instructor->courses()->findOrFail($course_id);
-        $sections = Section::where('course_id', $course->id)->where('instructor_id', $instructor->id)->orderBy('name', 'asc')->where('isActive', true)->get();
+        $sections = Section::where('course_id', $course->id)->where('instructor_id', $instructor->id)->orderBy('name', 'asc')->get();
 
         return view('admin.instructor.course', compact('instructor', 'course', 'sections'));
     }
@@ -90,7 +90,7 @@ class InstructorController extends Controller
     {
         $instructor = User::findOrFail($instructor_id);
         $course = $instructor->courses()->findOrFail($course_id);
-        $section = Section::where('course_id', $course->id)->where('instructor_id', $instructor->id)->where('isActive', true)->findOrFail($section_id);
+        $section = Section::where('course_id', $course->id)->where('instructor_id', $instructor->id)->findOrFail($section_id);
 
         return view('admin.instructor.section', compact('instructor', 'course', 'section'));
     }

@@ -56,6 +56,7 @@ class TokenController extends Controller
 
         $request->validate([
             'section' => 'required|max:255',
+            'expireDate' => 'required|max:255',
         ]);
 
         $token = new Token;
@@ -63,6 +64,7 @@ class TokenController extends Controller
         $token->course_id = $course_id;
         $token->section_id = $request->section;
         $token->token = str_random(10);
+        $token->expireDate = $request->formatted_expireDate_submit;
         $token->save();
 
         session()->flash('status', 'Successfully added!');

@@ -11,6 +11,7 @@ use App\Token;
 use Hash;
 use App\Section;
 use App\Http\Requests\UserRequest;
+use carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -53,7 +54,11 @@ class HomeController extends Controller
         $token = Token::where('token', $request->classToken)->where('status', true)->first();
 
         if(isset($token)){
-            if($token->token == $request->classToken){
+            if(Carbon::parse($token->expireDate)->isPast()){
+                session()->flash('status', 'Token already expired!');
+                session()->flash('type', 'error');
+                return redirect()->back();
+            } elseif($token->token == $request->classToken){
                 return redirect()->route('privacy_policy', $token->token);
             }
         }
@@ -67,7 +72,11 @@ class HomeController extends Controller
         $section = Token::where('token', $token)->where('status', true)->firstOrFail();
 
         if(isset($section)){
-            if($section->token == $token){
+            if(Carbon::parse($section->expireDate)->isPast()){
+                session()->flash('status', 'Token already expired!');
+                session()->flash('type', 'error');
+                return redirect()->back();
+            } elseif($section->token == $token){
                 return view('auth.register', compact('section'));
             }
             session()->flash('status', 'Invalid token!');
@@ -81,7 +90,11 @@ class HomeController extends Controller
         $section = Token::where('token', $token)->where('status', true)->firstOrFail();
 
         if(isset($section)){
-            if($section->token == $token){
+            if(Carbon::parse($section->expireDate)->isPast()){
+                session()->flash('status', 'Token already expired!');
+                session()->flash('type', 'error');
+                return redirect()->back();
+            } elseif($section->token == $token){
                 return view('auth.privacy_policy', compact('section'));
             }
             session()->flash('status', 'Invalid token!');

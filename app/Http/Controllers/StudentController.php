@@ -175,15 +175,20 @@ class StudentController extends Controller
         $token = Token::where('token', $request->token)->where('status', true)->whereHas('section', function($e){
             $e->where('isActive', true);
         })->first();
+        
 
         if(isset($token)){
-            if($token->token == $request->token){
+            if(Carbon::parse($token->expireDate)->isPast()){
+                session()->flash('status', 'Token already expired!');
+                session()->flash('type', 'error');
+                return redirect()->back();
+            } elseif ($token->token == $request->token){
                 return redirect()->route('student.course.add', $token->token);
             }
         }
         session()->flash('status', 'Invalid token!');
-                session()->flash('type', 'error');
-                return redirect()->back();
+        session()->flash('type', 'error');
+        return redirect()->back();
     }
 
     public function course_add($token)
@@ -191,7 +196,11 @@ class StudentController extends Controller
         $section = Token::where('token', $token)->where('status', true)->firstOrFail();
 
         if(isset($section)){
-            if($section->token == $token){
+            if(Carbon::parse($section->expireDate)->isPast()){
+                session()->flash('status', 'Token already expired!');
+                session()->flash('type', 'error');
+                return redirect()->back();
+            } elseif($section->token == $token){
                 return view('student.course.add', compact('section'));
             }
             session()->flash('status', 'Invalid token!');
@@ -221,7 +230,6 @@ class StudentController extends Controller
         session()->flash('status', 'Success!');
         session()->flash('type', 'success');
         return redirect()->route('student.dashboard');
-
     }
 
 }

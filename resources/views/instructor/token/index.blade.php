@@ -33,6 +33,7 @@
                         <th>Section</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Expiration Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -68,6 +69,9 @@
                                 <input type="hidden" name="status" value="1">
                             </form>
                             @endif
+                        </td>
+                        <td>
+                            {{$token->expireDate != null ? date('F j, Y',strtotime($token->expireDate)) : ''}}
                         </td>
                         <td>
                             <a class="text-danger" onclick="if(confirm('Are you sure you want to delete this token?')) {

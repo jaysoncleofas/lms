@@ -62,7 +62,7 @@ class TokenController extends Controller
         $token->instructor_id = $user->id;
         $token->course_id = $course_id;
         $token->section_id = $request->section;
-        $token->token = str_random(20);
+        $token->token = str_random(10);
         $token->save();
 
         session()->flash('status', 'Successfully added!');

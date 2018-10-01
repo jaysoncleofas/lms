@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <h3 class="text-oswald text-capitalize">{{$instructor->firstName .' '.$instructor->lastName}}</h3>
-        <a href="{{url()->previous()}}" class="btn btn-danger">Back</a>
+        <a href="{{route('admin.instructor.show', $instructor->id)}}" class="btn btn-danger">Back</a>
     </div>
 
     <div class="row mt-3">

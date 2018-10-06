@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('styles')
-    <link href="{{ asset('Datatables/datatables.min.css') }}" rel="stylesheet">
-@endsection
-
 @section('content')
     <div class="container">
             <div class="row px-3 d-flex justify-content-between align-items-center">
@@ -34,6 +30,16 @@
                                         @endif
                                     </div>
 
+                                    <div class="md-form mb-3">
+                                        <input type="text" name="expireDate" id="expireDate" class="datepicker form-control" value="{{old('expireDate')}}">
+                                        <label for="expireDate">Expire Date</label>
+                                        @if ($errors->has('expireDate'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('expireDate') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+
                             <button type="submit" name="button" class="btn btn-primary pull-right">Generate</button>
                         </form>
 
@@ -43,12 +49,15 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('Datatables/datatables.min.js') }}"></script>
     @include('partials.notification')
     <script>
     $(document).ready(function () {
             $('.mdb-select').material_select();
-            $('#example').DataTable();
+            $('.datepicker').pickadate({
+                min: new Date(),
+                formatSubmit: 'yyyy-mm-dd',
+                hiddenPrefix: 'formatted_',
+            });
         });
     </script>
 @endsection

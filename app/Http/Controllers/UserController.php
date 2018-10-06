@@ -26,7 +26,7 @@ class UserController extends Controller
             'firstName' => 'required|string|max:255',
             'lastName'  => 'required|string|max:255',
             'middleName'=> 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            'birthDate' => 'required|max:255',
+            'birthDate' => 'nullable|max:255',
         ]);
 
         if ($request->email != $user->email) {

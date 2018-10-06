@@ -199,6 +199,7 @@
              localStorage.clear();
             document.getElementById('divCounter').innerHTML = finishedtext;
             //  if(confirm("TIME UP!")){
+                window.onbeforeunload = null;
 
                  document.getElementById('take-quiz-form-{{$quiz->id}}').submit();
             //  }

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
 
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <h3 class="text-oswald">{{$course->name}}</h3>

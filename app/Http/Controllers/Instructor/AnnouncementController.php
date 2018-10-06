@@ -10,6 +10,8 @@ use App\User;
 use App\Section;
 use App\Announcement;
 use Carbon\Carbon;
+use App\Mail\newAnnouncement;
+use Illuminate\Support\Facades\Mail;
 
 class AnnouncementController extends Controller
 {
@@ -70,12 +72,16 @@ class AnnouncementController extends Controller
 
         $msg = 'There\'s a new announcement posted in your course '.$announcement->course->name;
 
-    //     foreach($announcement->sections as $section){
-    //        foreach($section->users as $user){
-    //            $mobile = $user->mobileNumber;
-    //            $message = \App\Helpers\SMS::send($mobile, $msg);
-    //        }
-    //    }
+        foreach($announcement->sections as $section){
+           foreach($section->users as $user){
+               if($user->mobileNumber){
+                   $mobile = $user->mobileNumber;
+                   $message = \App\Helpers\SMS::send($mobile, $msg);
+               }
+               Mail::to($user->email)->send(new newAnnouncement($user, $announcement));
+           }
+       }
+
 
         session()->flash('status', 'Successfully posted!');
         session()->flash('type', 'success');

@@ -12,6 +12,8 @@ use App\Assignment;
 use carbon\Carbon;
 use Purifier;
 use App\Pass;
+use App\Mail\newAssignment;
+use Illuminate\Support\Facades\Mail;
 
 class AssignmentController extends Controller
 {
@@ -76,12 +78,15 @@ class AssignmentController extends Controller
 
          $msg = 'There\'s a new assignment in your course '.$assignment->course->name;
 
-        //  foreach($assignment->sections as $section){
-        //     foreach($section->users as $user){
-        //         $mobile = $user->mobileNumber;
-        //         $message = \App\Helpers\SMS::send($mobile, $msg);
-        //     }
-        // }
+         foreach($assignment->sections as $section){
+            foreach($section->users as $user){
+                if($user->mobileNumber){
+                    $mobile = $user->mobileNumber;
+                    $message = \App\Helpers\SMS::send($mobile, $msg);
+                }
+            }
+            Mail::to($user->email)->send(new newAssignment($user, $assignment));
+        }
 
          session()->flash('status', 'Successfully saved!');
          session()->flash('type', 'success');

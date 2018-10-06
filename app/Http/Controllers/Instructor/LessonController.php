@@ -11,6 +11,8 @@ use App\Section;
 use App\Lesson;
 use carbon\Carbon;
 use Purifier;
+use App\Mail\newLesson;
+use Illuminate\Support\Facades\Mail;
 
 class LessonController extends Controller
 {
@@ -82,14 +84,17 @@ class LessonController extends Controller
 
          $lesson->sections()->sync($request->sections, false);
 
-        // $msg = 'There\'s a new uploaded lesson in your course '.$lesson->course->name;
+        $msg = 'There\'s a new uploaded lesson in your course '.$lesson->course->name;
 
-        //  foreach($lesson->sections as $section){
-        //     foreach($section->users as $user){
-        //         $mobile = $user->mobileNumber;     
-        //         $message = \App\Helpers\SMS::send($mobile, $msg);
-        //     }
-        // }
+         foreach($lesson->sections as $section){
+            foreach($section->users as $user){
+                if($user->mobileNumber){
+                    $mobile = $user->mobileNumber;     
+                    $message = \App\Helpers\SMS::send($mobile, $msg);
+                }
+            }
+            Mail::to($user->email)->send(new newLesson($user, $lesson));
+        }
         
          session()->flash('status', 'Successfully added!');
          session()->flash('type', 'success');

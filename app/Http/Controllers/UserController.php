@@ -49,7 +49,7 @@ class UserController extends Controller
 
         if ($request->hasFile('avatar')) {
             $request->validate([
-                'avatar' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'avatar' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             ]);
             
             $avatar = $request->avatar;
@@ -61,12 +61,6 @@ class UserController extends Controller
             $user->avatar = $name;
         }
 
-        
-        if ($request->studentNumber != $user->studentNumber) {
-            $request->validate([
-                'studentNumber'  => 'required|alpha_num|unique:users|digits:10',
-                ]);
-            }
             
         if ($user->role == 'student' && $user->studentNumber == '') {
             $request->validate([
@@ -77,7 +71,12 @@ class UserController extends Controller
         }
 
         if ($user->role == 'student') {
-            $user->birthdate     = $request->formatted_birthDate_submit;
+            if(Carbon::parse($request->formatted_birthDate_submit)->age >= 16 ){
+                $user->birthDate = $request->formatted_birthDate_submit;
+            } else {
+                session()->flash('statusError', '16 years old above only');
+                return redirect()->route('profile.index');
+            }
         }
 
         $user->firstName     = $request->firstName;
@@ -91,7 +90,7 @@ class UserController extends Controller
         session()->flash('status', 'Update successful!');
         session()->flash('type', 'success');
 
-        return redirect()->route('profile.update');
+        return redirect()->route('profile.index');
     }
 
     public function profile_remove(Request $request)

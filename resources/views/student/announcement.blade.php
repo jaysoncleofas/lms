@@ -35,7 +35,7 @@
                                         {{$announcement->created_at->diffForHumans()}}</div>
                                 </div>
                                 <div class="added-text">
-                                    {{$announcement->message}}
+                                    {{$announcement->message}} <br>
                                     <img class="z-depth-1 img-fluid mt-3" src="{{asset('storage/images/'.$announcement->image)}}" alt="">
                                 </div>
                             </div>

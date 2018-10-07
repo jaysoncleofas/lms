@@ -105,6 +105,11 @@
                                             <strong>{{ $errors->first('birthDate') }}</strong>
                                         </span>
                                     @endif
+                                    @if (Session::has('statusError'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ Session::get('statusError') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         @endif
@@ -157,7 +162,7 @@
     @include('partials.notification')
     <script>
         $('.datepicker').pickadate({
-            max: new Date(2003,11,31),
+            max: new Date(),
             formatSubmit: 'yyyy-mm-dd',
             hiddenPrefix: 'formatted_',
             selectYears: 50

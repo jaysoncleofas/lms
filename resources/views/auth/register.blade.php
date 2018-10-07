@@ -125,7 +125,7 @@
 @section('script')
 <script>
     $('.datepicker').pickadate({
-        max: new Date(2003,11,31),
+        max: new Date(),
         formatSubmit: 'yyyy-mm-dd',
         hiddenPrefix: 'formatted_',
         selectYears: 50

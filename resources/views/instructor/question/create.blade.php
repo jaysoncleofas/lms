@@ -18,8 +18,7 @@
                 <h3 class="text-oswald">Add Question</h3>
                 <a href="{{route('instructor.question.index', [$course->id, $quiz->id])}}" class="btn btn-primary">Questions</a>
             </div>
-            <form class="" action="{{route('instructor.question.store', [$course->id, $quiz->id])}}" method="post"
-                enctype="multipart/form-data">
+            <form class="" action="{{route('instructor.question.store', [$course->id, $quiz->id])}}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="md-form">

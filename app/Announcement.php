@@ -10,6 +10,7 @@ class Announcement extends Model
         'instructor_id',
         'course_id',
         'section_id',
+        'image',
         'message'
     ];
 

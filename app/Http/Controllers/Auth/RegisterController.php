@@ -49,14 +49,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'firstName' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'middleName'=> 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            'lastName'  => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'birthDate' => 'required|max:255',
-            'username'  => 'required|alpha_dash|unique:users|max:255',
-            'email'     => 'required|string|email|unique:users|max:255',
-            'password'  => 'required|string|min:6|confirmed',
-            'mobileNumber'=> 'nullable|alpha_num|digits:11|unique:users',
+            'firstName'             => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'middleName'            => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
+            'lastName'              => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'studentNumber'         => 'required|alpha_num|unique:users|digits:10',
+            'birthDate'             => 'required|max:255',
+            'username'              => 'required|alpha_dash|unique:users|max:255',
+            'email'                 => 'required|string|email|unique:users|max:255',
+            'password'              => 'required|string|min:6|confirmed',
+            'mobileNumber'          => 'nullable|alpha_num|digits:11|unique:users',
+            'password_confirmation' => 'required'
         ]);
     }
 
@@ -69,15 +71,16 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'role'      => 'student',
-            'firstName' => $data['firstName'],
-            'middleName'=> $data['middleName'],
-            'lastName'  => $data['lastName'],
-            'birthDate' => $data['formatted_birthDate_submit'],
-            'username'  => $data['username'],
-            'email'     => $data['email'],
+            'role'          => 'student',
+            'firstName'     => $data['firstName'],
+            'middleName'    => $data['middleName'],
+            'lastName'      => $data['lastName'],
+            'studentNumber' => $data['studentNumber'],
+            'birthDate'     => $data['formatted_birthDate_submit'],
+            'username'      => $data['username'],
+            'email'         => $data['email'],
             'mobileNumber'  => $data['mobileNumber'],
-            'password'  => Hash::make($data['password']),
+            'password'      => Hash::make($data['password']),
         ]);
 
         $user->sections()->sync($data['sections'], false);

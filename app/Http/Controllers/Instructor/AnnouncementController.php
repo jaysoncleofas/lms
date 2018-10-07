@@ -63,6 +63,20 @@ class AnnouncementController extends Controller
         ]);
 
         $announcement = new Announcement;
+
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
+            ]);
+            
+            $image = $request->image;
+            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+            $name = $timestamp. '-' .$image->getClientOriginalName();
+            // $image->image = $name;
+            $image->storeAs('public/images', $name);
+            $announcement->image = $name;
+        }
+        
         $announcement->instructor_id = $user->id;
         $announcement->course_id = $course->id;
         $announcement->message = $request->message;
@@ -76,7 +90,7 @@ class AnnouncementController extends Controller
            foreach($section->users as $user){
                if($user->mobileNumber){
                    $mobile = $user->mobileNumber;
-                   $message = \App\Helpers\SMS::send($mobile, $msg);
+                //    $message = \App\Helpers\SMS::send($mobile, $msg);
                }
                Mail::to($user->email)->send(new newAnnouncement($user, $announcement));
            }
@@ -141,6 +155,19 @@ class AnnouncementController extends Controller
         $request->validate([
             'message' => 'required|string',
         ]);
+
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'question_image' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            ]);
+            
+            $image = $request->image;
+            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+            $name = $timestamp. '-' .$image->getClientOriginalName();
+            // $image->image = $name;
+            $image->storeAs('public/images', $name);
+            $announcement->image = $name;
+        }
 
         $announcement->message = $request->message;
         $announcement->save();

@@ -28,7 +28,7 @@
 
                 <div class="md-form">
                     <input type="text" id="title" name="title" value="{{$lesson->title}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
-                    <label for="title">Title</label>
+                    <label for="title">Title <span class="red-asterisk">*</span></label>
                     @if ($errors->has('title'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('title') }}</strong>
@@ -37,9 +37,8 @@
                 </div>
 
                 <div class="md-form">
-                    <textarea name="description" id="description" class="md-textarea form-control {{$errors->has('description') ? 'is-invalid' : ''}}"
-                        rows="8" cols="80">{{$lesson->description}}</textarea>
-                    <label for="description">Description</label>
+                    <p class="select2Label">Content <span class="red-asterisk">*</span></p>
+                    <textarea name="description" id="description" class="md-textarea form-control {{$errors->has('description') ? 'is-invalid' : ''}}" rows="8" cols="80">{{$lesson->description}}</textarea>
                     @if ($errors->has('description'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('description') }}</strong>
@@ -47,14 +46,14 @@
                     @endif
                 </div>
 
-                <p class="mb-0">Assign Section</p>
+                <p class="mb-0 mt-3 select2Label">Assign Section <span class="red-asterisk">*</span></p>
                 <div class="md-form mt-0">
                     <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach
                     </select>
-                    <div class="form-check">
+                    <div class="form-check pl-0">
                         <input type="checkbox" class="form-check-input" id="checkbox">
                         <label class="form-check-label" for="checkbox">Send to all</label>
                     </div>
@@ -68,8 +67,7 @@
                             <input type="file" name="upload_file">
                         </div>
                         <div class="file-path-wrapper pr-3">
-                            <input class="file-path" type="text" name="upload_file" id="upload_file" placeholder="Upload file" value="{{substr($lesson->upload_file, 20)}}"
-                                readonly>
+                            <input class="file-path" type="text" name="upload_file" id="upload_file" placeholder="Upload file" value="{{substr($lesson->upload_file, 20)}}" readonly>
                         </div>
                     </div>
                     @if ($errors->has('upload_file'))

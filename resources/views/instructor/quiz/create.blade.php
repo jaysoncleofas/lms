@@ -58,20 +58,20 @@
                     @endif
                 </div>
 
-                <p class="mb-0">Assign Section</p>
+                <p class="mb-0 select2Label">Assign Section</p>
                 <div class="md-form mt-0">
                     <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach
                     </select>
-                    <div class="form-check">
+                    <div class="form-check pl-0">
                         <input type="checkbox" class="form-check-input" id="checkbox">
                         <label class="form-check-label" for="checkbox">Send to all</label>
                     </div>
                 </div>
 
-                <button type="submit" name="button" class="btn btn-primary pull-right mt-5">Save</button>
+                <button type="submit" name="button" class="btn btn-primary pull-right mt-3">Save</button>
             </form>
 
         </div>

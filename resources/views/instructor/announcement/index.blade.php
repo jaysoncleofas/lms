@@ -23,7 +23,7 @@
 
             @if (count($announcements) > 0)
             @foreach ($announcements as $announcement)
-            <div class="card my-5">
+            <div class="card my-3">
                 <div class="card-body">
                     <!-- Newsfeed -->
                     <div class="mdb-feed">
@@ -39,37 +39,38 @@
                             <div class="excerpt">
                                 <!-- Brief -->
                                 <div class="brief">
-                                    <a class="name">{{$announcement->instructor->firstName.'
-                                        '.$announcement->instructor->lastName}}</a>
-                                    <div class="date"><i class="fa fa-clock-o"></i>
-                                        {{$announcement->created_at->diffForHumans()}}</div>
+                                    <p class="name blue-text my-0">{{$announcement->instructor->firstName.' '.$announcement->instructor->lastName}}</p>
+                                    <div class="date pl-0">
+                                        <i class="fa fa-clock-o"></i>
+                                        {{$announcement->created_at->diffForHumans()}}
+                                    </div>
+                                    <div class="pull-right mb-3">
+                                        <a href="{{route('instructor.announcement.edit', [$course->id, $announcement->id])}}" class="thumbs mr-3 black-text" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                                            <i class="fa fa-pencil blue-text"></i>
+                                        </a>
+                                        <a class="thumbs" onclick="if(confirm('Are you sure you want to delete this announcement?')) {
+                                                                event.preventDefault();
+                                                                $('#delete-announcement-form-{{$announcement->id}}').submit();
+                                                            }" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                            <i class="fa fa-trash red-text"></i>
+                                        </a>
+                                        <form id="delete-announcement-form-{{$announcement->id}}" action="{{ route('instructor.announcement.destroy', [$course->id, $announcement->id]) }}" method="post">
+                                            @csrf {{method_field('DELETE')}}
+    
+                                        </form>
+                                    </div>
                                 </div>
                                 <!-- Added text -->
-                                <div class="added-text">{{$announcement->message}}</div>
+                                <div class="added-text">
+                                    {{$announcement->message}} <br>
+                                    <img class="z-depth-1 img-fluid mt-3" src="{{asset('storage/images/'.$announcement->image)}}" alt="">
+                                </div>
 
-                                <p>Posted to:
+                                <p class="my-0">Posted to:
                                     @foreach ($announcement->sections as $section)
                                     {{$section->name}},
                                     @endforeach
                                 </p>
-                                <!-- Feed footer -->
-                                <div class="feed-footer">
-                                    <a href="{{route('instructor.announcement.edit', [$course->id, $announcement->id])}}"
-                                        class="thumbs mr-3 black-text">
-                                        <i class="fa fa-edit blue-text"></i> Edit
-                                    </a>
-                                    <a class="thumbs" onclick="if(confirm('Are you sure you want to delete this announcement?')) {
-                                                          event.preventDefault();
-                                                          $('#delete-announcement-form-{{$announcement->id}}').submit();
-                                                        }">
-                                        <i class="fa fa-trash red-text"></i> Delete
-                                    </a>
-                                    <form id="delete-announcement-form-{{$announcement->id}}" action="{{ route('instructor.announcement.destroy', [$course->id, $announcement->id]) }}"
-                                        method="post">
-                                        @csrf {{method_field('DELETE')}}
-
-                                    </form>
-                                </div>
                             </div>
 
                         </div>

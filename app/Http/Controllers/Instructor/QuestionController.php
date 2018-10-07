@@ -59,21 +59,24 @@ class QuestionController extends Controller
              'correct' => 'required|string',
          ]);
 
+         $question = new Question;
+
          if ($request->hasFile('image')) {
              $request->validate([
-                 'question_image' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                 'question_image' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
              ]);
-                     $image = $request->image;
-                     $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-                     $name = $timestamp. '-' .$image->getClientOriginalName();
-                     // $image->image = $name;
-                     $image->storeAs('public/images', $name);
+            
+             $image = $request->image;
+            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+            $name = $timestamp. '-' .$image->getClientOriginalName();
+            // $image->image = $name;
+            $image->storeAs('public/images', $name);
+            $question->question_image = $name;
          }
 
-         $question = new Question;
+         
          $question->quiz_id = $quiz->id;
          $question->question = $request->question;
-         $question->question_image = $name ?? "";
          $question->correct = $request->correct;
          $question->option_one = $request->option_one;
          $question->option_two = $request->option_two;
@@ -137,15 +140,17 @@ class QuestionController extends Controller
              $request->validate([
                  'question_image' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
              ]);
-                     $image = $request->image;
-                     $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-                     $name = $timestamp. '-' .$image->getClientOriginalName();
-                     // $image->image = $name;
-                     $image->storeAs('public/images', $name);
+            
+            $image = $request->image;
+            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+            $name = $timestamp. '-' .$image->getClientOriginalName();
+            // $image->image = $name;
+            $image->storeAs('public/images', $name);
+
+            $question->question_image = $name;
          }
 
          $question->question = $request->question;
-         $question->question_image = $name ?? "";
          $question->correct = $request->correct;
          $question->option_one = $request->option_one;
          $question->option_two = $request->option_two;

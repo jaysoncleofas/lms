@@ -25,7 +25,7 @@
                 @csrf
                 <div class="md-form">
                     <input type="text" name="title" id="title" value="{{old('title')}}" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}">
-                    <label for="title">Title</label>
+                    <label for="title">Title <span class="red-asterisk">*</span></label>
                     @if ($errors->has('title'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('title') }}</strong>
@@ -34,10 +34,8 @@
                 </div>
 
                 <div class="md-form mb-3">
-                    <p>Content</p>
-                    <textarea name="content" id="content" class="md-textarea form-control pt-0 {{$errors->has('content') ? 'is-invalid' : ''}}"
-                        rows="15">{{old('content')}}</textarea>
-                    {{-- <label for="content">Description</label> --}}
+                    <p class="select2Label">Content <span class="red-asterisk">*</span></p>
+                    <textarea name="content" id="content" class="md-textarea form-control pt-0 {{$errors->has('content') ? 'is-invalid' : ''}}" rows="15">{{old('content')}}</textarea>
                     @if ($errors->has('content'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('content') }}</strong>
@@ -49,7 +47,7 @@
                     <div class="col-md-6">
                         <div class="md-form mb-3">
                             <input type="text" name="startDate" id="startDate" class="datepicker form-control" value="{{old('startDate')}}">
-                            <label for="startDate">Start Date</label>
+                            <label for="startDate">Start Date <span class="red-asterisk">*</span></label>
                             @if ($errors->has('startDate'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('startDate') }}</strong>
@@ -61,7 +59,7 @@
                     <div class="col-md-6">
                         <div class="md-form mb-3">
                             <input type="text" name="expireDate" id="expireDate" class="datepicker form-control" value="{{old('expireDate')}}">
-                            <label for="expireDate">Expire Date</label>
+                            <label for="expireDate">Expire Date <span class="red-asterisk">*</span></label>
                             @if ($errors->has('expireDate'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('expireDate') }}</strong>
@@ -72,14 +70,14 @@
     
                 </div>
 
-                <p class="mb-0">Assign Section</p>
+                <p class="mb-0 select2Label">Assign Section <span class="red-asterisk">*</span></p>
                 <div class="md-form mt-0">
                     <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
                         @foreach ($sections as $section2)
                         <option value="{{ $section2->id }}">{{ $section2->name }}</option>
                         @endforeach
                     </select>
-                    <div class="form-check">
+                    <div class="form-check pl-0">
                         <input type="checkbox" class="form-check-input" id="checkbox">
                         <label class="form-check-label" for="checkbox">Send to all</label>
                     </div>

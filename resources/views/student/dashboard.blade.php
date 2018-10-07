@@ -41,8 +41,8 @@
                 <div class="modal-body">
 
                     <div class="md-form">
-                        <input type="text" name="token" id="token" class="form-control">
-                        <label for="token">Token</label>
+                        <input type="text" name="token" id="token" class="form-control" required>
+                        <label for="token">Token <span class="red-asterisk">*</span></label>
                     </div>
 
                 </div>

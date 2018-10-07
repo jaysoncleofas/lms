@@ -17,8 +17,7 @@
                 {{ csrf_field() }}
 
                 <div class="md-form">
-                    <input type="text" name="name" id="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
-                        value="{{old('name')}}">
+                    <input type="text" name="name" id="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}" value="{{old('name')}}">
                     <label for="name">Course Name</label>
                     @if ($errors->has('name'))
                     <span class="invalid-feedback" role="alert">
@@ -28,8 +27,7 @@
                 </div>
 
                 <div class="md-form">
-                    <input type="text" name="code" id="code" class="form-control {{$errors->has('code') ? 'is-invalid' : ''}}"
-                        value="{{old('code')}}">
+                    <input type="text" name="code" id="code" class="form-control {{$errors->has('code') ? 'is-invalid' : ''}}" value="{{old('code')}}">
                     <label for="code">Course code</label>
                     @if ($errors->has('code'))
                     <span class="invalid-feedback" role="alert">
@@ -38,10 +36,9 @@
                     @endif
                 </div>
 
-                <div class="md-form">
-                    <textarea type="text" id="description" name="description" class="md-textarea form-control {{$errors->has('description') ? 'is-invalid' : ''}}"
-                        rows="3">{{old('description')}}</textarea>
-                    <label for="description">Description</label>
+                <div class="form-group">
+                    <label class="select2Label">Description</label>
+                    <textarea type="text" id="description" name="description" rows="5" class="form-control rounded-0 z-depth-1 {{$errors->has('description') ? 'is-invalid' : ''}}">{{old('description')}}</textarea>
                     @if ($errors->has('description'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('description') }}</strong>
@@ -49,10 +46,9 @@
                     @endif
                 </div>
 
-                <p>Assign Instructors</p>
-                <div class="md-form">
-                    <select class="multiple-select form-control" multiple="multiple" id="instructors" name="instructors[]" required
-                        style="width:100% !important;">
+                <p class="select2Label mb-0 mt-3">Assign Instructors</p>
+                <div class="md-form mt-0">
+                    <select class="multiple-select form-control" multiple="multiple" id="instructors" name="instructors[]" required style="width:100% !important;">
                         @foreach ($instructors as $instructor)
                         <option value="{{ $instructor->id }}" {{ $instructor->id === old('instructors') ? 'selected' : ''  }}>{{ $instructor->firstName.' '.$instructor->lastName }}</option>
                         @endforeach

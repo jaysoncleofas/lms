@@ -340,3 +340,11 @@ background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.6), rgba(29, 210, 177,
   #dtHorizontalExample th, td {
     white-space: nowrap;
   }
+
+  .select2Label{
+    color: #757575 !important
+}
+
+.red-asterisk{
+    color: red
+}

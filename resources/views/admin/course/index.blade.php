@@ -27,7 +27,7 @@
                         <td>{{$course->name}}</td>
                         <td>
                             @foreach ($course->users as $instructor)
-                            {{$instructor->firstName.' '.$instructor->lastName}},
+                                <a class="blue-text" href="{{route('admin.instructor.show', $instructor->id)}}">{{$instructor->firstName.' '.$instructor->lastName}}</a>,
                             @endforeach
                         </td>
                         <td>

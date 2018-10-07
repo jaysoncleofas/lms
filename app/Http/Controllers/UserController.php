@@ -51,24 +51,42 @@ class UserController extends Controller
             $request->validate([
                 'avatar' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
-                    $avatar = $request->avatar;
-                    $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-                    $name = $timestamp. '-' .$avatar->getClientOriginalName();
-                    // $avatar->image = $name;
-                    $avatar->storeAs('public/avatars', $name);
+            
+            $avatar = $request->avatar;
+            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+            $name = $timestamp. '-' .$avatar->getClientOriginalName();
+            // $avatar->image = $name;
+            $avatar->storeAs('public/avatars', $name);
+            
+            $user->avatar = $name;
         }
 
-        $user->update([
-            'firstName' => $request->firstName,
-            'middleName' => $request->middleName,
-            'lastName'  => $request->lastName,
-            'birthDate' => $request->formatted_birthDate_submit,
-            'username'  => $request->username,
-            'email'     => $request->email,
-            'mobileNumber'     => $request->mobileNumber,
-            'avatar'     => $name ?? 'profile_pic.png',
-            // 'password'  => $request->password == '' ? bcrypt('secrect') : bcrypt($request->password),
-        ]);
+        
+        if ($request->studentNumber != $user->studentNumber) {
+            $request->validate([
+                'studentNumber'  => 'required|alpha_num|unique:users|digits:10',
+                ]);
+            }
+            
+        if ($user->role == 'student' && $user->studentNumber == '') {
+            $request->validate([
+                'studentNumber'  => 'required|alpha_num|unique:users|digits:10',
+            ]);
+
+            $user->studentNumber = $request->studentNumber;
+        }
+
+        if ($user->role == 'student') {
+            $user->birthdate     = $request->formatted_birthDate_submit;
+        }
+
+        $user->firstName     = $request->firstName;
+        $user->middleName    = $request->middleName;
+        $user->lastName      = $request->lastName;
+        $user->username      = $request->username;
+        $user->email         = $request->email;
+        $user->mobileNumber  = $request->mobileNumber;
+        $user->save();
 
         session()->flash('status', 'Update successful!');
         session()->flash('type', 'success');
@@ -97,7 +115,13 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        if (Hash::check(Input::get('oldpassword'), $user['password'])) {
+        $this->validate($request, [
+            'currentPassword' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6',
+        ]);
+
+        if (Hash::check(Input::get('currentPassword'), $user['password'])) {
                 $this->validate($request, [
                     'password' => 'required|min:6|confirmed'
                     ]);

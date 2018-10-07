@@ -81,8 +81,7 @@
                 <div class="modal-body">
                     <input type="hidden" name="to_user_id" value="{{$section->instructor->id}}" class="form-control" id="recipient-name">
                     <div class="md-form mt-0">
-                        <textarea type="text" placeholder="Message" name="message" id="message-text" class="form-control md-textarea"
-                            rows="3" required></textarea>
+                        <textarea type="text" placeholder="Message" name="message" id="message-text" class="form-control md-textarea" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -152,7 +152,8 @@ class SectionController extends Controller
         $section->tokens()->delete();
         $section->takes()->delete();
         $section->passes()->delete();
-        $section->delete();
+        $section->forceDelete();
+        // $section->delete();
 
         session()->flash('status', 'Successfully Deleted!');
         session()->flash('type', 'success');

@@ -28,6 +28,9 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
     Route::resource('/course', 'Admin\CourseController');
     Route::get('/instructor/{id}/course/{course}/section/{section}', 'Admin\InstructorController@section')->name('instructor.section');
     Route::get('/instructor/{id}/course/{course}', 'Admin\InstructorController@course')->name('instructor.course');
+    Route::delete('/instructor/trash/{user}', 'Admin\InstructorController@forceDestroy')->name('instructor.forceDestroy');
+    Route::put('/instructor/restore/{user}', 'Admin\InstructorController@restore')->name('instructor.restore');
+    Route::get('/instructor/trash', 'Admin\InstructorController@trash')->name('instructor.trash');
     Route::resource('/instructor', 'Admin\InstructorController');
     Route::resource('/student', 'Admin\StudentController');
 });

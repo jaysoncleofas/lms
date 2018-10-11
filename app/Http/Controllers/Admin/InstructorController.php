@@ -22,6 +22,24 @@ class InstructorController extends Controller
         return view('admin.instructor.index', compact('instructors'));
     }
 
+    public function trash()
+    {
+        $instructors = User::where('role', 'instructor')->onlyTrashed()->get();
+        return view('admin.instructor.deleted', compact('instructors'));
+    }
+
+    public function restore(Request $request, $id)
+    {
+        $instructor = User::withTrashed()->findOrFail($id);
+        $instructor->instructorSections()->restore();
+        $instructor->restore();
+
+        session()->flash('status', 'Successfully restored!');
+        session()->flash('type', 'success');
+
+        return redirect()->route('admin.instructor.trash');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -73,7 +91,6 @@ class InstructorController extends Controller
     public function show($id)
     {
         $instructor = User::findOrFail($id);
-
         return view('admin.instructor.show', compact('instructor'));
     }
 
@@ -177,12 +194,25 @@ class InstructorController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->courses()->detach();
+        // $user->courses()->detach();
+        $user->instructorSections()->delete();
         $user->delete();
 
         session()->flash('status', 'Successfully deleted!');
         session()->flash('type', 'success');
 
         return redirect()->route('admin.instructor.index');
+    }
+
+    public function forceDestroy($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->courses()->detach();
+        $user->forceDelete();
+
+        session()->flash('status', 'Successfully deleted!');
+        session()->flash('type', 'success');
+
+        return redirect()->route('admin.instructor.trash');
     }
 }

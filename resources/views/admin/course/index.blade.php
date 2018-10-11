@@ -25,7 +25,7 @@
                     @foreach ($courses as $course)
                     <tr>
                         <td>{{$course->name}}</td>
-                        <td>
+                        <td style="white-space: normal;">
                             @foreach ($course->users as $instructor)
                                 <a class="blue-text" href="{{route('admin.instructor.show', $instructor->id)}}">{{$instructor->firstName.' '.$instructor->lastName}}</a>,
                             @endforeach

@@ -34,10 +34,9 @@ class InstructorController extends Controller
         $instructor->instructorSections()->restore();
         $instructor->restore();
 
-        session()->flash('status', 'Successfully restored!');
+        session()->flash('status', 'Successfully restored');
         session()->flash('type', 'success');
-
-        return redirect()->route('admin.instructor.trash');
+        return response('success', 200);
     }
 
     /**
@@ -58,27 +57,19 @@ class InstructorController extends Controller
      */
     public function store(UserRequest $request)
     {
-        if($request->password){
-            $request->validate([
-                'password' => 'string|min:6|max:255',
-            ]);
-        }
-
         $user = User::create([
-            'role'      => 'instructor',
-            'firstName' => $request->firstName,
-            'middleName' => $request->middleName,
-            'lastName'  => $request->lastName,
-            // 'birthDate' => $request->formatted_birthDate_submit,
-            'username'  => $request->username,
-            'email'     => $request->email,
-            'mobileNumber'     => $request->mobileNumber,
-            'password'  => $request->password == '' ? bcrypt('secret') : bcrypt($request->password),
+            'role'         => 'instructor',
+            'firstName'    => $request->firstName,
+            'middleName'   => $request->middleName,
+            'lastName'     => $request->lastName,
+            'username'     => $request->username,
+            'email'        => $request->email,
+            'mobileNumber' => $request->mobileNumber,
+            'password'     => $request->password ? bcrypt($request->password) : bcrypt('secret'),
         ]);
 
-        session()->flash('status', 'Successfully added!');
+        session()->flash('status', 'Successfully saved');
         session()->flash('type', 'success');
-
         return redirect()->route('admin.instructor.index');
     }
 
@@ -136,52 +127,27 @@ class InstructorController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'firstName' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'lastName'  => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'middleName'  => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            // 'birthDate' => 'required|max:255',
+            'firstName'    => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'lastName'     => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'middleName'   => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
+            'username'     => 'required|alpha_dash|unique:users,username,'.$user->id.',id|max:255',
+            'email'        => 'required|string|email|unique:users,email,'.$user->id.',id|max:255',
+            'mobileNumber' => 'nullable|alpha_num|digits:11|unique:users,mobileNumber,'.$user->id.',id',
+            'password'     => 'nullable|string|min:6|max:255',
         ]);
-
-        // check if request email is not equal to users email then validate
-        if ($request->email != $user->email) {
-            $request->validate([
-                'email' => 'required|string|email|unique:users|max:255',
-            ]);
-        }
-         // check if request userName is not equal to users userName then validate
-        elseif($request->username != $user->username){
-            $request->validate([
-                'username' => 'required|string|unique:users|max:255',
-            ]);
-        }
-
-
-        if ($request->mobileNumber != $user->mobileNumber) {
-            $request->validate([
-                'mobileNumber'=> 'nullable|digits:11|unique:users',
-            ]);
-        }
-         // check if user type a password then validate
-        elseif($request->password){
-            $request->validate([
-                'password' => 'string|min:6|max:255',
-            ]);
-        }
 
         $user->update([
-            'firstName' => $request->firstName,
-            'middleName' => $request->middleName,
-            'lastName'  => $request->lastName,
-            // 'birthDate' => $request->formatted_birthDate_submit,
-            'username'  => $request->username,
-            'email'     => $request->email,
-            'mobileNumber'     => $request->mobileNumber,
-            'password'  => $request->password == '' ? $user->password : bcrypt($request->password),
+            'firstName'    => $request->firstName,
+            'middleName'   => $request->middleName,
+            'lastName'     => $request->lastName,
+            'username'     => $request->username,
+            'email'        => $request->email,
+            'mobileNumber' => $request->mobileNumber,
+            'password'     => $request->password ? bcrypt($request->password) : $user->password,
         ]);
 
-        session()->flash('status', 'Successfully updated!');
+        session()->flash('status', 'Successfully updated');
         session()->flash('type', 'success');
-
         return redirect()->route('admin.instructor.index');
     }
 
@@ -198,10 +164,9 @@ class InstructorController extends Controller
         $user->instructorSections()->delete();
         $user->delete();
 
-        session()->flash('status', 'Successfully deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
-
-        return redirect()->route('admin.instructor.index');
+        return response('success', 200);
     }
 
     public function forceDestroy($id)
@@ -210,9 +175,8 @@ class InstructorController extends Controller
         $user->courses()->detach();
         $user->forceDelete();
 
-        session()->flash('status', 'Successfully deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
-
-        return redirect()->route('admin.instructor.trash');
+        return response('success', 200);
     }
 }

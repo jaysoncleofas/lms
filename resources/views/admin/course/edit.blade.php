@@ -7,59 +7,63 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-xl-6 col-md-6">
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Update Course</h3>
-                <a href="{{route('admin.course.index')}}" class="btn btn-danger">Back</a>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row px-3 d-flex justify-content-between align-items-center">
+                        <h3 class="text-oswald">Update Course</h3>
+                        <a href="{{route('admin.course.index')}}" class="btn btn-danger">Back</a>
+                    </div>
+        
+                    <form action="{{route('admin.course.update', $course->id)}}" method="post">
+                        {{ csrf_field() }} {{method_field('PUT')}}
+        
+                        <div class="md-form">
+                            <input type="text" id="name" name="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
+                                value="{{$course->name}}">
+                            <label for="name">Course Name</label>
+                            @if ($errors->has('name'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+        
+                        <div class="md-form">
+                            <input type="text" name="code" id="code" class="form-control {{$errors->has('code') ? 'is-invalid' : ''}}"
+                                value="{{$course->code}}">
+                            <label for="code">Course code</label>
+                            @if ($errors->has('code'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('code') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+        
+                        <div class="form-group">
+                            <label class="select2Label">Description</label>
+                            <textarea type="text" name="description" rows="5" id="description" class="form-control rounded-0 z-depth-1 {{$errors->has('description') ? 'is-invalid' : ''}}">{{$course->description}}</textarea>
+                            @if ($errors->has('description'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('description') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+        
+                        <p class="mb-0 mt-3 select2Label">Assign Instructors</p>
+                        <div class="md-form mt-0">
+                            <select class="multiple-select form-control" multiple="multiple" id="instructors" name="instructors[]" required
+                                style="width:100% !important;">
+                                @foreach ($instructors as $instructor)
+                                <option value="{{ $instructor->id }}">{{ $instructor->firstName.' '.$instructor->lastName }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+        
+                        <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
+                    </form>
+                </div>
             </div>
-
-            <form action="{{route('admin.course.update', $course->id)}}" method="post">
-                {{ csrf_field() }} {{method_field('PUT')}}
-
-                <div class="md-form">
-                    <input type="text" id="name" name="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
-                        value="{{$course->name}}">
-                    <label for="name">Course Name</label>
-                    @if ($errors->has('name'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('name') }}</strong>
-                    </span>
-                    @endif
-                </div>
-
-                <div class="md-form">
-                    <input type="text" name="code" id="code" class="form-control {{$errors->has('code') ? 'is-invalid' : ''}}"
-                        value="{{$course->code}}">
-                    <label for="code">Course code</label>
-                    @if ($errors->has('code'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('code') }}</strong>
-                    </span>
-                    @endif
-                </div>
-
-                <div class="md-form">
-                    <label class="select2Label">Description</label>
-                    <textarea type="text" name="description" rows="5" id="description" class="form-control rounded-0 z-depth-1 {{$errors->has('description') ? 'is-invalid' : ''}}">{{$course->description}}</textarea>
-                    @if ($errors->has('description'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('description') }}</strong>
-                    </span>
-                    @endif
-                </div>
-
-                <p class="mb-0 mt-3 select2Label">Assign Instructors</p>
-                <div class="md-form mt-0">
-                    <select class="multiple-select form-control" multiple="multiple" id="instructors" name="instructors[]" required
-                        style="width:100% !important;">
-                        @foreach ($instructors as $instructor)
-                        <option value="{{ $instructor->id }}">{{ $instructor->firstName.' '.$instructor->lastName }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
-            </form>
         </div>
     </div>
 </div>

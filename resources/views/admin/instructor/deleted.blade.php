@@ -30,23 +30,9 @@
                         <td>{{$instructor->username}}</td>
                         <td>{{$instructor->mobileNumber}}</td>
                         <td>
-                            <a class="text-success" onclick="if(confirm('Are you sure you want to restore this instructor?')) {
-                                                            event.preventDefault();
-                                                            $('#restore-instructor-form-{{$instructor->id}}').submit();
-                                                          }"> Restore </a>
-                                                          |
-                            <a class="text-danger" onclick="if(confirm('Are you sure you want to permamently delete this instructor?')) {
-                                                            event.preventDefault();
-                                                            $('#delete-instructor-form-{{$instructor->id}}').submit();
-                                                          }">
-                                Delete
-                            </a>
-                            <form id="delete-instructor-form-{{$instructor->id}}" action="{{ route('admin.instructor.forceDestroy', $instructor->id) }}" method="post">
-                                @csrf {{method_field('DELETE')}}
-                            </form>
-                            <form id="restore-instructor-form-{{$instructor->id}}" action="{{ route('admin.instructor.restore', $instructor->id) }}" method="post">
-                                @csrf {{method_field('PUT')}}
-                            </form>
+                            <a href="javascript:void(0);" data-href="{{ route('admin.instructor.restore', $instructor->id) }}" class="restore text-success" data-method="put" data-from="instructor">Restore</a>
+                            |
+                            <a href="javascript:void(0);" data-href="{{ route('admin.instructor.forceDestroy', $instructor->id) }}" class="perma_delete text-danger" data-method="delete" data-from="instructor">Delete</a>                              
                         </td>
                     </tr>
                     @endforeach

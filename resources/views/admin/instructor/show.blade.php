@@ -15,7 +15,7 @@
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card py-5">
                 <div class="card-body text-center">
-                    <h4 class="text-osald">No Section Available</h4>
+                    <h4 class="text-osald">No course available</h4>
                 </div>
             </div>
         </div>

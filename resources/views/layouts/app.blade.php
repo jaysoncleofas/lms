@@ -47,6 +47,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/mdb.min.js') }}"></script>
+    <script src="{{ asset('js/delete.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.26.10/dist/sweetalert2.all.min.js"></script>
     <script>
         // SideNav Button Initialization
         $(".button-collapse").sideNav();

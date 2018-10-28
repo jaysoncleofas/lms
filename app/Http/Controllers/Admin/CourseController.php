@@ -53,7 +53,7 @@ class CourseController extends Controller
 
         $course->users()->sync($request->instructors, false);
 
-        session()->flash('status', 'Successfully added!');
+        session()->flash('status', 'Successfully saved');
         session()->flash('type', 'success');
 
         return redirect()->route('admin.course.index');
@@ -119,7 +119,7 @@ class CourseController extends Controller
 
 
 
-        session()->flash('status', 'Successfully updated!');
+        session()->flash('status', 'Successfully updated');
         session()->flash('type', 'success');
 
         return redirect()->route('admin.course.index');
@@ -137,9 +137,8 @@ class CourseController extends Controller
         $course->users()->detach();
         $course->delete();
 
-        session()->flash('status', 'Successfully deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
-
-        return redirect()->back();
+        return response('success', 200);
     }
 }

@@ -38,7 +38,7 @@
                                             @csrf
                                             <div class="md-form">
                                                 <input type="text" name="email" id="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
-                                                <label for="email">Email or Username</label>
+                                                <label for="email">Username or Email</label>
                                                 @if ($errors->has('email'))
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $errors->first('email') }}</strong>

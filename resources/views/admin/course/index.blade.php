@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald">Course{{count($courses) > 1 ? 's' : ''}}</h3>
+        <h3 class="text-oswald">Courses</h3>
         <a href="{{route('admin.course.create')}}" class="btn btn-primary">Add course</a>
     </div>
     <div class="row mt-lg-3">
@@ -31,18 +31,9 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{route('admin.course.edit', $course->id)}}" class="blue-text">Update</a> |
-                            <a class="text-danger" onclick="if(confirm('Are you sure you want to delete this course?')) {
-                                                            event.preventDefault();
-                                                            $('#delete-course-form-{{$course->id}}').submit();
-                                                          }">
-                                Delete
-                            </a>
-                            <form id="delete-course-form-{{$course->id}}" action="{{ route('admin.course.destroy', $course->id) }}"
-                                method="post">
-                                @csrf {{method_field('DELETE')}}
-
-                            </form>
+                            <a href="{{route('admin.course.edit', $course->id)}}" class="blue-text">Update</a> 
+                            |
+                            <a href="javascript:void(0);" data-href="{{ route('admin.course.destroy', $course->id) }}" class="perma_delete text-danger" data-method="delete" data-from="course">Delete</a> 
                         </td>
                     </tr>
                     @endforeach

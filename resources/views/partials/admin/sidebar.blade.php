@@ -8,20 +8,16 @@
         <li>
             <ul class="collapsible collapsible-accordion">
                 <li>
-                    <a href="{{route('admin.dashboard')}}" class="{{Nav::isRoute('admin.dashboard')}} collapsible-header waves-effect arrow-r"><i
-                            class="fa fa-tachometer"></i> Dashboard<i class="fa fa-angle-right pull-right"></i></a>
+                    <a href="{{route('admin.dashboard')}}" class="{{Nav::isRoute('admin.dashboard')}} collapsible-header waves-effect arrow-r"><i class="fa fa-tachometer"></i> Dashboard<i class="fa fa-angle-right pull-right"></i></a>
                 </li>
                 <li>
-                    <a href="{{route('admin.course.index')}}" class="{{Nav::hasSegment('course', 2)}} collapsible-header waves-effect arrow-r"><i
-                            class="fa fa-book"></i> Course<i class="fa fa-angle-right pull-right"></i></a>
+                    <a href="{{route('admin.course.index')}}" class="{{Nav::isResource('course', 2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i> Courses<i class="fa fa-angle-right pull-right"></i></a>
                 </li>
                 <li>
-                    <a href="{{route('admin.instructor.index')}}" class="{{Nav::hasSegment('instructor', 2)}} collapsible-header waves-effect arrow-r"><i
-                            class="fa fa-users"></i> Instructor<i class="fa fa-angle-right pull-right"></i></a>
+                    <a href="{{route('admin.instructor.index')}}" class="{{Nav::hasSegment('instructor', 2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-users"></i> Instructors<i class="fa fa-angle-right pull-right"></i></a>
                 </li>
                 <li>
-                    <a href="{{route('admin.student.index')}}" class="{{Nav::hasSegment('student', 2)}} collapsible-header waves-effect arrow-r"><i
-                            class="fa fa-users"></i> Student<i class="fa fa-angle-right pull-right"></i></a>
+                    <a href="{{route('admin.student.index')}}" class="{{Nav::hasSegment('student', 2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-users"></i> Students<i class="fa fa-angle-right pull-right"></i></a>
                 </li>
             </ul>
         </li>

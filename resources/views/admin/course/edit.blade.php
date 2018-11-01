@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row px-3 d-flex justify-content-between align-items-center">
                         <h3 class="text-oswald">Update Course</h3>
-                        <a href="{{route('admin.course.index')}}" class="btn btn-danger">Back</a>
+                        <a href="{{route('admin.course.index')}}" class="btn btn-danger"><i class="fa fa-arrow-circle-left"></i> Back</a>
                     </div>
         
                     <form action="{{route('admin.course.update', $course->id)}}" method="post">
@@ -21,7 +21,7 @@
                         <div class="md-form">
                             <input type="text" id="name" name="name" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}"
                                 value="{{$course->name}}">
-                            <label for="name">Course Name</label>
+                            <label for="name">Course Name <span class="red-asterisk">*</span></label>
                             @if ($errors->has('name'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('name') }}</strong>
@@ -42,7 +42,7 @@
         
                         <div class="form-group">
                             <label class="select2Label">Description</label>
-                            <textarea type="text" name="description" rows="5" id="description" class="form-control rounded-0 z-depth-1 {{$errors->has('description') ? 'is-invalid' : ''}}">{{$course->description}}</textarea>
+                            <textarea type="text" name="description" rows="5" id="description" class="form-control rounded-0 {{$errors->has('description') ? 'is-invalid' : ''}}">{{$course->description}}</textarea>
                             @if ($errors->has('description'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('description') }}</strong>
@@ -60,7 +60,7 @@
                             </select>
                         </div>
         
-                        <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Update</button>
+                        <button type="submit" name="button" class="btn btn-primary pull-right mt-4"><i class="fa fa-pencil"></i> Update</button>
                     </form>
                 </div>
             </div>

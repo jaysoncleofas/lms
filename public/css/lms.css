@@ -215,12 +215,6 @@ button{
     border-radius: 0;
 }
 
-// .search-icon {
-//     top: 8px;
-//     right: 21px;
-//     position: relative;
-// }
-
 .shadow-textarea textarea.form-control::placeholder {
   font-weight: 300;
 }
@@ -239,30 +233,12 @@ button{
     border-top: none !important;
    margin-bottom: 0px !important
  }
- tbody{
-   border-bottom: 1px solid #ced4da
 
- }
  thead{
-    border-top: none !important;
+    border-top: 1px solid #d2ecff !important;
+    background: #028aec;
+    color: #ffff;
  }
-
-//  .dataTables_length select {
-//     margin: 0 10px;
-//     border: 1px solid #3793cb;
-//     background-color: #e7f6ff;
-//     border-radius: 25px;
-//     display: block !important;
-//     color: #3793cb;
-//     font-size: unset;
-//     height: 37px !important;
-// }
-
-// .dataTables_length select:focus {
-//     /* border: 1px solid #3793cb; */
-//     background-color: #e7f6ff;
-//     color: #3793cb;
-// }
 
 .dataTables_filter input{
     -webkit-transition: all .3s;
@@ -288,9 +264,8 @@ button{
 
 }
 
-
 .table {
-    border-bottom:1px solid #d2ecff;
+    border:1px solid #d2ecff;
   }
 
   .table thead th {
@@ -298,7 +273,7 @@ button{
   }
 
 
-  .table tbody tr:nth-child(odd) {
+  .table tbody tr:nth-child(even) {
     background-color: #e6f5fe;
   }
 

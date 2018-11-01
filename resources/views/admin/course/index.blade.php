@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <h3 class="text-oswald">Courses</h3>
-        <a href="{{route('admin.course.create')}}" class="btn btn-primary">Add course</a>
+        <a href="{{route('admin.course.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add course</a>
     </div>
     <div class="row mt-lg-3">
         <div class="col-xl-12 col-md-12 mb-4">
@@ -31,9 +31,8 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{route('admin.course.edit', $course->id)}}" class="blue-text">Update</a> 
-                            |
-                            <a href="javascript:void(0);" data-href="{{ route('admin.course.destroy', $course->id) }}" class="perma_delete text-danger" data-method="delete" data-from="course">Delete</a> 
+                            <a href="{{route('admin.course.edit', $course->id)}}" class="blue-text mr-3" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></a> 
+                            <a href="javascript:void(0);" data-href="{{ route('admin.course.destroy', $course->id) }}" class="perma_delete text-danger" data-method="delete" data-from="course" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> 
                         </td>
                     </tr>
                     @endforeach
@@ -57,6 +56,10 @@
                 searchPlaceholder: "Search",
             }
         });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     });
 
 </script>

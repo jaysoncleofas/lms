@@ -2,7 +2,8 @@
     <ul class="custom-scrollbar">
         <li>
             <div class="logo-wrapper waves-light">
-                <a href="#"><img src="{{asset('images/logo.png')}}" class="img-fluid flex-center img-logo"></a>
+                {{-- <a href="#"><img src="{{asset('images/logo.png')}}" class="img-fluid flex-center img-logo"></a> --}}
+                <a class="navbar-brand text-oswald black-text" href="#" style="font-size:19px;padding-left: 15px;">Learning Management System </a>
             </div>
         </li>
         <li>

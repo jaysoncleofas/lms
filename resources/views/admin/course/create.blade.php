@@ -19,7 +19,7 @@
                 <div class="card-body">
                         <div class="row px-3 d-flex justify-content-between align-items-center">
                             <h3 class="text-oswald">Add Course</h3>
-                            <a href="{{route('admin.course.index')}}" class="btn btn-danger">Back</a>
+                            <a href="{{route('admin.course.index')}}" class="btn btn-danger"><i class="fa fa-arrow-circle-left"></i> Back</a>
                         </div>
                         <form action="{{route('admin.course.store')}}" method="post">
                             {{ csrf_field() }}
@@ -46,7 +46,7 @@
             
                             <div class="form-group">
                                 <label class="select2Label">Description</label>
-                                <textarea type="text" id="description" name="description" rows="5" class="form-control rounded-0 z-depth-1 {{$errors->has('description') ? 'is-invalid' : ''}}">{{old('description')}}</textarea>
+                                <textarea type="text" id="description" name="description" rows="5" class="form-control rounded-0 {{$errors->has('description') ? 'is-invalid' : ''}}">{{old('description')}}</textarea>
                                 @if ($errors->has('description'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('description') }}</strong>
@@ -63,7 +63,7 @@
                                 </select>
                             </div>
             
-                            <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Save</button>
+                            <button type="submit" name="button" class="btn btn-primary pull-right mt-4"><i class="fa fa-save"></i> Save</button>
                         </form>
                 </div>
             </div>

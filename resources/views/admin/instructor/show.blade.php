@@ -9,7 +9,7 @@
 
     <div class="row mt-3">
         <div class="col-md-2 col-sm-4 text-center">
-                <img src="{{ $instructor->avatar ? asset('storage/avatars/'.$instructor->avatar) : asset('images/profile_pic.png')}}" class="img-fluid rounded-circle z-depth-1" style="height:100px;width:100px;object-fit: cover;" alt="">
+                <img src="{{ $instructor->avatar ? asset('storage/avatars/'.$instructor->avatar) : asset('images/profile_pic.png')}}" class="img-fluid rounded-circle z-depth-1" style="height:100px;width:100px;object-fit:cover;" alt="">
         </div>
         <div class="col-md-5 col-sm-8 mt-3 instructor-des">
             <p><b>Name:</b> {{ $instructor->name() }}</p> 

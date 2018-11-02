@@ -11,28 +11,26 @@
         {{ csrf_field() }} {{method_field('PUT')}}
             <div class="row mt-lg-3">
                 <div class="col-lg-4 mb-5">
-                    <div class="col-md-12">
-                        <div class="md-form">
-                            <img class="img-fluid img-preview z-depth-1">
-                            <div class="file-field">
-                                <div class="btn btn-primary btn-sm float-left">
-                                    <span>Choose file</span>
-                                    <input type="file" name="avatar" onchange="previewFile()">
-                                </div>
-                                <a class="btn btn-danger btn-sm float-left" onclick="
-                                            event.preventDefault();
-                                            $('#remove-profile-pic-{{$user->id}}').submit();
-                                          ">
-                                    <span>Remove</span>
-                                </a>
+                    <div class="md-form">
+                        <img class="img-fluid img-preview z-depth-1" style="object-fit: cover;height:250px;width:250px;">
+                        <div class="file-field">
+                            <div class="btn btn-primary btn-sm float-left">
+                                <span>Choose file</span>
+                                <input type="file" name="avatar" onchange="previewFile()">
                             </div>
-
-                            @if ($errors->has('image'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('image') }}</strong>
-                                </span>
-                            @endif
+                            <a class="btn btn-danger btn-sm float-left" onclick="
+                                        event.preventDefault();
+                                        $('#remove-profile-pic-{{$user->id}}').submit();
+                                        ">
+                                <span>Remove</span>
+                            </a>
                         </div>
+
+                        @if ($errors->has('image'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-8">

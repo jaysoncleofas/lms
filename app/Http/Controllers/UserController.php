@@ -87,7 +87,7 @@ class UserController extends Controller
         $user->mobileNumber  = $request->mobileNumber;
         $user->save();
 
-        session()->flash('status', 'Update successful!');
+        session()->flash('status', 'Update successful');
         session()->flash('type', 'success');
 
         return redirect()->route('profile.index');
@@ -99,7 +99,7 @@ class UserController extends Controller
         $user->avatar = 'profile_pic.png';
         $user->save();
 
-        session()->flash('status', 'Remove profile picture successful!');
+        session()->flash('status', 'Remove profile picture successful');
         session()->flash('type', 'success');
 
         return redirect()->route('profile.update');
@@ -134,9 +134,6 @@ class UserController extends Controller
                 session()->flash('type', 'error');
                 return redirect()->route('change.password.index');
               }
-
-        // return $user
-
     }
 
     public function my_files()
@@ -172,7 +169,7 @@ class UserController extends Controller
         $files->size = $size ?? "";
         $files->save();
 
-        session()->flash('status', 'Successfully saved!');
+        session()->flash('status', 'Successfully saved');
         session()->flash('type', 'success');
 
         return redirect()->back();
@@ -192,7 +189,7 @@ class UserController extends Controller
         $entry = File::findOrFail($file_id);
         $entry->delete();
 
-        session()->flash('status', 'Successfully deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
         return response('success', 200);
     }

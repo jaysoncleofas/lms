@@ -2,7 +2,8 @@
         <ul class="custom-scrollbar">
             <li>
                 <div class="logo-wrapper waves-light">
-                    <a href="#"><img src="{{asset('images/logo.png')}}" class="img-fluid flex-center img-logo"></a>
+                    <img style="height:50px;width:50px;padding:5px;margin-top:15px;" src="{{ asset('images/ccs.png') }}" alt=""> 
+                    <p style="margin-top:13px;color:black;padding-top:15px;font-size:16px;position:absolute;top:0;left:54px;">Learning Management System</p>
                 </div>
             </li>
             <li>

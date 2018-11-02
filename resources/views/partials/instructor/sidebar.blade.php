@@ -1,8 +1,9 @@
 <div id="slide-out" class="side-nav side-nav-light fixed">
     <ul class="custom-scrollbar">
         <li>
-            <div class="waves-light">
-                <a class="navbar-brand text-oswald black-text" href="#" style="font-size:19px;padding-left: 15px;">Learning Management System </a>
+            <div class="logo-wrapper waves-light">
+                <img style="height:50px;width:50px;padding:5px;margin-top:15px;" src="{{ asset('images/ccs.png') }}" alt=""> 
+                <p style="margin-top:13px;color:black;padding-top:15px;font-size:16px;position:absolute;top:0;left:54px;">Learning Management System</p>
             </div>
         </li>
         <li>

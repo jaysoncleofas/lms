@@ -4,12 +4,12 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-9">
-            <div class="card">
+            <div class="row px-3 d-flex justify-content-between align-items-center">
+                <h3 class="text-oswald font-weight-bold">Add Instructor</h3>
+                {{-- <a href="{{route('admin.instructor.index')}}" class="btn btn-light"><i class="fa fa-arrow-circle-left"></i> Back to list</a> --}}
+            </div>
+            <div class="card mt-2">
                 <div class="card-body">
-                    <div class="row px-3 d-flex justify-content-between align-items-center">
-                        <h3 class="text-oswald">Add Instructor</h3>
-                        <a href="{{route('admin.instructor.index')}}" class="btn btn-danger">Back</a>
-                    </div>
                     <form action="{{route('admin.instructor.store')}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-row">
@@ -88,7 +88,7 @@
                             @endif
                         </div>
         
-                        <button type="submit" name="button" class="btn btn-primary pull-right mt-4">Save</button>
+                        <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-save"></i> Save</button>
                     </form>
                 </div>
             </div>

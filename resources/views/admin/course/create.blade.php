@@ -11,16 +11,14 @@
 
 @section('content')
 <div class="container-fluid">
-
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            
-            <div class="card">
+                <div class="row px-3 d-flex justify-content-between align-items-center">
+                    <h3 class="text-oswald font-weight-bold"><strong>Add Course</strong></h3>
+                    {{-- <a href="{{route('admin.course.index')}}" class="btn btn-light"><i class="fa fa-arrow-circle-left"></i> Back to List</a> --}}
+                </div>
+            <div class="card mt-2">
                 <div class="card-body">
-                        <div class="row px-3 d-flex justify-content-between align-items-center">
-                            <h3 class="text-oswald">Add Course</h3>
-                            <a href="{{route('admin.course.index')}}" class="btn btn-danger"><i class="fa fa-arrow-circle-left"></i> Back</a>
-                        </div>
                         <form action="{{route('admin.course.store')}}" method="post">
                             {{ csrf_field() }}
             
@@ -63,7 +61,7 @@
                                 </select>
                             </div>
             
-                            <button type="submit" name="button" class="btn btn-primary pull-right mt-4"><i class="fa fa-save"></i> Save</button>
+                            <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-save"></i> Save</button>
                         </form>
                 </div>
             </div>

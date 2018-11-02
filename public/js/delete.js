@@ -48,7 +48,7 @@ $(document).on('click', '.perma_delete', function(e) {
     var from = $this.data('from');
     swal({
         title: 'Are you sure?',
-        text: 'You want to permamently delete this '+from+'?',
+        text: 'You won\'t be able to revert this!',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

@@ -6,8 +6,10 @@
     </div>
     <!-- Breadcrumb-->
     <div class="breadcrumb-dn mr-auto">
-            <a class="navbar-brand text-oswald" href="#" style="font-size:19px;">Learning Management System </a>
-        {{-- <p>Learning Management System</p> --}}
+        <a class="navbar-brand text-oswald" href="/{{ Auth::user()->role }}/{{ Auth::user()->role == 'instructor' ? 'course' : 'dashboard' }}" style="font-size:19px;">
+            <img style="height:35px;" src="{{ asset('images/ccs.png') }}" alt="">
+            Learning Management System 
+        </a>
     </div>
     <ul class="nav navbar-nav nav-flex-icons ml-auto">
         <li class="nav-item">
@@ -34,4 +36,4 @@
         </li>
     </ul>
 </nav>
-        <!-- /.Navbar -->
+<!-- /.Navbar -->

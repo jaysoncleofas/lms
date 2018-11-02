@@ -33,11 +33,11 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
     Route::put('/instructor/restore/{user}', 'Admin\InstructorController@restore')->name('instructor.restore');
     Route::get('/instructor/trash', 'Admin\InstructorController@trash')->name('instructor.trash');
     Route::resource('/instructor', 'Admin\InstructorController');
-    Route::resource('/student', 'Admin\StudentController');
+    Route::get('/student', 'Admin\StudentController@index')->name('student.index');
 });
 
 Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {
-    Route::get('/dashboard', 'HomeController@instructor_dashboard')->name('dashboard');
+    Route::get('/all-course', 'HomeController@instructor_dashboard')->name('dashboard');
     Route::put('/course/{course}/section/{section}/status', 'Instructor\SectionController@status')->name('section.status');
     Route::get('/course/{course}/section/deactivated', 'Instructor\SectionController@deactivated')->name('section.deactivated');
     Route::resource('/course/{course}/section', 'Instructor\SectionController')->except('show');

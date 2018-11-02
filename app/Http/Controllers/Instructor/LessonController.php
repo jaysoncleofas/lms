@@ -86,15 +86,15 @@ class LessonController extends Controller
 
         $msg = 'There\'s a new uploaded lesson in your course '.$lesson->course->name;
 
-         foreach($lesson->sections as $section){
-            foreach($section->users as $user){
-                if($user->mobileNumber){
-                    $mobile = $user->mobileNumber;     
-                    $message = \App\Helpers\SMS::send($mobile, $msg);
-                }
-            }
-            Mail::to($user->email)->send(new newLesson($user, $lesson));
-        }
+        //  foreach($lesson->sections as $section){
+        //     foreach($section->users as $user){
+        //         if($user->mobileNumber){
+        //             $mobile = $user->mobileNumber;     
+        //             $message = \App\Helpers\SMS::send($mobile, $msg);
+        //         }
+        //     }
+        //     Mail::to($user->email)->send(new newLesson($user, $lesson));
+        // }
         
          session()->flash('status', 'Successfully added!');
          session()->flash('type', 'success');

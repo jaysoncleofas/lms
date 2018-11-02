@@ -18,13 +18,13 @@ class InstructorController extends Controller
      */
     public function index()
     {
-        $instructors = User::where('role', 'instructor')->get();
+        $instructors = User::where('role', 'instructor')->latest()->get();
         return view('admin.instructor.index', compact('instructors'));
     }
 
     public function trash()
     {
-        $instructors = User::where('role', 'instructor')->onlyTrashed()->get();
+        $instructors = User::where('role', 'instructor')->onlyTrashed()->orderBy('deleted_at', 'desc')->get();
         return view('admin.instructor.deleted', compact('instructors'));
     }
 

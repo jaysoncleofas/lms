@@ -141,8 +141,8 @@ class UserController extends Controller
 
     public function my_files()
     {
-        $files = File::where('user_id', Auth::id())->get();
-        return view('profile.my_files', compact('files'));
+        $data['files'] = File::where('user_id', Auth::id())->latest()->get();
+        return view('profile.my_files', $data);
     }
 
     public function files_store(Request $request)
@@ -183,7 +183,8 @@ class UserController extends Controller
 
         $entry = File::findOrFail($file_id);
         $pathToFile = storage_path()."/app/public/userfiles/".$entry->name;
-        return response()->download($pathToFile);
+        $name = substr($entry->name,11);
+        return response()->download($pathToFile, $name);
     }
 
     public function files_destroy($file_id){
@@ -193,8 +194,7 @@ class UserController extends Controller
 
         session()->flash('status', 'Successfully deleted!');
         session()->flash('type', 'success');
-
-        return redirect()->back();
+        return response('success', 200);
     }
 
 

@@ -33,7 +33,7 @@ class User extends Authenticatable
 
     public function courses()
     {
-        return $this->belongsToMany('App\Course');
+        return $this->belongsToMany('App\Course')->latest();
     }
 
     public function sections()
@@ -45,7 +45,6 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Section', 'instructor_id');
     }
-
 
     public function announcements()
     {

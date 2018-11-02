@@ -105,12 +105,19 @@ div.dataTables_wrapper div.dataTables_length select {
         padding-right: 0 !important;
          padding-left: 0 !important;
     }
+
+    footer{
+        margin-left: 0px !important;
+    }
 }
 
 main.admin{
     margin-left: 240px;
     margin-top: 80px;
     padding: 15px 15px;
+}
+footer{
+    margin-left: 240px;
 }
 
 // .side-nav.side-nav-light .collapsible li .collapsible-header{
@@ -322,4 +329,19 @@ background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.6), rgba(29, 210, 177,
 
 .red-asterisk{
     color: red
+}
+
+.tiles-left-icon{
+    position: absolute;
+    left: 20px;
+}
+
+footer.page-footer .footer-copyright {
+    background-color: #ffffff !important
+}
+
+@media only screen and (max-width: 575px) {
+    .instructor-des{
+        text-align: center !important
+    }
 }

@@ -8,13 +8,12 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="card">
+            <div class="row px-3 d-flex justify-content-between align-items-center">
+                <h3 class="text-oswald font-weight-bold">Update Course</h3>
+                {{-- <a href="{{route('admin.course.index')}}" class="btn btn-light mr-0"><i class="fa fa-table"></i> TAble list</a> --}}
+            </div>
+            <div class="card mt-2">
                 <div class="card-body">
-                    <div class="row px-3 d-flex justify-content-between align-items-center">
-                        <h3 class="text-oswald">Update Course</h3>
-                        <a href="{{route('admin.course.index')}}" class="btn btn-danger"><i class="fa fa-arrow-circle-left"></i> Back</a>
-                    </div>
-        
                     <form action="{{route('admin.course.update', $course->id)}}" method="post">
                         {{ csrf_field() }} {{method_field('PUT')}}
         
@@ -60,7 +59,7 @@
                             </select>
                         </div>
         
-                        <button type="submit" name="button" class="btn btn-primary pull-right mt-4"><i class="fa fa-pencil"></i> Update</button>
+                        <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-pencil-alt"></i> Update</button>
                     </form>
                 </div>
             </div>

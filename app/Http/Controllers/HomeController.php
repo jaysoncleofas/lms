@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
+use Auth;
+use Hash;
+use carbon\Carbon;
 use App\User;
 use App\Course;
-use Auth;
-use App\Token;
-use Hash;
 use App\Section;
+use App\Lesson;
+use App\Quiz;
+use App\Assignment;
+use App\Token;
+use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class HomeController extends Controller
 {
@@ -32,11 +35,16 @@ class HomeController extends Controller
      */
     public function admin_dashboard()
     {
-        $instructor_total = User::where('role', 'instructor')->count();
-        $course_total = Course::count();
-        $student_total = User::where('role', 'student')->count();
+        $data['course_total'] = Course::count();
+        $data['instructor_total'] = User::where('role', 'instructor')->count();
+        $data['student_total'] = User::where('role', 'student')->count();
+        $data['lesson_total'] = Lesson::count();
+        $data['quiz_total'] = Quiz::count();
+        $data['assignment_total'] = Assignment::count();
+        $data['pie_data'] = [$data['lesson_total'], $data['quiz_total'], $data['assignment_total']];
+        $data['new_users'] = User::latest()->limit(10)->get();
 
-        return view('admin.dashboard', compact('instructor_total', 'course_total', 'student_total'));
+        return view('admin.dashboard', $data);
     }
 
     public function instructor_dashboard()

@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <div>
-            <h3 class="text-oswald">{{$course->name}}</h3>
+            <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span> </h3>
             <h4 class="text-oswald">Section / {{$section->name}}</h4>
         </div>
         <div>

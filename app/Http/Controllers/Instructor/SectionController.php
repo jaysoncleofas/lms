@@ -21,17 +21,17 @@ class SectionController extends Controller
         $user = Auth::user();
         $course = $user->courses()->findOrFail($id);
         $sections = Section::where('course_id', $id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', true)->get();
-        $sections2 = Section::where('course_id', $id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', false)->get();
+        $sections2 = Section::where('course_id', $id)->where('instructor_id', $user->id)->where('isActive', false)->get();
         return view('instructor.section.index', compact('course', 'sections', 'sections2'));
     }
 
     public function deactivated($course_id)
     {
         $user = Auth::user();
-        $course = $user->courses()->findOrFail($course_id);
-        $sections = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', true)->get();
-        $sections2 = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', false)->get();
-        return view('instructor.section.deactivated', compact('course', 'sections', 'sections2'));
+        $data['course'] = $user->courses()->findOrFail($course_id);
+        $data['sections'] = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->where('isActive', true)->get();
+        $data['sections2'] = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->orderBy('name', 'asc')->where('isActive', false)->get();
+        return view('instructor.section.deactivated', $data);
     }
 
     /**
@@ -43,7 +43,6 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($id);
-
         return view('instructor.section.create', compact('course'));
     }
 
@@ -57,7 +56,6 @@ class SectionController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($id);
-
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -68,27 +66,10 @@ class SectionController extends Controller
         $section->name = $request->name;
         $section->save();
 
-        session()->flash('status', 'Successfully added!');
+        session()->flash('status', 'Successfully saved');
         session()->flash('type', 'success');
-
         return redirect()->route('instructor.section.index', $course->id);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function announcement($course_id, $id)
-    // {
-    //     $user = Auth::user();
-    //     $course = $user->courses()->findOrFail($course_id);
-    //
-    //     $section = Section::where('course_id', $course->id)->findOrFail($id);
-    //
-    //     return view('instructor.section.announcement', compact('course', 'section'));
-    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -117,7 +98,6 @@ class SectionController extends Controller
         $course = $user->courses()->findOrFail($course_id);
         $section = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->findOrFail($id);
 
-
         if ($request->name != $section->name) {
             $request->validate([
                 'name' => 'required|string|max:255',
@@ -127,10 +107,9 @@ class SectionController extends Controller
         $section->name = $request->name;
         $section->save();
 
-        session()->flash('status', 'Successfully update!');
+        session()->flash('status', 'Successfully updated');
         session()->flash('type', 'success');
-
-        return redirect()->route('instructor.section.index', $course->id);
+        return redirect()->back();
     }
 
     /**
@@ -153,11 +132,9 @@ class SectionController extends Controller
         $section->takes()->delete();
         $section->passes()->delete();
         $section->forceDelete();
-        // $section->delete();
 
-        session()->flash('status', 'Successfully Deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
-
         return redirect()->back();
     }
 
@@ -166,13 +143,11 @@ class SectionController extends Controller
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
         $section = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->findOrFail($section_id);
-
         $section->isActive = $request->status == 1 ? true : false;
         $section->save();
 
-        session()->flash('status', 'Successfully updated!');
+        session()->flash('status', 'Successfully updated');
         session()->flash('type', 'success');
-
-        return redirect()->route('instructor.section.index', $course->id);
+        return response('success', 200); 
     }
 }

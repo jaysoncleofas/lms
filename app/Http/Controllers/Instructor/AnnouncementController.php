@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Instructor;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Auth;
 use App\Course;
 use App\User;
 use App\Section;
 use App\Announcement;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Mail\newAnnouncement;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Controller;
 
 class AnnouncementController extends Controller
 {
@@ -24,11 +24,7 @@ class AnnouncementController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        // $section = Section::where('course_id', $course->id)->findOrFail($id);
-
         $announcements = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->paginate(20);
-
-        // return view('instructor.announcement.index', compact('course', 'section', 'announcements'));
         return view('instructor.announcement.index', compact('course', 'announcements'));
     }
 
@@ -188,14 +184,11 @@ class AnnouncementController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-
         $announcement = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
         $announcement->sections()->detach();
         $announcement->delete();
-
-        session()->flash('status', 'Successfully deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
-
-        return redirect()->route('instructor.announcement.index', $course->id);
+        return response('success', 200);
     }
 }

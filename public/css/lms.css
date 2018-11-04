@@ -76,8 +76,22 @@ div.dataTables_wrapper div.dataTables_length select {
   img.img-logo {
     display: none !important
   }
+
+  .logo-wrapper img {
+        display: none !important
+    }
+}
+@media (max-width: 992px) {
+    .logo-wrapper img {
+        display: block !important
+    }
 }
 
+@media only screen and (max-width: 500px) {
+    #img-announcement{
+        height: 250px !important; 
+    }
+}
 
 @media only screen and (min-width: 994px) {
     .side-nav.fixed {
@@ -94,6 +108,10 @@ div.dataTables_wrapper div.dataTables_length select {
          /* border-bottom: none !important; */
         height: 65px;
     }
+}
+
+.logo-wrapper img {
+    display: none
 }
 
 @media only screen and (max-width: 993px) {

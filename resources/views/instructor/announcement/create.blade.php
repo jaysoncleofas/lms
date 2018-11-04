@@ -12,61 +12,65 @@
 @section('content')
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald">{{$course->name}}</h3>
+        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span> </h3>
     </div>
     <div class="row mt-5 justify-content-center">
-        <div class="col-xl-6 col-md-6 mb-5 pb-5">
+        <div class="col-lg-8 col-md-10 mb-5 pb-5">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Post Announcement</h3>
-                <a href="{{route('instructor.announcement.index', $course->id)}}" class="btn btn-danger">Back</a>
+                {{-- <a href="{{route('instructor.announcement.index', $course->id)}}" class="btn btn-danger">Back</a> --}}
             </div>
-            <form class="" action="{{route('instructor.announcement.store', $course->id)}}" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-
-                <div class="form-group mb-3">
-                    <p class="select2Label">Message <span class="red-asterisk">*</span></p>
-                    <textarea type="text" id="message" name="message" class="form-control rounded-0 z-depth-1 {{$errors->has('message') ? 'is-invalid' : ''}}" rows="3">{{old('message')}}</textarea>
-                    {{-- <label for="message">Message</label> --}}
-                    @if ($errors->has('message'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('message') }}</strong>
-                    </span>
-                    @endif
-                </div>
-
-                <div class="md-form">
-                    <div class="file-field">
-                        <div class="btn btn-primary btn-sm float-left ml-0">
-                            <span>Upload image</span>
-                            <input type="file" name="image" onchange="previewFile()">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <form class="" action="{{ route('instructor.announcement.store', $course->id) }}" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group mb-3">
+                            <p class="select2Label">Message <span class="red-asterisk">*</span></p>
+                            <textarea type="text" id="message" name="message" class="form-control rounded-0 {{$errors->has('message') ? 'is-invalid' : ''}}" rows="3">{{old('message')}}</textarea>
+                            {{-- <label for="message">Message</label> --}}
+                            @if ($errors->has('message'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('message') }}</strong>
+                            </span>
+                            @endif
                         </div>
-                    </div>
-                    <img class="img-fluid img-preview z-depth-1">
-
-                    @if ($errors->has('image'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('image') }}</strong>
-                        </span>
-                    @endif
+        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="md-form mt-0">
+                                    <div class="file-field">
+                                        <div class="btn btn-primary btn-md float-left ml-0">
+                                            <span><i class="fa fa-file-image"></i> Upload image</span>
+                                            <input type="file" name="image" onchange="previewFile()">
+                                        </div>
+                                    </div>
+                                    
+                                    @if ($errors->has('image'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('image') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <img id="img-preview" class="img-fluid img-preview z-depth-1">
+                        <p class="mb-0 select2Label">Select Section <span class="red-asterisk">*</span></p>
+                        <div class="md-form mt-0">
+                            <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
+                                @foreach ($sections as $section2)
+                                <option value="{{ $section2->id }}">{{ $section2->name }}</option>
+                                @endforeach
+                            </select>
+                            <div class="form-check pl-0">
+                                <input type="checkbox" class="form-check-input" id="checkbox">
+                                <label class="form-check-label" for="checkbox">Post to all</label>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary float-right mt-4"><i class="fa fa-share-square"></i> Post</button>
+                    </form>
                 </div>
-                <br>
-                <p class="mb-0 mt-2 select2Label">Select Section <span class="red-asterisk">*</span></p>
-                <div class="md-form mt-0">
-                    <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
-                        @foreach ($sections as $section2)
-                        <option value="{{ $section2->id }}">{{ $section2->name }}</option>
-                        @endforeach
-                    </select>
-                    <div class="form-check pl-0">
-                        <input type="checkbox" class="form-check-input" id="checkbox">
-                        <label class="form-check-label" for="checkbox">Send to all</label>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary pull-right mt-3">Post</button>
-
-            </form>
-
+            </div>
         </div>
     </div>
 </div>
@@ -95,6 +99,7 @@
         }
 
         if (file) {
+            document.getElementById('img-preview').style.marginBottom = "1rem";
             reader.readAsDataURL(file); //reads the data as a URL
         }
 

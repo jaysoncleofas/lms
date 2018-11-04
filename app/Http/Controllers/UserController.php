@@ -154,8 +154,6 @@ class UserController extends Controller
            ]);
 
            $fileUpload = $request->file_upload;
-           time() . '.' .
-           // $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
            $name = time().'-'.$fileUpload->getClientOriginalName();
            $type = $fileUpload->getClientOriginalExtension();
            $size = $fileUpload->getClientSize();
@@ -164,9 +162,9 @@ class UserController extends Controller
 
         $files = new File;
         $files->user_id = Auth::id();
-        $files->name = $name ?? "";
-        $files->type = $type ?? "";
-        $files->size = $size ?? "";
+        $files->name = $name;
+        $files->type = $type;
+        $files->size = $size;
         $files->save();
 
         session()->flash('status', 'Successfully saved');

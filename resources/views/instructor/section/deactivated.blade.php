@@ -9,7 +9,7 @@
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <h3 class="text-oswald">{{$course->name}}</h3>
     </div>
-    <div class="row mt-lg-3">
+    <div class="row mt-3">
         <div class="col-lg-4 col-sm-4 mb-4">
             <div class="card blue">
                 <div class="view overlay text-white text-center py-4">

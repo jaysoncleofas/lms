@@ -14,7 +14,7 @@
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span> </h3>
     </div>
-    <div class="row mt-3 justify-content-center">
+    <div class="row mt-5 justify-content-center">
         <div class="col-lg-8 col-md-10 mb-5 pb-5">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Announcement{{count($announcements) > 1 ? 's' : ''}}</h3>
@@ -42,7 +42,7 @@
                                     <p class="name blue-text my-0">{{ $announcement->instructor->name() }}</p>
                                     <div class="date pl-0">
                                         <i class="fa fa-clock-o"></i>
-                                        {{$announcement->created_at->diffForHumans()}}
+                                        {{ $announcement->created_at->diffForHumans() }}
                                     </div>
                                     <div class="float-right mb-3">
                                         <a href="{{route('instructor.announcement.edit', [$course->id, $announcement->id])}}" class="thumbs mr-3 black-text" data-toggle="tooltip" data-placement="bottom" title="Edit">

@@ -356,6 +356,7 @@ background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.6), rgba(29, 210, 177,
 .tiles-left-icon{
     position: absolute;
     left: 20px;
+    color: #68bafb;
 }
 
 footer.page-footer .footer-copyright {

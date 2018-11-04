@@ -56,7 +56,7 @@
                             <div class="md-form mt-0">
                                 <select class="multiple-select form-control" multiple="multiple" id="instructors" name="instructors[]" style="width:100% !important;">
                                     @foreach ($instructors as $instructor)
-                                    <option value="{{ $instructor->id }}" {{ $instructor->id === old('instructors') ? 'selected' : ''  }}>{{ $instructor->firstName.' '.$instructor->lastName }}</option>
+                                        <option value="{{ $instructor->id }}" {{ $instructor->id === old('instructors') ? 'selected' : ''  }}>{{ $instructor->name() }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -74,7 +74,7 @@
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
     $('.multiple-select').select2();
-    $('.multiple-select').select2().val({!!json_encode(old('instructors')) !!}).trigger('change');
+    $('.multiple-select').select2().val({!! json_encode(old('instructors')) !!}).trigger('change');
     $('.datepicker').pickadate({
         max: new Date(),
         formatSubmit: 'yyyy-mm-dd',

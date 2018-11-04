@@ -14,7 +14,7 @@
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span> </h3>
     </div>
-    <div class="row mt-3 justify-content-center">
+    <div class="row mt-5 justify-content-center">
         <div class="col-lg-8 col-md-10 mb-5 pb-5">
             <div class="row px-3 d-flex justify-content-between align-items-center">
                 <h3 class="text-oswald">Update Announcement</h3>

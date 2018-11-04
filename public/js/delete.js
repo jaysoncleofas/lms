@@ -134,14 +134,15 @@ $(document).on('click', '.deactivate', function(e) {
     e.preventDefault();
     var $this = $(this);
     var from = $this.data('from');
+    var action = $this.data('action');
     swal({
         title: 'Are you sure?',
-        text: 'You want to deactivate this '+from+'?',
+        text: 'You want to '+action+' this '+from+'?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, '+action+' it!'
       }).then((result) => {
         if (result.value) {
             $.ajax({

@@ -24,12 +24,9 @@ class LessonController extends Controller
      public function index($course_id)
      {
          $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-         // $section = Section::where('course_id', $course->id)->findOrFail($section_id);
-
-         $lessons = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
-
-         return view('instructor.lesson.index', compact('course', 'lessons'));
+         $data['course'] = $user->courses()->findOrFail($course_id);
+         $data['lessons'] = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->oldest()->get();
+         return view('instructor.lesson.index', $data);
        }
 
     /**
@@ -40,11 +37,9 @@ class LessonController extends Controller
      public function create($course_id)
      {
          $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-
-         $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
-
-         return view('instructor.lesson.create', compact('course', 'sections'));
+         $data['course'] = $user->courses()->findOrFail($course_id);
+         $data['sections'] = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
+         return view('instructor.lesson.create', $data);
      }
 
     /**
@@ -55,22 +50,22 @@ class LessonController extends Controller
      */
      public function store(Request $request, $course_id)
      {    
+         $request->validate([
+             'title' => 'required|unique:lessons|string|max:255',
+             'content' => 'required_without:upload_file',
+             'upload_file' => 'required_without:content',
+             'sections' => 'required'
+         ]);
+
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-
-         $request->validate([
-             'title' => 'required|string|max:255',
-             'description' => 'required|string',
-         ]);
 
          if ($request->hasFile('upload_file')) {
             $request->validate([
                 'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:25000',
             ]);
                     $lessonfile = $request->upload_file;
-                    $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-                    $name = $timestamp. '-' .$lessonfile->getClientOriginalName();
-                    // $image->image = $name;
+                    $name = time().'-'.$lessonfile->getClientOriginalName();
                     $lessonfile->storeAs('public/files', $name);
         }
 
@@ -78,7 +73,7 @@ class LessonController extends Controller
          $lesson->instructor_id = $user->id;
          $lesson->course_id = $course->id;
          $lesson->title = $request->title;
-         $lesson->description = Purifier::clean($request->description);
+         $lesson->description = Purifier::clean($request->content);
          $lesson->upload_file = $name ?? "";
          $lesson->save();
 
@@ -96,10 +91,8 @@ class LessonController extends Controller
         //     Mail::to($user->email)->send(new newLesson($user, $lesson));
         // }
         
-         session()->flash('status', 'Successfully added!');
+         session()->flash('status', 'Successfully added');
          session()->flash('type', 'success');
-         
-
          return redirect()->route('instructor.lesson.index', $course->id);
      }
 
@@ -134,9 +127,7 @@ class LessonController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-
          $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
-
          $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
          $section22 = array();
          foreach ($sections as $section2) {
@@ -154,32 +145,31 @@ class LessonController extends Controller
      */
      public function update(Request $request, $course_id, $id)
      {
+        $request->validate([
+            'title' => 'required|unique:lessons,title,'.$id.',id|string|max:255',
+            'content' => 'required_without:upload_file',
+            'upload_file' => 'required_without:content',
+            'sections' => 'required'
+        ]);
+
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-
          $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
-
-         $request->validate([
-             'title' => 'required|string|max:255',
-             'description' => 'required|string',
-         ]);
 
          if ($request->hasFile('upload_file')) {
             $request->validate([
                 'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:5000',
             ]);
-                    $lessonfile = $request->upload_file;
-                    $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-                    $name = $timestamp. '-' .$lessonfile->getClientOriginalName();
-                    // $image->image = $name;
-                    $lessonfile->storeAs('public/files', $name);
 
-                    $lesson->upload_file = $name;
+            $lessonfile = $request->upload_file;
+            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+            $name = $timestamp. '-' .$lessonfile->getClientOriginalName();
+            $lessonfile->storeAs('public/files', $name);
+            $lesson->upload_file = $name;
         }
 
-
          $lesson->title = $request->title;
-         $lesson->description = Purifier::clean($request->description);
+         $lesson->description = Purifier::clean($request->content);
          $lesson->save();
 
          if (isset($request->sections)) {
@@ -188,9 +178,8 @@ class LessonController extends Controller
              $lesson->sections()->sync(array());
          }
 
-         session()->flash('status', 'Successfully updated!');
+         session()->flash('status', 'Successfully updated');
          session()->flash('type', 'success');
-
          return redirect()->route('instructor.lesson.index', $course->id);
      }
 
@@ -204,38 +193,33 @@ class LessonController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-
         $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($lesson_id);
-
         $lesson->sections()->detach();
         $lesson->delete();
 
-        session()->flash('status', 'Successfully deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
-
-        return redirect()->route('instructor.lesson.index', $course->id);
+        return response('success', 200);
     }
 
     public function status(Request $request, $course_id, $lesson_id)
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-
         $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($lesson_id);
-
         $lesson->status = $request->status == 1 ? true : false;
         $lesson->save();
-
-        session()->flash('status', 'Successfully updated!');
+        $status = $request->status == 1 ? 'activated' : 'deactivated';
+        session()->flash('status', 'Successfully '.$status);
         session()->flash('type', 'success');
-
-        return redirect()->route('instructor.lesson.index', $course->id);
+        return response('success', 200);
     }
 
-    public function download($course_id, $lesson_id){
-
+    public function download($course_id, $lesson_id)
+    {
         $entry = Lesson::findOrFail($lesson_id);
         $pathToFile = storage_path()."/app/public/files/".$entry->upload_file;
-        return response()->download($pathToFile);
+        $name = substr($entry->upload_file, 11);
+        return response()->download($pathToFile, $name);
     }
 }

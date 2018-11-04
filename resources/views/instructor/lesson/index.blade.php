@@ -15,7 +15,7 @@
         <div class="col-lg-4 col-sm-4 mb-4">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
-                        <i class="fa fa-bookmark fa-3x tiles-left-icon"></i> 
+                    <i class="fa fa-bookmark fa-3x tiles-left-icon"></i> 
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{ count($lessons) }}</strong></h2>
                     <h2 class="text-uppercase text-white text-oswald">Lesson{{ count($lessons) > 1 ? 's' : '' }}</h2>
                 </div>

@@ -263,7 +263,7 @@ button{
    margin-bottom: 0px !important
  }
 
- thead{
+ table.table thead{
     border-top: 1px solid #d2ecff !important;
     background: #028aec;
     color: #ffff;

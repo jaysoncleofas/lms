@@ -81,7 +81,6 @@
                                     <strong>{{ $errors->first('sections') }}</strong>
                                 </span>
                             @endif
-        
                             <div class="form-check pl-0">
                                 <input type="checkbox" class="form-check-input" id="checkbox">
                                 <label class="form-check-label" for="checkbox">Select all</label>

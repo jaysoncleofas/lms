@@ -23,11 +23,9 @@ class QuizController extends Controller
      public function index($course_id)
      {
          $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-
-         $quizzes = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
-
-         return view('instructor.quiz.index', compact('course', 'quizzes'));
+         $data['course'] = $user->courses()->findOrFail($course_id);
+         $data['quizzes'] = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->oldest()->get();
+         return view('instructor.quiz.index', $data);
        }
 
     /**
@@ -38,11 +36,9 @@ class QuizController extends Controller
      public function create($course_id)
      {
          $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-
-         $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
-
-         return view('instructor.quiz.create', compact('course', 'sections'));
+         $data['course'] = $user->courses()->findOrFail($course_id);
+         $data['sections'] = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
+         return view('instructor.quiz.create', $data);
      }
 
     /**
@@ -53,15 +49,16 @@ class QuizController extends Controller
      */
      public function store(Request $request, $course_id)
      {
-         $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-
          $request->validate([
-             'title' => 'required|string|max:255',
+             'title' => 'required|unique:quizzes|string|max:255',
              'startDate' => 'required|string|max:255',
              'expireDate' => 'required|string|max:255',
              'minutes' => 'required|string|max:255',
+             'sections' => 'required',
          ]);
+
+         $user = Auth::user();
+         $course = $user->courses()->findOrFail($course_id);
 
          $quiz = new Quiz;
          $quiz->instructor_id = $user->id;
@@ -73,7 +70,6 @@ class QuizController extends Controller
          $quiz->save();
 
          $quiz->sections()->sync($request->sections, false);
-
          $msg = 'There\'s a new quiz in your course '.$quiz->course->name;
 
         //  foreach($quiz->sections as $section){
@@ -86,9 +82,8 @@ class QuizController extends Controller
         //     Mail::to($user->email)->send(new newQuiz($user, $quiz));
         // }
 
-         session()->flash('status', 'Successfully added!');
+         session()->flash('status', 'Successfully added');
          session()->flash('type', 'success');
-
          return redirect()->route('instructor.quiz.index', $course->id);
      }
 
@@ -113,9 +108,7 @@ class QuizController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
-
          $sections = Section::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isActive', true)->get();
          $section22 = array();
          foreach ($sections as $section2) {
@@ -133,17 +126,17 @@ class QuizController extends Controller
      */
      public function update(Request $request, $course_id, $id)
      {
-         $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
-
          $request->validate([
-             'title' => 'required|string|max:255',
+             'title' => 'required|unique:quizzes,title,'.$id.'id|string|max:255',
              'startDate' => 'required|string|max:255',
              'expireDate' => 'required|string|max:255',
              'minutes' => 'required|string|max:255',
+             'sections' => 'required',
          ]);
+
+         $user = Auth::user();
+         $course = $user->courses()->findOrFail($course_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
          $quiz->title = $request->title;
          $quiz->timeLimit = $request->minutes;
@@ -157,9 +150,8 @@ class QuizController extends Controller
              $quiz->sections()->sync(array());
          }
 
-         session()->flash('status', 'Successfully Updated!');
+         session()->flash('status', 'Successfully updated');
          session()->flash('type', 'success');
-
          return redirect()->route('instructor.quiz.index', [$course->id]);
      }
 
@@ -173,31 +165,27 @@ class QuizController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
          $quiz->questions()->delete();
          $quiz->sections()->detach();
          $quiz->delete();
 
-         session()->flash('status', 'Successfully Deleted!');
+         session()->flash('status', 'Successfully deleted');
          session()->flash('type', 'success');
-
-         return redirect()->route('instructor.quiz.index', [$course->id]);
+         return response('success', 200);
      }
 
      public function status(Request $request, $course_id, $quiz_id)
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
-
          $quiz->isActive = $request->status == 1 ? true : false;
          $quiz->save();
 
-         session()->flash('status', 'Successfully updated!');
+         $status = $request->status == 1 ? 'activated' : 'deactivated';
+         session()->flash('status', 'Successfully '.$status);
          session()->flash('type', 'success');
-
-         return redirect()->route('instructor.quiz.index', $course->id);
+         return response('success', 200);
      }
 }

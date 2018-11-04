@@ -7,13 +7,14 @@
 @section('content')
 <div class="container-fluid">
     <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald">{{$course->name}}</h3>
-        <a href="{{route('instructor.quiz.create', $course->id)}}" class="btn btn-primary">Add Quiz</a>
+        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
+        <a href="{{route('instructor.quiz.create', $course->id)}}" class="btn btn-primary mr-0"><i class="fa fa-plus"></i> Add Quiz</a>
     </div>
     <div class="row mt-lg-3">
         <div class="col-lg-4 col-sm-4 mb-4">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
+                    <i class="fa fa-book fa-3x tiles-left-icon"></i> 
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($quizzes)}}</strong></h2>
                     <h2 class="text-uppercase text-white text-oswald">Quiz{{count($quizzes) > 1 ? 'zes' : ''}}</h2>
                 </div>
@@ -23,90 +24,58 @@
 
     <div class="row mt-lg-3">
         <div class="col-xl-12 col-md-12 mb-4">
-
-            <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Sections</th>
-                        <th>Questions</th>
-                        <th>Time Limit</th>
-                        <th>Start Date</th>
-                        <th>Expire Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($quizzes as $quiz)
-                    <tr>
-
-                        <td>
-                            {{-- <a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="blue-text"> --}}
-                            {{$quiz->title}}
-                            {{-- </a> --}}
-                        </td>
-                        <td>
-                            @foreach ($quiz->sections as $section2)
-                            {{$section2->name}},
+            <div class="card">
+                <div class="card-body pb-0">
+                    <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Section</th>
+                                <th>Questions</th>
+                                <th>Time Limit</th>
+                                <th>Start Date</th>
+                                <th>Expire Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($quizzes as $quiz)
+                            <tr>
+        
+                                <td>
+                                    {{-- <a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="blue-text"> --}}
+                                    {{$quiz->title}}
+                                    {{-- </a> --}}
+                                </td>
+                                <td>
+                                    @foreach ($quiz->sections as $key => $section2)
+                                    {{$section2->name}}{{ $key < count($quiz->sections) - 1 ? ', ' : ''  }}
+                                    @endforeach
+                                </td>
+                                <td><a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Add Questions" data-placement="right">{{count($quiz->questions)}}</a></td>
+                                <td>{{$quiz->timeLimit ?? 0}} minutes</td>
+                                <td>{{$quiz->startDate ? $quiz->startDate->toFormattedDateString() : ''}}</td>
+                                <td>{{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}</td>
+                                <td>
+                                    <a href="javascript:void(0);" data-href="{{ route('instructor.quiz.status', [$course->id, $quiz->id]) }}" class="deactivate btn btn-sm {{ $quiz->isActive == 1 ? 'btn-success' : 'btn-danger'  }}" data-method="put" data-from="token" data-action="{{ $quiz->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $quiz->isActive == 1 ? 0 : 1  }}">
+                                        @if ($quiz->isActive == 1) 
+                                            Active
+                                        @else 
+                                            Inactive
+                                        @endif    
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('instructor.quiz.edit', [$course->id, $quiz->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil-alt"></i></a> 
+                                    <a href="javascript:void(0);" data-href="{{ route('instructor.quiz.destroy', [$course->id, $quiz->id]) }}" class="perma_delete text-danger" data-placement="left" data-method="delete" data-from="quiz" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> 
+                                </td>
+                            </tr>
                             @endforeach
-                        </td>
-                        <td>
-                            <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info">{{count($quiz->questions)}}</a>
-                        </td>
-                        <td>{{$quiz->timeLimit ?? 0}} minutes</td>
-                        <td>
-                            {{$quiz->startDate ? $quiz->startDate->toFormattedDateString() : ''}}
-                        </td>
-                        <td>
-                            {{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}
-                        </td>
-                        <td>
-                            @if ($quiz->isActive == true)
-                            <a href="#" class="btn btn-success btn-sm" onclick="if(confirm('Are you sure you want to deactivate this quiz?')) {
-                                                                event.preventDefault();
-                                                                $('#deactivate-form-{{$quiz->id}}').submit();
-                                                              }">
-                                Active
-                            </a>
-                            <form id="deactivate-form-{{$quiz->id}}" action="{{ route('instructor.quiz.status', [$course->id, $quiz->id]) }}"
-                                method="post">
-                                @csrf {{method_field('PUT')}}
-                                <input type="hidden" name="status" value="0">
-                            </form>
-                            @else
-                            <a href="#" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure you want to activate this quiz?')) {
-                                                                event.preventDefault();
-                                                                $('#activate-form-{{$quiz->id}}').submit();
-                                                              }">
-                                Deactivate
-                            </a>
-                            <form id="activate-form-{{$quiz->id}}" action="{{ route('instructor.quiz.status', [$course->id, $quiz->id]) }}"
-                                method="post">
-                                @csrf {{method_field('PUT')}}
-                                <input type="hidden" name="status" value="1">
-                            </form>
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{route('instructor.quiz.edit', [$course->id, $quiz->id])}}" class="blue-text">Update</a>
-                            |
-                            <a class="text-danger" onclick="if(confirm('Are you sure you want to delete this quiz?')) {
-                                                            event.preventDefault();
-                                                            $('#delete-instructor-form-{{$quiz->id}}').submit();
-                                                          }">
-                                Delete
-                            </a>
-                            <form id="delete-instructor-form-{{$quiz->id}}" action="{{ route('instructor.quiz.destroy', [$course->id, $quiz->id]) }}"
-                                method="post">
-                                @csrf {{method_field('DELETE')}}
-
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -119,11 +88,12 @@
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
-            "scrollX": true,
+            scrollX: true,
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search",
-            }
+            },
+            order:[]
         });
     });
 

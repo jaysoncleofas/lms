@@ -9,12 +9,11 @@
     <div class="row px-3 d-flex justify-content-between align-items-center">
         <div>
             <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span> </h3>
-            <h4 class="text-oswald font-weight-bold">Section: <span class="font-weight-normal">{{ $section->name }}</span></h4>
         </div>
     </div>
-
+    
     <div class="row mt-3">
-        <div class="col-lg-4 col-sm-4 mb-4">
+        <div class="col-lg-4 col-sm-4 mb-3">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <i class="fa fa-users fa-3x tiles-left-icon"></i> 
@@ -24,10 +23,12 @@
             </div>
         </div>
     </div>
-
+    
     <div class="row mt-3">
         <div class="col-xl-12 col-md-12 mb-4">
-            <div class="card">
+            <hr>
+            <h4 class="text-oswald font-weight-bold">Section: <span class="font-weight-normal">{{ $section->name }}</span></h4>
+            <div class="card mt-3">
                 <div class="card-body pb-0">
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>

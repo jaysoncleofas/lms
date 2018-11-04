@@ -21,11 +21,9 @@ class TokenController extends Controller
     public function index($course_id)
     {
         $user = Auth::user();
-        $course = $user->courses()->findOrFail($course_id);
-
-        $tokens = Token::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
-
-        return view('instructor.token.index', compact('course', 'tokens', 'sections'));
+        $data['course'] = $user->courses()->findOrFail($course_id);
+        $data['tokens'] = Token::where('instructor_id', $user->id)->where('course_id', $course_id)->oldest()->get();
+        return view('instructor.token.index', $data);
     }
 
     /**
@@ -36,11 +34,9 @@ class TokenController extends Controller
      public function create($course_id)
      {
          $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-
-         $sections = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->where('isActive', true)->get();
-
-         return view('instructor.token.create', compact('course', 'sections'));
+         $data['course'] = $user->courses()->findOrFail($course_id);
+         $data['sections'] = Section::where('course_id', $course_id)->where('instructor_id', $user->id)->where('isActive', true)->get();
+         return view('instructor.token.create', $data);
      }
 
     /**
@@ -110,16 +106,13 @@ class TokenController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        // $token = ::where('course_id', $course->id)->findOrFail($section_id);
-        
         $token = Token::findOrFail($token_id);
         $token->status = $request->status == 1 ? true : false;
         $token->save();
-        
-        session()->flash('status', 'Successfully updated!');
+        $status = $request->status == 1 ? 'activated' : 'deactivated';
+        session()->flash('status', 'Successfully '.$status);
         session()->flash('type', 'success');
-        
-        return redirect()->back();
+        return response('success', 200);
     }
 
     /**
@@ -131,12 +124,10 @@ class TokenController extends Controller
     public function destroy($course_id, $token_id)
     {
         $token = Token::findOrFail($token_id);
-
         $token->delete();
 
-        session()->flash('status', 'Successfully Deleted!');
+        session()->flash('status', 'Successfully deleted');
         session()->flash('type', 'success');
-
-        return redirect()->route('instructor.token.index', $course_id);
+        return response('success', 200);
     }
 }

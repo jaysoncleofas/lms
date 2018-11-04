@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img id="img-preview" class="img-fluid img-preview z-depth-1">
+                        <img id="img-announcement" class="img-fluid img-preview z-depth-1">
                         <p class="mb-0 select2Label">Select Section <span class="red-asterisk">*</span></p>
                         <div class="md-form mt-0">
                             <select class="multiple-select form-control" multiple="multiple" id="sections" name="sections[]" required style="width:100% !important;">
@@ -99,7 +99,10 @@
         }
 
         if (file) {
-            document.getElementById('img-preview').style.marginBottom = "1rem";
+            document.getElementById('img-announcement').style.height = "500px";
+            document.getElementById('img-announcement').style.width = "100%";
+            document.getElementById('img-announcement').style.objectFit = "cover";
+            document.getElementById('img-announcement').style.marginBottom = "1rem";
             reader.readAsDataURL(file); //reads the data as a URL
         }
 

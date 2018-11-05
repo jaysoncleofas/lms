@@ -17,12 +17,10 @@
     </div>
     <div class="row mt-5 justify-content-center">
         <div class="col-xl-9 col-md-9 mb-4">
-
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Add Lesson</h3>
-                {{-- <a href="{{route('instructor.lesson.index', $course->id)}}" class="btn btn-danger">Back</a> --}}
-            </div>
-            <div class="card mt-3">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Add Assignment</h5>
+                </div>
                 <div class="card-body">
                     <form class="" action="{{route('instructor.lesson.store', $course->id)}}" method="post" enctype="multipart/form-data">
                         @csrf

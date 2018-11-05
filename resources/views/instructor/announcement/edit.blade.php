@@ -16,10 +16,10 @@
     </div>
     <div class="row mt-5 justify-content-center">
         <div class="col-lg-8 col-md-10 mb-5 pb-5">
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Update Announcement</h3>
-            </div>
-            <div class="card mt-3">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Update Announcement</h5>
+                </div>
                 <div class="card-body">
                     <form class="" action="{{route('instructor.announcement.update', [$course->id, $announcement->id])}}" enctype="multipart/form-data" method="post">
                         {{ csrf_field() }} {{method_field('PUT')}}

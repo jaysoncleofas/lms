@@ -17,12 +17,10 @@
     </div>
     <div class="row mt-5 justify-content-center">
         <div class="col-xl-9 col-md-9 mb-4">
-
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Update Lesson</h3>
-                {{-- <a href="{{route('instructor.lesson.index', $course->id)}}" class="btn btn-danger">Back</a> --}}
-            </div>
-            <div class="card mt-3">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Update Lesson</h5>
+                </div>
                 <div class="card-body">
                     <form class="" action="{{route('instructor.lesson.update', [$course->id, $lesson->id])}}" method="post"
                         enctype="multipart/form-data">
@@ -85,7 +83,7 @@
                             @endif
                             <div class="form-check pl-0">
                                 <input type="checkbox" class="form-check-input" id="checkbox">
-                                <label class="form-check-label" for="checkbox">Send to all</label>
+                                <label class="form-check-label" for="checkbox">All Section</label>
                             </div>
                         </div>
                         <button type="submit" name="button" class="btn btn-primary float-right mt-5"><i class="fa fa-pencil-alt"></i> Update</button>

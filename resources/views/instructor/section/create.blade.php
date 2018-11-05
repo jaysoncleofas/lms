@@ -8,11 +8,10 @@
 
     <div class="row mt-5 justify-content-center">
         <div class="col-xl-6 col-md-6 mb-5 pb-5">
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Add Section</h3>
-                {{-- <a href="{{route('instructor.section.index', $course->id)}}" class="btn btn-danger">Back</a> --}}
-            </div>
-            <div class="card mt-3">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Add Section</h5>
+                </div>
                 <div class="card-body">
                     <form action="{{route('instructor.section.store', $course->id)}}" method="post">
                         {{ csrf_field() }}

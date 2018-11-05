@@ -11,11 +11,10 @@
     </div>
     <div class="row justify-content-center mt-5">
         <div class="col-xl-8 col-md-8 mb-4">
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Add Quiz</h3>
-                {{-- <a href="{{route('instructor.quiz.index', $course->id)}}" class="btn btn-danger">Back</a> --}}
-            </div>
-            <div class="card mt-3">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Add Quiz</h5>
+                </div>
                 <div class="card-body">
                     <form class="" action="{{ route('instructor.quiz.store', $course->id) }}" method="post">
                         @csrf
@@ -79,7 +78,7 @@
                             @endif
                             <div class="form-check pl-0">
                                 <input type="checkbox" class="form-check-input" id="checkbox">
-                                <label class="form-check-label" for="checkbox">Send to all</label>
+                                <label class="form-check-label" for="checkbox">All Section</label>
                             </div>
                         </div>
         

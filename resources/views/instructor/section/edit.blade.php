@@ -7,10 +7,10 @@
     </div>
     <div class="row mt-5 justify-content-center">
         <div class="col-xl-6 col-md-6 mb-5 pb-5">
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald">Update Section</h3>
-            </div>
-            <div class="card mt-3">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Update Section</h5>
+                </div>
                 <div class="card-body">
                     <form action="{{route('instructor.section.update', [$course->id, $section->id])}}" method="post">
                         {{ csrf_field() }} {{method_field('PUT')}}

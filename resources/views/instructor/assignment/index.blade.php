@@ -30,7 +30,7 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Sections</th>
+                                <th>Section</th>
                                 <th>Start Date</th>
                                 <th>Expire Date</th>
                                 <th>Status</th>

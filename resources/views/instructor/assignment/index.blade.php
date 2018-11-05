@@ -31,7 +31,6 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Sections</th>
-                                {{-- <th>Questions</th> --}}
                                 <th>Start Date</th>
                                 <th>Expire Date</th>
                                 <th>Status</th>
@@ -43,19 +42,12 @@
                             <tr>
                                 <td><a href="{{ route('instructor.assignment.show', [$course->id, $assignment->id]) }}" class="blue-text">{{ $assignment->title }}</a></td>
                                 <td>
-                                    @foreach ($assignment->sections as $section2)
-                                    {{ $section2->name }},
+                                    @foreach ($assignment->sections as $key => $section2)
+                                        {{ $section2->name }}{{ $key < count($assignment->sections) - 1 ? ', ' : ''  }}
                                     @endforeach
                                 </td>
-                                {{-- <td>
-                                    <a href="{{route('instructor.question.assignmentCreate', [$course->id, $assignment->id])}}" class="btn btn-info btn-sm">{{count($assignment->questions)}}</a>
-                                </td> --}}
-                                <td>
-                                    {{ $assignment->startDate ? $assignment->startDate->toFormattedDateString() : '' }}
-                                </td>
-                                <td>
-                                    {{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : '' }}
-                                </td>
+                                <td>{{ $assignment->startDate ? $assignment->startDate->toFormattedDateString() : '' }}</td>
+                                <td>{{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : '' }}</td>
                                 <td>
                                     <a href="javascript:void(0);" data-href="{{ route('instructor.assignment.status', [$course->id, $assignment->id]) }}" class="deactivate btn btn-sm {{ $assignment->isActive == 1 ? 'btn-success' : 'btn-danger'  }}" data-method="put" data-from="assignment" data-action="{{ $assignment->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $assignment->isActive == 1 ? 0 : 1  }}">
                                         @if ($assignment->isActive == 1) 

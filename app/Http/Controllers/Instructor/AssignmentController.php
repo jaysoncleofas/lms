@@ -56,6 +56,7 @@ class AssignmentController extends Controller
              'content' => 'required|string',
              'startDate' => 'required|string|max:255',
              'expireDate' => 'required|string|max:255',
+             'sections' => 'required'
          ]);
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
@@ -151,6 +152,7 @@ class AssignmentController extends Controller
              'content' => 'required|string',
              'startDate' => 'required|string|max:255',
              'expireDate' => 'required|string|max:255',
+             'sections' => 'required'
          ]);
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);

@@ -91,7 +91,7 @@ class LessonController extends Controller
         //     Mail::to($user->email)->send(new newLesson($user, $lesson));
         // }
         
-         session()->flash('status', 'Successfully added');
+         session()->flash('status', 'Successfully saved');
          session()->flash('type', 'success');
          return redirect()->route('instructor.lesson.index', $course->id);
      }

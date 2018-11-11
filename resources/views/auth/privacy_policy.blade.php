@@ -126,13 +126,9 @@
                 </div>
             </div>
 
-            <div class="row mt-3">
-                <div class="col-lg-9">
-                    <a href="{{route('register_token')}}" class="btn black-text">Cancel</a>
-                </div>
-                <div class="col-lg-3">
-                    <a href="{{route('register_student', $section->token)}}" class="btn btn-primary">I agree</a>
-                </div>
+            <div class="row mt-3 mx-0 justify-content-between d-flex">
+                <a href="{{route('register_token')}}" class="btn black-text">Cancel</a>
+                <a href="{{route('register_student', $section->token)}}" class="btn btn-primary">I agree</a>
             </div>
 
 

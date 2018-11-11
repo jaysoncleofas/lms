@@ -22,13 +22,14 @@
         </div>
     </div>
 
-    <div class="row mt-lg-3">
+    <div class="row mt-3">
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card">
                 <div class="card-body pb-0">
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Title</th>
                                 <th>Section</th>
                                 <th>Questions</th>
@@ -40,17 +41,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($quizzes as $quiz)
+                            @foreach ($quizzes as $key => $quiz)
                             <tr>
-        
+                                <td>{{ $key+1 }}.</td>
                                 <td>
-                                    {{-- <a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="blue-text"> --}}
-                                    {{$quiz->title}}
-                                    {{-- </a> --}}
+                                    <a href="{{ route('instructor.question.index', [$course->id, $quiz->id]) }}" class="btn-link" title="{{ $quiz->title }}">
+                                        {{ $quiz->isCode ? 'Code Quiz:' : '' }} {{ substr($quiz->title, 0, 20) }}{{ strlen($quiz->title) > 20 ? "..." : "" }}
+                                    </a>
                                 </td>
                                 <td>
                                     @foreach ($quiz->sections as $key => $section2)
-                                    {{$section2->name}}{{ $key < count($quiz->sections) - 1 ? ', ' : ''  }}
+                                        {{ $section2->name }}{{ $key < count($quiz->sections) - 1 ? ', ' : ''  }}
                                     @endforeach
                                 </td>
                                 <td><a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Add Questions" data-placement="right">{{count($quiz->questions)}}</a></td>
@@ -58,7 +59,7 @@
                                 <td>{{$quiz->startDate ? $quiz->startDate->toFormattedDateString() : ''}}</td>
                                 <td>{{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}</td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.quiz.status', [$course->id, $quiz->id]) }}" class="deactivate btn btn-sm {{ $quiz->isActive == 1 ? 'btn-success' : 'btn-danger'  }}" data-method="put" data-from="token" data-action="{{ $quiz->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $quiz->isActive == 1 ? 0 : 1  }}">
+                                    <a href="javascript:void(0);" data-href="{{ route('instructor.quiz.status', [$course->id, $quiz->id]) }}" class="deactivate btn btn-sm {{ $quiz->isActive == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="token" data-action="{{ $quiz->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $quiz->isActive == 1 ? 0 : 1  }}">
                                         @if ($quiz->isActive == 1) 
                                             Active
                                         @else 

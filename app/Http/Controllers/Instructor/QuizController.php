@@ -63,8 +63,10 @@ class QuizController extends Controller
          $quiz = new Quiz;
          $quiz->instructor_id = $user->id;
          $quiz->course_id = $course->id;
+         $quiz->isActive = 0;
          $quiz->title = $request->title;
-         $quiz->timeLimit = $request->minutes ?? 20;
+         $quiz->isCode = $request->has('codeQuiz');
+         $quiz->timeLimit = $request->minutes;
          $quiz->startDate = $request->formatted_startDate_submit;
          $quiz->expireDate = $request->formatted_expireDate_submit;
          $quiz->save();
@@ -82,9 +84,9 @@ class QuizController extends Controller
         //     Mail::to($user->email)->send(new newQuiz($user, $quiz));
         // }
 
-         session()->flash('status', 'Successfully added');
+         session()->flash('status', 'Successfully saved');
          session()->flash('type', 'success');
-         return redirect()->route('instructor.quiz.index', $course->id);
+         return redirect()->route('instructor.question.index', [$course->id, $quiz->id]);
      }
 
     /**

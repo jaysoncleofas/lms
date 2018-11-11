@@ -49,7 +49,7 @@
                                 <td>{{ $assignment->startDate ? $assignment->startDate->toFormattedDateString() : '' }}</td>
                                 <td>{{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : '' }}</td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.assignment.status', [$course->id, $assignment->id]) }}" class="deactivate btn btn-sm {{ $assignment->isActive == 1 ? 'btn-success' : 'btn-danger'  }}" data-method="put" data-from="assignment" data-action="{{ $assignment->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $assignment->isActive == 1 ? 0 : 1  }}">
+                                    <a href="javascript:void(0);" data-href="{{ route('instructor.assignment.status', [$course->id, $assignment->id]) }}" class="deactivate btn btn-sm {{ $assignment->isActive == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="assignment" data-action="{{ $assignment->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $assignment->isActive == 1 ? 0 : 1  }}">
                                         @if ($assignment->isActive == 1) 
                                             Active
                                         @else 

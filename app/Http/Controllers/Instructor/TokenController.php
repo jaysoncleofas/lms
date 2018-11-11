@@ -63,7 +63,7 @@ class TokenController extends Controller
         $token->expireDate = $request->formatted_expireDate_submit;
         $token->save();
 
-        session()->flash('status', 'Successfully added!');
+        session()->flash('status', 'Successfully saved!');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.token.index', $course->id);

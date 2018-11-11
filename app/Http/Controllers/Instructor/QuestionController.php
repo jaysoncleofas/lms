@@ -53,14 +53,20 @@ class QuestionController extends Controller
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
-
-         $request->validate([
-             'question' => 'required|string|max:255',
-             'correct' => 'required|string',
-         ]);
-
+        
+         if(!$quiz->isCode){
+             $request->validate([
+                'question' => 'required|string',
+                'correct' => 'required|string',
+            ]);
+         } else {
+            $request->validate([
+                'item' => 'required|string',
+                'correct' => 'nullable|string',
+            ]);
+         }
+         
          $question = new Question;
-
          if ($request->hasFile('image')) {
              $request->validate([
                  'question_image' => 'bail|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
@@ -76,11 +82,11 @@ class QuestionController extends Controller
 
          
          $question->quiz_id = $quiz->id;
-         $question->question = $request->question;
-         $question->correct = $request->correct;
-         $question->option_one = $request->option_one;
-         $question->option_two = $request->option_two;
-         $question->option_three = $request->option_three;
+         $question->question = $quiz->isCode == 1 ? $request->item : $request->question;
+         $question->correct = $quiz->isCode == 1 ? '' : $request->correct;
+         $question->option_one = $quiz->isCode == 1 ? '' : $request->option_one;
+         $question->option_two = $quiz->isCode == 1 ? '' : $request->option_two;
+         $question->option_three = $quiz->isCode == 1 ? '' : $request->option_three;
          $question->save();
 
          session()->flash('status', 'Successfully saved!');
@@ -132,7 +138,7 @@ class QuestionController extends Controller
          $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
 
          $request->validate([
-             'question' => 'required|string|max:255',
+             'question' => 'required|string',
              'correct' => 'required|string',
          ]);
 
@@ -157,7 +163,7 @@ class QuestionController extends Controller
          $question->option_three = $request->option_three;
          $question->save();
 
-         session()->flash('status', 'Successfully added!');
+         session()->flash('status', 'Successfully saved!');
          session()->flash('type', 'success');
 
          return redirect()->route('instructor.question.index', [$course->id, $quiz->id]);
@@ -178,9 +184,8 @@ class QuestionController extends Controller
 
          $question->delete();
 
-         session()->flash('status', 'Successfully Deleted!');
+         session()->flash('status', 'Successfully deleted');
          session()->flash('type', 'success');
-
-         return redirect()->route('instructor.question.index', [$course->id, $quiz->id]);
+         return response('success', 200);    
      }
 }

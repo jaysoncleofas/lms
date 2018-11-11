@@ -10,7 +10,7 @@
         <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
     </div>
     <div class="row justify-content-center mt-5">
-        <div class="col-xl-8 col-md-8 mb-4">
+        <div class="col-lg-10 col-md-12 mb-4">
             <div class="card">
                 <div class="card-header text-white bg-primary">
                     <h5 class="text-oswald mb-0">Add Quiz</h5>
@@ -28,7 +28,14 @@
                                 </span>
                             @endif
                         </div>
-        
+
+                        <div class="md-form pb-3 pt-2 mt-0">
+                            <div class="form-check pl-0">
+                                <input type="checkbox" class="form-check-input" name="codeQuiz" id="codeQuiz" value="1" {{ old('codeQuiz') == 1 ? 'checked' : '' }}>
+                                <label class="form-check-label" for="codeQuiz">Code Quiz</label>
+                            </div>
+                        </div>
+                        
                         <div class="md-form">
                             <input type="number" name="minutes" id="minutes" value="{{ old('minutes') }}" class="form-control {{ $errors->has('minutes') ? 'is-invalid' : '' }}">
                             <label for="minutes">Minutes <span class="red-asterisk">*</span></label>

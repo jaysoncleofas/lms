@@ -49,7 +49,7 @@
                                     <a href="{{ route('instructor.lesson.download', [$course->id, $lesson->id]) }}" class="btn-link" data-toggle="tooltip" title="Download" data-placement="left">{{ substr($lesson->upload_file, 20 )}}</a>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.lesson.status', [$course->id, $lesson->id]) }}" class="deactivate btn btn-sm {{ $lesson->status == 1 ? 'btn-success' : 'btn-danger'  }}" data-method="put" data-from="lesson" data-action="{{ $lesson->status == 1 ? 'deactivate' : 'activate' }}" data-from="lesson" data-value="{{ $lesson->status == 1 ? 0 : 1  }}">
+                                    <a href="javascript:void(0);" data-href="{{ route('instructor.lesson.status', [$course->id, $lesson->id]) }}" class="deactivate btn btn-sm {{ $lesson->status == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="lesson" data-action="{{ $lesson->status == 1 ? 'deactivate' : 'activate' }}" data-from="lesson" data-value="{{ $lesson->status == 1 ? 0 : 1  }}">
                                         @if ($lesson->status == 1) 
                                             Active
                                         @else 

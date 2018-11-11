@@ -44,7 +44,7 @@
                                 <td>{{date('F j, Y',strtotime($token->created_at))}}</td>
                                 <td>{{$token->expireDate != null ? date('F j, Y',strtotime($token->expireDate)) : ''}}</td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.token.update', [$course->id, $token->id]) }}" class="deactivate btn btn-sm {{ $token->status == 1 ? 'btn-success' : 'btn-danger'  }}" data-method="put" data-from="token" data-action="{{ $token->status == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $token->status == 1 ? 0 : 1  }}">
+                                    <a href="javascript:void(0);" data-href="{{ route('instructor.token.update', [$course->id, $token->id]) }}" class="deactivate btn btn-sm {{ $token->status == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="token" data-action="{{ $token->status == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $token->status == 1 ? 0 : 1  }}">
                                         @if ($token->status == 1) 
                                             Active
                                         @else 

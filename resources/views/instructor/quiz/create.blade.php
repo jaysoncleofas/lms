@@ -28,14 +28,24 @@
                                 </span>
                             @endif
                         </div>
-
+                        
                         <div class="md-form pb-3 pt-2 mt-0">
                             <div class="form-check pl-0">
                                 <input type="checkbox" class="form-check-input" name="codeQuiz" id="codeQuiz" value="1" {{ old('codeQuiz') == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="codeQuiz">Code Quiz</label>
                             </div>
                         </div>
-                        
+
+                        <div class="form-group mb-3 content_form" style="display:none;">
+                            <p class="select2Label">Content <span class="red-asterisk">*</span></p>
+                            <textarea placeholder="Write a program..." type="text" id="content" name="content" class="form-control rounded-0 {{$errors->has('content') ? 'is-invalid' : ''}}" rows="3">{{old('content')}}</textarea>
+                            @if ($errors->has('content'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('content') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+
                         <div class="md-form">
                             <input type="number" name="minutes" id="minutes" value="{{ old('minutes') }}" class="form-control {{ $errors->has('minutes') ? 'is-invalid' : '' }}">
                             <label for="minutes">Minutes <span class="red-asterisk">*</span></label>
@@ -101,19 +111,31 @@
 @section('script')
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
-    $('.multiple-select').select2();
-    $('.multiple-select').select2().val({!!json_encode(old('sections')) !!}).trigger('change');
-    $("#checkbox").on('click',function(){
-        if($("#checkbox").is(':checked') ){
-            $('.multiple-select').select2('destroy').find('option').prop('selected', 'selected').end().select2();
-        }else{
-            $('.multiple-select').select2('destroy').find('option').prop('selected', false).end().select2();
+    $(document).ready(function() {
+        $('.multiple-select').select2();
+        $('.multiple-select').select2().val({!!json_encode(old('sections')) !!}).trigger('change');
+        $("#checkbox").on('click',function(){
+            if($("#checkbox").is(':checked') ){
+                $('.multiple-select').select2('destroy').find('option').prop('selected', 'selected').end().select2();
+            }else{
+                $('.multiple-select').select2('destroy').find('option').prop('selected', false).end().select2();
+            }
+        });
+        $('.datepicker').pickadate({
+            min: new Date(),
+            formatSubmit: 'yyyy-mm-dd',
+            hiddenPrefix: 'formatted_',
+        });
+        if($('#codeQuiz').attr( "checked" )){
+            $('.content_form').show();
         }
-    });
-    $('.datepicker').pickadate({
-        min: new Date(),
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenPrefix: 'formatted_',
+        $('#codeQuiz').change(function() {
+            if (this.checked) {
+                $('.content_form').show();
+            } else {
+                $('.content_form').hide();
+            }
+        });
     });
 </script>
 @endsection

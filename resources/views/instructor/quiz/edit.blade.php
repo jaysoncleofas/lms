@@ -28,13 +28,23 @@
                                 </span>
                                 @endif
                             </div>
-
+        
                             @if ($quiz->isCode == 1)
-                            <div class="md-form pb-3 pt-2 mt-0">
-                                <div class="form-check pl-0">
-                                        <input type="checkbox" class="form-check-input" disabled checked }}>
+                                <div class="md-form pb-3 pt-2 mt-0">
+                                    <div class="form-check pl-0">
+                                        <input type="checkbox" class="form-check-input" disabled checked>
                                         <label class="form-check-label" for="codeQuiz">Code Quiz</label>
                                     </div>
+                                </div>
+
+                                <div class="form-group mb-5 content_form">
+                                    <p class="select2Label">Content <span class="red-asterisk">*</span></p>
+                                    <textarea placeholder="Write a program..." type="text" id="content" name="content" class="form-control rounded-0 {{$errors->has('content') ? 'is-invalid' : ''}}" rows="3">{{ $quiz->content }}</textarea>
+                                    @if ($errors->has('content'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('content') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             @endif
                                 
@@ -72,7 +82,6 @@
                                     </div>
                                 </div>
                             </div>
-    
     
                             <p class="mb-0 select2Label">Assign Section <span class="red-asterisk">*</span></p>
                             <div class="md-form mt-0">

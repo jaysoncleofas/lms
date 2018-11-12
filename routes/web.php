@@ -51,6 +51,8 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
     Route::resource('/course/{course}/lesson', 'Instructor\LessonController');
 
     Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');
+    Route::get('/course/{course}/quiz/{quiz}/take/{take}', 'Instructor\QuizController@takeShow')->name('quiz.takeShow');
+    Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');
     Route::resource('/course/{course}/quiz', 'Instructor\QuizController');
 
     Route::get('/course/{course}/assignment/{assignment}/section/{section}/submit/{submit}', 'Instructor\AssignmentController@show_submit')->name('assignment.submit');
@@ -85,6 +87,7 @@ Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->gro
     Route::get('/course/{course}/section/{section}/assignment', 'StudentController@assignment_index')->name('assignment.index');
     Route::get('/course/{course}/section/{section}/assignment/{assignment}', 'StudentController@assignment_show')->name('assignment.show');
 
+    Route::post('/course/{course}/section/{section}/quiz/{quiz}/takes/code-quiz', 'TakeController@storeCodeQuiz')->name('take.storeCodeQuiz');
     Route::post('/course/{course}/section/{section}/quiz/{quiz}/take', 'TakeController@store')->name('take.store');
     Route::get('/course/{course}/section/{section}/quiz/{quiz}/take/{take}/result', 'TakeController@result')->name('take.result');
 
@@ -94,6 +97,8 @@ Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->gro
     Route::post('/dashboard/register-token', 'StudentController@check_token')->name('check_token');
     Route::get('/dashboard/register-token/{token}', 'StudentController@course_add')->name('course.add');
     Route::post('/dashboard/register/{section}', 'StudentController@register_store')->name('register.store');
+
+    Route::post('/runcode', 'TakeController@runCode')->name('runCode');
 });
 
 Route::middleware('auth')->group(function () {

@@ -61,6 +61,30 @@ class TakeController extends Controller
         return redirect()->route('student.take.result', [$course_id, $section_id, $quiz_id, $take->id]);
     }
 
+    public function storeCodeQuiz(Request $request, $course_id, $section_id, $quiz_id)
+    {
+        $checktakes = Take::where('user_id', Auth::id())->where('quiz_id', $quiz_id)->where('section_id', $section_id)->first();
+        
+        if($checktakes)
+        {
+            session()->flash('status', 'Already taken the quiz');
+            session()->flash('type', 'error');
+
+            return redirect()->route('student.quiz.show', [$course_id, $section_id, $quiz_id]);
+        }
+        
+        $take = Take::create([
+            'user_id' => Auth::id(),
+            'section_id' => $section_id,
+            'quiz_id' => $quiz_id,
+            'code'  => $request->code,
+        ]);
+
+        session()->flash('status', 'Quiz finished!');
+        session()->flash('type', 'success');    
+        return redirect()->route('student.quiz.index', [$course_id, $section_id]);
+    }
+
     public function result($course_id, $section_id, $quiz_id, $take_id)
     {
         $user = Auth::user();
@@ -106,5 +130,15 @@ class TakeController extends Controller
         $pass = Pass::where('assignment_id', $assignment->id)->findOrFail($pass_id);
 
         return view('student.assignment.result', compact('course', 'section', 'assignment', 'pass'));
+    }
+
+    public function runCode(Request $request){
+
+        $executed = \App\Helpers\runCode::run($request->code);
+        $data = json_decode($executed, true);
+        // $data = $executed['output'];
+        $data2 = $data['output'];
+        // return  $data2;
+        return json_encode(['text' =>  $data2, 'return' => '1']);
     }
 }

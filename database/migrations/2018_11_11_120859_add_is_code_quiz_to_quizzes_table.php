@@ -14,6 +14,7 @@ class AddIsCodeQuizToQuizzesTable extends Migration
     public function up()
     {
         Schema::table('quizzes', function (Blueprint $table) {
+            $table->text('content')->after('title')->nullable();
             $table->boolean('isCode')->after('title')->default(false);
         });
     }
@@ -26,6 +27,7 @@ class AddIsCodeQuizToQuizzesTable extends Migration
     public function down()
     {
         Schema::table('quizzes', function (Blueprint $table) {
+            $table->dropColumn('content');
             $table->dropColumn('isCode');
         });
     }

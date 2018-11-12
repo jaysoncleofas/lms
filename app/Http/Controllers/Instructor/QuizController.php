@@ -12,6 +12,7 @@ use App\Quiz;
 use Purifier;
 use App\Mail\newQuiz;
 use Illuminate\Support\Facades\Mail;
+use App\Take;
 
 class QuizController extends Controller
 {
@@ -49,13 +50,20 @@ class QuizController extends Controller
      */
      public function store(Request $request, $course_id)
      {
+         if($request->codeQuiz){
+            $request->validate([
+                'content' => 'required|string',
+            ]);
+         }
+
          $request->validate([
-             'title' => 'required|unique:quizzes|string|max:255',
-             'startDate' => 'required|string|max:255',
+             'title'      => 'required|string|max:255',
+             'startDate'  => 'required|string|max:255',
              'expireDate' => 'required|string|max:255',
-             'minutes' => 'required|string|max:255',
-             'sections' => 'required',
+             'minutes'    => 'required|string|max:255',
+             'sections'   => 'required',
          ]);
+
 
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
@@ -66,6 +74,7 @@ class QuizController extends Controller
          $quiz->isActive = 0;
          $quiz->title = $request->title;
          $quiz->isCode = $request->has('codeQuiz');
+         $quiz->content = $request->codeQuiz ? $request->content : '';
          $quiz->timeLimit = $request->minutes;
          $quiz->startDate = $request->formatted_startDate_submit;
          $quiz->expireDate = $request->formatted_expireDate_submit;
@@ -86,6 +95,9 @@ class QuizController extends Controller
 
          session()->flash('status', 'Successfully saved');
          session()->flash('type', 'success');
+         if($request->codeQuiz){
+            return redirect()->route('instructor.quiz.index', [$course->id]);
+         }
          return redirect()->route('instructor.question.index', [$course->id, $quiz->id]);
      }
 
@@ -95,9 +107,22 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($course_id, $id)
     {
-        //
+         $user = Auth::user();
+         $course = $user->courses()->findOrFail($course_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
+         return view('instructor.quiz.show', compact('course', 'quiz'));
+    }
+
+    public function takeShow($course_id, $quiz_id, $id)
+    {
+         $user = Auth::user();
+         $course = $user->courses()->findOrFail($course_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $take = Take::where('quiz_id', $quiz->id)->findOrFail($id);
+
+         return view('instructor.quiz.show', compact('course', 'quiz'));
     }
 
     /**

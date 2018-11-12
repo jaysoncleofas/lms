@@ -18,7 +18,7 @@ class Take extends Model
         return $this->belongsToMany('App\Assignment');
     }
 
-    public function student()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }

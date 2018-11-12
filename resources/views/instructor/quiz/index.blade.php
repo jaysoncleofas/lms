@@ -10,7 +10,7 @@
         <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
         <a href="{{route('instructor.quiz.create', $course->id)}}" class="btn btn-primary mr-0"><i class="fa fa-plus"></i> Add Quiz</a>
     </div>
-    <div class="row mt-lg-3">
+    <div class="row mt-3">
         <div class="col-lg-4 col-sm-4 mb-4">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
@@ -45,16 +45,26 @@
                             <tr>
                                 <td>{{ $key+1 }}.</td>
                                 <td>
-                                    <a href="{{ route('instructor.question.index', [$course->id, $quiz->id]) }}" class="btn-link" title="{{ $quiz->title }}">
-                                        {{ $quiz->isCode ? 'Code Quiz:' : '' }} {{ substr($quiz->title, 0, 20) }}{{ strlen($quiz->title) > 20 ? "..." : "" }}
-                                    </a>
+                                    @if (!$quiz->isCode)
+                                        <a href="{{ route('instructor.question.index', [$course->id, $quiz->id]) }}" class="btn-link" title="{{ $quiz->title }}">
+                                            {{ substr($quiz->title, 0, 20) }}{{ strlen($quiz->title) > 20 ? "..." : "" }}
+                                        </a>
+                                    @else 
+                                        <a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="btn-link" title="{{ $quiz->title }}">
+                                            <strong>{{ $quiz->isCode ? 'Code Quiz:' : '' }}</strong> {{ substr($quiz->title, 0, 20) }}{{ strlen($quiz->title) > 20 ? "..." : "" }}
+                                        </a>
+                                    @endif
                                 </td>
                                 <td>
                                     @foreach ($quiz->sections as $key => $section2)
                                         {{ $section2->name }}{{ $key < count($quiz->sections) - 1 ? ', ' : ''  }}
                                     @endforeach
                                 </td>
-                                <td><a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Add Questions" data-placement="right">{{count($quiz->questions)}}</a></td>
+                                <td>
+                                    @if (!$quiz->isCode)
+                                        <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Add Question" data-placement="right">{{count($quiz->questions)}}</a>
+                                    @endif
+                                </td>
                                 <td>{{$quiz->timeLimit ?? 0}} minutes</td>
                                 <td>{{$quiz->startDate ? $quiz->startDate->toFormattedDateString() : ''}}</td>
                                 <td>{{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}</td>

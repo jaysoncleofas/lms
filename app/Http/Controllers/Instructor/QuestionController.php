@@ -21,7 +21,7 @@ class QuestionController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
 
          $questions = Question::where('quiz_id', $quiz->id)->get();
 
@@ -37,7 +37,7 @@ class QuestionController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+        $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
 
         return view('instructor.question.create', compact('course', 'quiz'));
     }
@@ -52,7 +52,7 @@ class QuestionController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
         
          if(!$quiz->isCode){
              $request->validate([
@@ -116,7 +116,7 @@ class QuestionController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
 
          $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
 
@@ -134,7 +134,7 @@ class QuestionController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
          $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
 
          $request->validate([
@@ -179,7 +179,7 @@ class QuestionController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
          $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
 
          $question->delete();

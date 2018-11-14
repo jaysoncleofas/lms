@@ -80,7 +80,7 @@ class TakeController extends Controller
             'code'  => $request->code,
         ]);
 
-        session()->flash('status', 'Quiz finished!');
+        session()->flash('status', 'Quiz finished');
         session()->flash('type', 'success');    
         return redirect()->route('student.quiz.index', [$course_id, $section_id]);
     }

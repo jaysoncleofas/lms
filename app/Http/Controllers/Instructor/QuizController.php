@@ -118,11 +118,11 @@ class QuizController extends Controller
     public function takeShow($course_id, $quiz_id, $id)
     {
          $user = Auth::user();
-         $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
-         $take = Take::where('quiz_id', $quiz->id)->findOrFail($id);
+         $data['course'] = $user->courses()->findOrFail($course_id);
+         $data['quiz'] = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $data['take'] = Take::where('quiz_id', $quiz_id)->findOrFail($id);
 
-         return view('instructor.quiz.show', compact('course', 'quiz'));
+         return view('instructor.quiz.showTake', $data);
     }
 
     /**

@@ -23,8 +23,8 @@
     </div>
     <div class="row mt-3">
         <div class="col-xl-12 col-md-12 mb-5 pb-5">
-            <div class="card">
-                <div class="card-body">
+            <!-- <div class="card">
+                <div class="card-body"> -->
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -90,8 +90,8 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
+                <!-- </div>
+            </div> -->
         </div>
     </div>
 </div>

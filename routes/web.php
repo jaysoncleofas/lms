@@ -97,8 +97,6 @@ Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->gro
     Route::post('/dashboard/register-token', 'StudentController@check_token')->name('check_token');
     Route::get('/dashboard/register-token/{token}', 'StudentController@course_add')->name('course.add');
     Route::post('/dashboard/register/{section}', 'StudentController@register_store')->name('register.store');
-
-    Route::post('/runcode', 'TakeController@runCode')->name('runCode');
 });
 
 Route::middleware('auth')->group(function () {
@@ -116,4 +114,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/new-message/reply/{convo}', 'MessageController@reply')->name('message.reply');
     Route::get('/messages', 'MessageController@index')->name('message.index');
     Route::get('/messages/convo/{convo}', 'MessageController@show')->name('message.show');
+
+    Route::post('/runcode', 'TakeController@runCode')->name('runCode');
 });

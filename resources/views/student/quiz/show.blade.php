@@ -122,7 +122,6 @@
                         </div>
                     </div>
                 </div>
-
             @endif
         </div>
     </div>
@@ -212,7 +211,7 @@
             // $("#form_id").submit(); // Form submission.
             // alert(code);
 
-            var url = '{{ route('student.runCode') }}';
+            var url = '{{ route('runCode') }}';
             $.ajax({
                 type: 'post',
                 url: url,

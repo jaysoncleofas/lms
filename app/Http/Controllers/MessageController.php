@@ -64,7 +64,7 @@ class MessageController extends Controller
         $message->message = $request->message;
         $message->save();
 
-        session()->flash('status', 'Successfully Sent!');
+        session()->flash('status', 'Successfully sent');
         session()->flash('type', 'success');
 
         return redirect()->back();
@@ -136,7 +136,7 @@ class MessageController extends Controller
         $message->message = $request->message;
         $message->save();
 
-        session()->flash('status', 'Successfully Sent!');
+        session()->flash('status', 'Successfully sent');
         session()->flash('type', 'success');
 
         return redirect()->back();

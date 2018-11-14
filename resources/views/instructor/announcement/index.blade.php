@@ -25,19 +25,12 @@
             @foreach ($announcements as $announcement)
             <div class="card my-3">
                 <div class="card-body">
-                    <!-- Newsfeed -->
                     <div class="mdb-feed">
-                        <!-- Fourth news -->
                         <div class="news">
-
-                            <!-- Label -->
                             <div class="label">
                                 <img src="{{$announcement->instructor->avatar ? asset('storage/avatars/'.$announcement->instructor->avatar) : asset('images/profile_pic.png')}}" class="rounded-circle z-depth-1" style="height:30px;width:30px;object-fit:cover;" alt="">
                             </div>
-
-                            <!-- Excerpt -->
                             <div class="excerpt">
-                                <!-- Brief -->
                                 <div class="brief">
                                     <p class="name blue-text my-0">{{ $announcement->instructor->name() }}</p>
                                     <div class="date pl-0">
@@ -54,7 +47,6 @@
                                         </a>
                                     </div>
                                 </div>
-                                <!-- Added text -->
                                 <div class="added-text">
                                     {{$announcement->message}} 
                                     @if ($announcement->image)
@@ -86,9 +78,7 @@
                                     @endforeach
                                 </p>
                             </div>
-
                         </div>
-                        <!-- Fourth news -->
                     </div>
                 </div>
             </div>

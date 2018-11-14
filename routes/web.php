@@ -50,6 +50,7 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
     Route::put('/course/{course}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
     Route::resource('/course/{course}/lesson', 'Instructor\LessonController');
 
+    Route::put('/take/{take}', 'Instructor\QuizController@takeUpdate')->name('quiz.takeUpdate');
     Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');
     Route::get('/course/{course}/quiz/{quiz}/take/{take}', 'Instructor\QuizController@takeShow')->name('quiz.takeShow');
     Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');

@@ -40,16 +40,17 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <form action="" method="post">
+                                        <form action="{{ route('instructor.quiz.takeUpdate') }}" method="post">
+                                            <div class="modal-body">
+                                                @csrf @method('PUT')
                                                 <div class="md-form">
-                                                <input type="number" name="grade" id="grade" class="form-control" value="{{ $take->result }}">
+                                                    <input type="number" name="grade" id="grade" class="form-control" value="{{ $take->result }}">
                                                         <label for="grade">Grade</label>
                                                 </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Save</button>
                                         </div>
                                     </div>
                                     </div>

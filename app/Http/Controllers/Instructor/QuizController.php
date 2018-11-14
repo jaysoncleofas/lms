@@ -182,6 +182,17 @@ class QuizController extends Controller
          return redirect()->route('instructor.quiz.index', [$course->id]);
      }
 
+     public function takeUpdate(Request $request, $id)
+     {
+        $take = Take::findOrFail($id);
+        $take->result = $request->grade;
+        $take->save();
+
+        session()->flash('status', 'Successfully graded');
+        session()->flash('type', 'success');
+        return redirect()->back();
+     }
+
     /**
      * Remove the specified resource from storage.
      *

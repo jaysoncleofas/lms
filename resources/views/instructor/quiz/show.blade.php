@@ -50,21 +50,6 @@
                                 <td>
                                     <a href="{{ route('instructor.quiz.takeShow', [$course->id, $quiz->id, $take->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="View" data-placement="left"><i class="fa fa-eye"></i></a> 
                                 </td>
-                                {{-- <td> <img src="{{ $question->question_image ? asset('storage/images/'.$question->question_image) : ''}}" class="z-depth-1" style="object-fit:cover;height:100px;width:100px;" alt=""> </td>
-                                <td>{{ substr($question->question, 0, 100) }}{{ strlen($question->question) > 100 ? "..." : "" }}</td>
-                                @if (!$quiz->isCode)
-                                    <td>
-                                        @if ($question->option_one == null && $question->option_two == null && $question->option_three == null)
-                                            Identification
-                                            @else 
-                                            Multiple Choice
-                                        @endif
-                                    </td>
-                                @endif
-                                <td>
-                                    <a href="{{ route('instructor.question.edit', [$course->id, $quiz->id, $question->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil-alt"></i></a> 
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.question.destroy', [$course->id, $quiz->id, $question->id]) }}" class="perma_delete text-danger" data-placement="left" data-method="delete" data-from="quiz" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> 
-                                </td> --}}
                             </tr>
                             @endforeach
                         </tbody>

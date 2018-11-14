@@ -21,7 +21,8 @@ Route::get('/register/privacy-policy/{token}', 'HomeController@privacy_policy')-
 Route::get('/register/{token}', 'HomeController@register_student')->name('register_student');
 Route::post('/register/student/{section}', 'HomeController@register')->name('register.student');
 
-Auth::routes();
+// Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@admin_dashboard')->name('dashboard');
@@ -36,7 +37,7 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
     Route::get('/student', 'Admin\StudentController@index')->name('student.index');
 });
 
-Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'auth'])->group(function () {
+Route::prefix('instructor')->name('instructor.')->middleware(['verified', 'instructor', 'auth'])->group(function () {
     Route::get('/all-course', 'HomeController@instructor_dashboard')->name('dashboard');
     Route::put('/course/{course}/section/{section}/status', 'Instructor\SectionController@status')->name('section.status');
     Route::get('/course/{course}/section/deactivated', 'Instructor\SectionController@deactivated')->name('section.deactivated');
@@ -73,7 +74,7 @@ Route::prefix('instructor')->name('instructor.')->middleware(['instructor', 'aut
 });
 
 
-Route::prefix('student')->name('student.')->middleware(['student', 'auth'])->group(function () {
+Route::prefix('student')->name('student.')->middleware(['verified', 'student', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@student_dashboard')->name('dashboard');
     Route::get('/course/{course}/section/{section}/announcement', 'StudentController@announcement')->name('announcement');
     Route::get('/course/{course}/section/{section}', 'StudentController@section_index')->name('section.index');

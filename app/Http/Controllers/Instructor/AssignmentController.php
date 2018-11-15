@@ -26,7 +26,7 @@ class AssignmentController extends Controller
      {
          $user = Auth::user();
          $data['course'] = $user->courses()->findOrFail($course_id);
-         $data['assignments'] = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->get();
+         $data['assignments'] = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->oldest()->get();
          return view('instructor.assignment.index', $data);
        }
 
@@ -65,6 +65,7 @@ class AssignmentController extends Controller
          $assignment->instructor_id = $user->id;
          $assignment->course_id = $course->id;
          $assignment->title = $request->title;
+         $assignment->isCode = $request->has('codeAssignment');
          $assignment->content = Purifier::clean($request->content);
          $assignment->startDate = $request->formatted_startDate_submit;
          $assignment->expireDate = $request->formatted_expireDate_submit;
@@ -159,6 +160,7 @@ class AssignmentController extends Controller
          $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($id);
 
          $assignment->title = $request->title;
+         $assignment->isCode = $request->has('codeAssignment');
          $assignment->content = Purifier::clean($request->content);
          $assignment->startDate = $request->formatted_startDate_submit;
          $assignment->expireDate = $request->formatted_expireDate_submit;

@@ -33,6 +33,14 @@
                                 </span>
                             @endif
                         </div>
+
+                        <div class="md-form pb-3 pt-2 mt-0">
+                            <div class="form-check pl-0">
+                                <input type="checkbox" class="form-check-input" name="codeAssignment" id="codeAssignment" value="1" {{ $assignment->isCode == 1 ? 'checked' : '' }}>
+                                <label class="form-check-label" for="codeAssignment">Code Assignment</label>
+                            </div>
+                        </div>
+
                         <div class="md-form mb-3">
                             <p class="select2Label">Content <span class="red-asterisk">*</span></p>
                             <textarea name="content" id="content" class="md-textarea form-control pt-0 {{$errors->has('content') ? 'is-invalid' : ''}}"  rows="15">{{ $assignment->content }}</textarea>

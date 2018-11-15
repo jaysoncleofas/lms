@@ -29,6 +29,7 @@
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Title</th>
                                 <th>Section</th>
                                 <th>Start Date</th>
@@ -38,9 +39,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($assignments as $assignment)
+                            @foreach ($assignments as $key => $assignment)
                             <tr>
-                                <td><a href="{{ route('instructor.assignment.show', [$course->id, $assignment->id]) }}" class="blue-text">{{ $assignment->title }}</a></td>
+                                <td>{{$key+1}}.</td>
+                                <td>
+                                    <a href="{{ route('instructor.assignment.show', [$course->id, $assignment->id]) }}" class="btn-link" title="{{ $assignment->title }}"><strong>{{ $assignment->isCode ? 'Code:' : '' }}</strong> {{ substr($assignment->title, 0, 30) }}{{ strlen($assignment->title) > 30 ? "..." : "" }}</a></td>
                                 <td>
                                     @foreach ($assignment->sections as $key => $section2)
                                         {{ $section2->name }}{{ $key < count($assignment->sections) - 1 ? ', ' : ''  }}
@@ -78,11 +81,12 @@
     <script>
         $(document).ready(function () {
             $('#example').DataTable({
-                "scrollX": true,
+                scrollX: true,
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "Search",
-                }
+                },
+                order:[]
             });
         });
     </script>

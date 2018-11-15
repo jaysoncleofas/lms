@@ -51,7 +51,7 @@
                                         </a>
                                     @else 
                                         <a href="{{ route('instructor.quiz.show', [$course->id, $quiz->id]) }}" class="btn-link" title="{{ $quiz->title }}">
-                                            <strong>{{ $quiz->isCode ? 'Code Quiz:' : '' }}</strong> {{ substr($quiz->title, 0, 20) }}{{ strlen($quiz->title) > 20 ? "..." : "" }}
+                                            <strong>{{ $quiz->isCode ? 'Code:' : '' }}</strong> {{ substr($quiz->title, 0, 20) }}{{ strlen($quiz->title) > 20 ? "..." : "" }}
                                         </a>
                                     @endif
                                 </td>

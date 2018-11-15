@@ -71,7 +71,7 @@ class QuizController extends Controller
          $quiz = new Quiz;
          $quiz->instructor_id = $user->id;
          $quiz->course_id = $course->id;
-         $quiz->isActive = $request->codeQuiz ? 1 : 0;
+         $quiz->isActive = 1;
          $quiz->title = $request->title;
          $quiz->isCode = $request->has('codeQuiz');
          $quiz->content = $request->codeQuiz ? $request->content : '';

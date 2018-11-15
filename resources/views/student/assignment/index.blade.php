@@ -8,8 +8,8 @@
         </div>
     </div>
 
-    <div class="row mt-lg-3">
-        <div class="col-lg-4 col-sm-4">
+    <div class="row mt-3">
+        <div class="col-lg-4 col-sm-4 mb-4">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{count($section->assignments)}}</strong></h2>
@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-xl-12 col-md-12 mb-5 pb-5">
             <div class="table-responsive">
                 <table class="table">
@@ -36,7 +36,7 @@
                     <tbody>
                         @foreach ($section->assignments as $key => $assignment)
                         <tr>
-                            <th>{{$key+1}}</th>
+                            <th>{{$key+1}}.</th>
                             <td>{{$assignment->title}}</td>
                             <td>
                                 {{$assignment->startDate ? $assignment->startDate->toFormattedDateString() : ''}}

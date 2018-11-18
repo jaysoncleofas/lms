@@ -9,16 +9,16 @@
         <li>
             <ul class="collapsible collapsible-accordion">
                 <li>
-                    <a href="{{route('admin.dashboard')}}" class="{{Nav::isRoute('admin.dashboard')}} collapsible-header waves-effect arrow-r"><i class="fa fa-chart-pie"></i> Dashboard</a>
+                    <a href="{{route('admin.dashboard')}}" class="{{Nav::isRoute('admin.dashboard')}} collapsible-header waves-effect arrow-r"><i class="fa fa-tachometer"></i> Dashboard</a>
                 </li>
                 <li>
                     <a href="{{route('admin.course.index')}}" class="{{Nav::hasSegment('course', 2)}} {{Nav::isRoute('admin.course.index')}} collapsible-header waves-effect arrow-r"><i class="fa fa-list"></i> Courses</a>
                 </li>
                 <li>
-                    <a href="{{route('admin.instructor.index')}}" class="{{Nav::hasSegment('instructor', 2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-chalkboard-teacher"></i> Instructors</a>
+                    <a href="{{route('admin.instructor.index')}}" class="{{Nav::hasSegment('instructor', 2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-users"></i> Instructors</a>
                 </li>
                 <li>
-                    <a href="{{route('admin.student.index')}}" class="{{Nav::hasSegment('student', 2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-users"></i> Students</a>
+                    <a href="{{route('admin.student.index')}}" class="{{Nav::hasSegment('student', 2)}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Students</a>
                 </li>
             </ul>
         </li>

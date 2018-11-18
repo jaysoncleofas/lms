@@ -2,35 +2,37 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <div>
-            <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
-            <h3 class="text-oswald font-weight-bold">Section: <span class="font-weight-normal">{{ $take->section->name }}</span></h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <div class="post-prev-info mb-0">
+                {{ $take->section->name }}
+            </div>
+            <hr class="mt-0">
         </div>
     </div>
     <div class="row mt-3 justify-content-center">
-        <div class="col-lg-10 col-md-12 mb-4">
-            <div class="card mt-3">
+        <div class="col-lg-10 col-md-12 mb-3">
+            <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            <strong>{{ $quiz->title }}</strong>
+                            <h4 class="text-oswald">{{ $quiz->title }}</h4>
                             <p>{{ $quiz->content }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="card mt-3">
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            {{-- <div class="row justify-content-between d-flex mx-1"> --}}
                                 <p class="mb-0"><strong>Student:</strong> {{ $take->user->name() }}</p>
                                 <p><strong>Grade:</strong> {{ $take->result }}
-                                    <a href="" data-toggle="modal" data-target="#basicExampleModal"> {{ $take->result == '' ? 'Add' : 'Edit' }}</a>   
+                                    <a data-toggle="modal" data-target="#basicExampleModal" class="btn btn-light btn-sm"> {{ $take->result == '' ? 'Add' : 'Edit' }}</a>   
                                 </p>
-                                <!-- Modal -->
                                 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -40,9 +42,9 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         </div>
-                                        <form action="{{ route('instructor.quiz.takeUpdate') }}" method="post">
+                                        <form action="{{ route('instructor.quiz.takeUpdate', $take->id) }}" method="post">
+                                            @csrf @method('PUT')
                                             <div class="modal-body">
-                                                @csrf @method('PUT')
                                                 <div class="md-form">
                                                     <input type="number" name="grade" id="grade" class="form-control" value="{{ $take->result }}">
                                                         <label for="grade">Grade</label>
@@ -55,12 +57,11 @@
                                     </div>
                                     </div>
                                 </div>
-                            {{-- </div> --}}
                             <div class="form-group mb-3">
                                 <p class="select2Label">Code</p>
                                 <textarea type="text" id="code" name="code" rows="15" class="form-control rounded-0 {{$errors->has('code') ? 'is-invalid' : ''}}" rows="3" readonly>{{ $take->code }}</textarea>
                             </div>
-                            <a id="execute" class="btn btn-info mt-4 float-right"><i class="fa fa-save"></i> Execute</a>
+                            <a id="execute" class="btn btn-info"><i class="fa fa-save"></i> Run</a>
                         </div>
                     </div>
                 </div>
@@ -82,7 +83,6 @@
 @endsection
  
 @section('script')
-    @include('partials.notification')
     <script>
         $(document).ready(function() {
             $("#execute").click(function () {

@@ -57,6 +57,7 @@ Route::prefix('instructor')->name('instructor.')->middleware(['verified', 'instr
     Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');
     Route::resource('/course/{course}/quiz', 'Instructor\QuizController');
 
+    Route::put('/pass/{pass}', 'Instructor\AssignmentController@passUpdate')->name('assignment.passUpdate');
     Route::get('/course/{course}/assignment/{assignment}/section/{section}/submit/{submit}', 'Instructor\AssignmentController@show_submit')->name('assignment.submit');
     Route::put('/course/{course}/assignment/{assignment}/status', 'Instructor\AssignmentController@status')->name('assignment.status');
     Route::resource('/course/{course}/assignment', 'Instructor\AssignmentController');

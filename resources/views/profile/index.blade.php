@@ -4,37 +4,48 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="text-oswald font-weight-bold">Profile</h3>
+                <div class="post-prev-title">
+                    <h3>Profile</h3>
+                </div>
+                <hr class="mt-3">
             </div>
         </div>
+
         <form action="{{route('profile.update')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }} {{method_field('PUT')}}
-            <div class="row mt-lg-3">
-                <div class="col-lg-4 mb-5">
-                    <div class="md-form">
-                        <img class="img-fluid img-preview z-depth-1" style="object-fit: cover;height:250px;width:250px;">
-                        <div class="file-field">
-                            <div class="btn btn-primary btn-sm float-left">
-                                <span>Choose file</span>
-                                <input type="file" name="avatar" onchange="previewFile()">
-                            </div>
-                            <a class="btn btn-danger btn-sm float-left" onclick="
-                                        event.preventDefault();
-                                        $('#remove-profile-pic-{{$user->id}}').submit();
-                                        ">
-                                <span>Remove</span>
-                            </a>
+            <div class="row mt-3 pr-3">
+                <div class="col-lg-4 col-md-12 mb-5 text-center pr-0">
+                    <div class="card">
+                        <div class="card-header text-white bg-primary">
+                            <h5 class="text-oswald mb-0 text-left">Profile Avatar</h5>
                         </div>
-
-                        @if ($errors->has('image'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('image') }}</strong>
-                            </span>
-                        @endif
+                        <div class="card-body">
+                            <div class="md-form mt-0">
+                                <img class="img-fluid img-preview z-depth-1 profile-avatar rounded-circle mb-3" style="object-fit: cover;height:300px; width:300px;">
+                                <div class="file-field">
+                                    <div class="btn btn-primary btn-sm">
+                                        <span><i class="fa fa-image"></i> Choose</span>
+                                        <input type="file" name="avatar" onchange="previewFile()">
+                                    </div>
+                                    <a href="javascript:void(0);" data-href="{{ route('profile.picture.remove') }}" class="btn btn-danger btn-sm remove_avatar" data-method="put" data-value="{{ $user->id }}">
+                                        <span><i class="fa fa-times"></i> Remove</span>
+                                    </a>
+                                </div>
+        
+                                @if ($errors->has('image'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('image') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-md-12 pr-0">
                     <div class="card">
+                        <div class="card-header text-white bg-primary">
+                            <h5 class="text-oswald mb-0">Personal Information</h5>
+                        </div>
                         <div class="card-body">
                             <div class="form-row">
                                     <div class="col-md-4">
@@ -147,7 +158,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-pencil-alt"></i> Update</button>
+                                <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-pencil"></i> Update</button>
                         </div>
                     </div>
                 </div>
@@ -161,7 +172,6 @@
 @endsection
 
 @section('script')
-    @include('partials.notification')
     <script>
         $('.datepicker').pickadate({
             max: new Date(),

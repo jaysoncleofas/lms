@@ -12,11 +12,16 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <hr class="mt-3">
+        </div>
     </div>
-    <div class="row justify-content-center mt-5">
-        <div class="col-xl-11 col-md-11 mb-4">
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-10 col-md-12 mb-3">
             <div class="card">
                 <div class="card-header text-white bg-primary">
                     <h5 class="text-oswald mb-0">Add Assignment</h5>

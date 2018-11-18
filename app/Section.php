@@ -24,7 +24,7 @@ class Section extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\User')->orderBy('lastName', 'asc');
     }
 
     public function tokens()
@@ -49,7 +49,7 @@ class Section extends Model
 
     public function announcements()
     {
-        return $this->belongsToMany('App\Announcement')->orderBy('created_at', 'desc');
+        return $this->belongsToMany('App\Announcement')->orderBy('updated_at', 'desc');
     }
 
     public function students()

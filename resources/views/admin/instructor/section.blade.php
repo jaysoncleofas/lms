@@ -6,34 +6,49 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-            <h3 class="text-oswald font-weight-bold">Instructor Profile</h3> 
-        {{-- <h3 class="text-oswald text-capitalize">{{$instructor->firstName .' '.$instructor->lastName}}</h3> --}}
-        <a href="{{url()->previous()}}" class="btn btn-light btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
-    </div>
-
-    <div class="row mt-3">
-        <div class="col-md-2 col-sm-4 text-center">
-            <img src="{{ $instructor->avatar ? asset('storage/avatars/'.$instructor->avatar) : asset('images/profile_pic.png')}}" class="img-fluid rounded-circle z-depth-1" style="height:100px;width:100px;object-fit: cover;" alt="">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between">
+            <div class="post-prev-title">
+                <h3>Instructor Profile</h3>
+            </div>
+            <a href="{{ route('admin.instructor.course', [$instructor->id, $course->id]) }}" class="btn btn-light mr-0 my-0"><i class="fa fa-arrow-circle-left"></i> Back</a>
         </div>
-        <div class="col-md-5 col-sm-8 mt-3 instructor-des">
-            <p><b>Name:</b> {{ $instructor->name() }}</p> 
-            <p><b>Email-Address:</b> {{ $instructor->email }}</p>   
-            <p><b>Username:</b> {{ $instructor->username }}</p>   
+    </div>
+    <hr class="mt-2">
+    <div class="row">
+        <div class="col-md-2 col-sm-4 text-center">
+            <img src="{{ $instructor->avatar ? asset('storage/avatars/'.$instructor->avatar) : asset('images/profile_pic.png')}}" class="img-fluid rounded-circle z-depth-1" style="height:100px;width:100px;object-fit:cover;" alt="">
+        </div>
+        <div class="col-md-5 col-sm-8 instructor-des">
+            <p><b>Name:</b> {{ $instructor->name() }} <br>
+            <b>Email-Address:</b> {{ $instructor->email }} <br>  
+            <b>Username:</b> {{ $instructor->username }}  
             @if ($instructor->mobileNumber)
-                <p><b>Mobile Number:</b> {{ $instructor->mobileNumber }}</p>   
+                <br><b>Mobile Number:</b> {{ $instructor->mobileNumber }}  
             @endif
+            </p>
         </div>    
     </div>
-
-    <div class="row mt-3">
+    <hr class="mb-2">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <div class="post-prev-info mb-0">
+                {{ $section->name }}
+            </div>
+            <hr class="mt-0">
+        </div>
+    </div>
+    {{-- <div class="row mt-3">
         <div class="col-lg-12">
             <hr>
             <h4 class="text-oswald mb-3">Course: {{$course->name}}</h4>
             <h4 class="text-oswald mb-3">Section: {{$section->name}}</h4>
             <h4>Student{{count($section->users) > 1 ? 's' : ''}}: {{ number_format(count($section->users)) }}</h4>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row mt-3">
         <div class="col-lg-4 col-sm-4 mb-4">
@@ -101,7 +116,6 @@
 
 @section('script')
 <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-@include('partials.notification')
 <script>
     $(document).ready(function () {
         $('#example').DataTable({

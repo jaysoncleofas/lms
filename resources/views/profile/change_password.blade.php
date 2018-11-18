@@ -2,11 +2,22 @@
 
 @section('content')
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="post-prev-title">
+                    <h3>Change Password</h3>
+                </div>
+                <hr class="mt-3">
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <h3 class="text-oswald">Change Password</h3>
                 <div class="card mt-3">
+                    <div class="card-header text-white bg-primary">
+                        <h5 class="text-oswald mb-0 text-left">Change your password</h5>
+                    </div>
                     <div class="card-body">
+                        <span>Choose a strong password, use at least 6 characters.</span>
                         <form class="" action="{{route('change.password.update')}}" method="post">
                             @csrf {{method_field('PUT')}}
                             <div class="form-row">
@@ -48,15 +59,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-pencil-alt"></i> Update</button>
+                            <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-pencil"></i> Update</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-
-@section('script')
-    @include('partials.notification')
 @endsection

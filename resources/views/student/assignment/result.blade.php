@@ -19,51 +19,40 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="text-oswald">{{$course->name}} / {{$section->name}}</h3>
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <div class="post-prev-info mb-0">
+                {{ $section->name }}
+            </div>
+            <hr class="mt-0">
         </div>
     </div>
-
-    {{-- <div class="row mt-5 justify-content-center">
-        <div class="col-lg-4 col-sm-4 text-center">
-            <div class="card">
-                <div class="text-white blue text-center py-4 px-4">
-                    <h2 class="text-uppercase text-white text-oswald">Assignment Submitted</h2>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-    <div class="row mt-5">
-        <div class="col-md-12 col-lg-12">
+    <div class="row mt-3 justify-content-center">
+        <div class="col-lg-10 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="text-oswald mb-5 text-center">{{$assignment->title}}</h2>  
                     <div class="row justify-content-center">
-                        <div class="col-lg-8 col-md-8">
+                        <div class="col-md-12">
+                            <h4 class="text-oswald">{{ $assignment->title }}</h4>
                             {!! $assignment->content !!}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row mt-5">
-            <div class="col-md-12 col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="text-oswald mb-5 text-center">My Assignment</h2>  
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-md-8">
-                                {!! $assignment->checkpasses($section->id)->content !!}
-                            </div>
+        <div class="col-lg-10 col-md-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 mb-5">
+                            <h4 class="text-oswald text-center py-3">My Assignment</h4>
+                            {!! $assignment->checkpasses($section->id)->content !!}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
- 
-@section('script')
-    @include('partials.notification')
+    </div>
+</div>    
 @endsection

@@ -6,27 +6,29 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold">Deleted Instructor{{count($instructors) > 1 ? 's' : ''}}</h3>
-        {{-- <a href="{{route('admin.instructor.index')}}" class="btn btn-light"><i class="fa fa-arrow-circle-left"></i> Back</a> --}}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>Deleted Instructor{{count($instructors) > 1 ? 's' : ''}}</h3>
+            </div>
+            <hr class="mt-3">
+        </div>
     </div>
-
-    <div class="row mt-3">
-        <div class="col-lg-5 col-md-5 col-sm-6 mb-4">
+    <div class="row mt-2">
+        <div class="col-lg-4 col-md-4 col-sm-6 mb-3">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
-                    <i class="fa fa-chalkboard-teacher fa-3x tiles-left-icon"></i>
+                    <i class="fa fa-times fa-3x tiles-left-icon"></i>
                     <h2 class="card-title pt-2 text-white text-oswald"><strong>{{ number_format(count($instructors)) }}</strong></h2>
                     <h2 class="text-uppercase text-white text-oswald">Instructor{{ count($instructors) > 1 ? 's' : '' }}</h2>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="row mt-3">
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body pb-0">
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -61,7 +63,6 @@
 
 @section('script')
 <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-@include('partials.notification')
 <script>
     $(document).ready(function () {
         $('#example').DataTable({

@@ -6,47 +6,45 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row px-3 d-flex justify-content-between align-items-center">
-            <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="post-prev-title">
+                    <h3>{{ $course->name }}</h3>
+                </div>
+                <hr class="mt-3">
+            </div>
         </div>
-        <div class="row mt-lg-3">
-            <div class="col-xl-12 col-md-12 mb-4">
+        <div class="row">
+            <div class="col-lg-4 col-sm-4 mb-3">
                 <div class="card">
-                  <div class="card-body">
-                      <div class="row mx-5 d-flex justify-content-between align-items-center">
-                          @if (count($assignment->sections) > 0)
-                              <div>
-                                    Assignment for
-                                    @foreach ($assignment->sections as $value)
-                                        <span class="breadcrumb-item active">{{$value->name}}</span>
-                                    @endforeach
-                              </div>
-                          @endif
-                          <a href="{{route('instructor.assignment.edit', [$course->id, $assignment->id])}}" class="pull-right"><i class="fa fa-pencil-alt"></i> Update</a>
-                      </div>
-                      <div class="row justify-content-center mb-5">
-                          <div class="col-md-11">
-                              <h2 class="text-center py-3 text-oswald">{{$assignment->title}}</h2>
-
-                              <p>{!! $assignment->content !!}</p>
-                          </div>
-                      </div>
-                  </div>
+                    <div class="text-white blue text-center py-4 px-4">
+                        <i class="fa fa-save fa-3x tiles-left-icon"></i> 
+                        <h2 class="card-title pt-2 text-white text-oswald"><strong>{{ number_format(count($assignment->pass)) }}</strong></h2>
+                        <h2 class="text-uppercase text-white text-oswald">Submitted{{count($assignment->pass) > 1 ? 's' : ''}}</h2>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="row mt-5">
+        <hr class="mb-2">
+        <div class="row mt-0">
             <div class="col-lg-12">
-                <h4>Submitted Assignment{{count($assignment->pass) > 1 ? 's' : ''}}</h4>
-                <div class="card mt-3">
+                <div class="post-prev-title">
+                    <h3>{{ $assignment->isCode ? "Code " : '' }}Assignment: {{$assignment->title}}</h3>
+                </div>
+                <hr class="mt-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
                     <div class="card-body pb-0">
                         <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Section <i class="fa fa-sort float-right" aria-hidden="true"></i></th>
+                                    <th>Section</th>
                                     <th>Student</th>
                                     <th>Date Submitted</th>
+                                    <th>Result</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -56,6 +54,7 @@
                                         <td>{{$passes->section->name}}</td>
                                         <td><a class="blue-text" href="{{route('instructor.student.show', [$course->id, $passes->section->id, $passes->user->id])}}">{{$passes->user->name()}}</a></td>
                                         <td>{{$passes->created_at->toDayDateTimeString()}}</td>
+                                        <td>{{ $passes->grade }}</td>
                                         <td><a href="{{route('instructor.assignment.submit', [$course->id, $assignment->id, $passes->section->id, $passes->id ])}}" class="blue-text">View</a></td>
                                         {{-- /course/{course}/assignment/{assignment}/section/{section}/submit/{submit} --}}
                                     </tr>
@@ -71,7 +70,6 @@
 
 @section('script')
     <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-    @include('partials.notification')
     <script>
         $(document).ready(function () {
             $('#example').DataTable({

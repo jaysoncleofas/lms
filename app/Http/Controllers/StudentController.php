@@ -100,8 +100,9 @@ class StudentController extends Controller
     public function lesson_download($course_id, $section_id, $lesson_id){
 
         $entry = Lesson::findOrFail($lesson_id);
+        $filename = substr($entry->upload_file, 11);
         $pathToFile = storage_path()."/app/public/files/".$entry->upload_file;
-        return response()->download($pathToFile);
+        return response()->download($pathToFile, $filename);
     }
 
     public function section_index($course_id, $section_id)

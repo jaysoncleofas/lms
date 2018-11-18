@@ -101,6 +101,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return ucfirst($this->firstName) . ' ' . ucfirst($this->lastName);
     }
+
+    public function lastFirstName()
+    {
+        return ucfirst($this->lastName) . ', ' . ucfirst($this->firstName) . ' ' . ucfirst($this->middleName);
+    }
 }
 
 

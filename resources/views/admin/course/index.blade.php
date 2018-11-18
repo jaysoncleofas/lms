@@ -6,13 +6,17 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold"><strong>Courses</strong></h3>
-        <a href="{{route('admin.course.create')}}" class="btn btn-primary mr-0"><i class="fa fa-plus"></i> Add course</a>
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between">
+            <div class="post-prev-title">
+                <h3>Courses</h3>
+            </div>
+            <a href="{{route('admin.course.create')}}" class="btn btn-primary mr-0 my-0"><i class="fa fa-plus"></i> Add course</a>
+        </div>
     </div>
-
+    <hr class="mt-2">
     <div class="row mt-3">
-        <div class="col-lg-4 col-md-4 col-sm-6 mb-4">
+        <div class="col-lg-4 col-md-4 col-sm-6 mb-3">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <i class="fa fa-list fa-3x tiles-left-icon"></i>
@@ -22,7 +26,6 @@
             </div>
         </div>
     </div>
-
     <div class="row mt-3">
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card">
@@ -40,13 +43,13 @@
                             <tr>
                                 <td>{{$course->name}}</td>
                                 <td style="white-space: normal;">
-                                    @foreach ($course->users as $instructor)
-                                        <a class="btn-link" href="{{route('admin.instructor.show', $instructor->id)}}">{{$instructor->firstName.' '.$instructor->lastName}}</a>,
+                                    @foreach ($course->users as $key => $instructor)
+                                        <a class="btn-link" href="{{route('admin.instructor.show', $instructor->id)}}">{{$instructor->firstName.' '.$instructor->lastName}}</a>{{ $key < count($course->users) - 1 ? ', ' : ''  }}
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{route('admin.course.edit', $course->id)}}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil-alt"></i></a> 
-                                    <a href="javascript:void(0);" data-href="{{ route('admin.course.destroy', $course->id) }}" class="perma_delete text-danger" data-placement="right" data-method="delete" data-from="course" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> 
+                                    <a href="{{route('admin.course.edit', $course->id)}}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a> 
+                                    <a href="javascript:void(0);" data-href="{{ route('admin.course.destroy', $course->id) }}" class="perma_delete text-danger" data-placement="left" data-method="delete" data-from="course" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> 
                                 </td>
                             </tr>
                             @endforeach
@@ -61,7 +64,6 @@
 
 @section('script')
 <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-@include('partials.notification')
 <script>
     $(document).ready(function () {
         $('#example').DataTable({

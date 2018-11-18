@@ -2,14 +2,20 @@
 
 @section('content')
 <div class="container-fluid">
-
-    <div class="row justify-content-center">
-        <div class="col-xl-9 col-md-9">
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald font-weight-bold">Update Instructor</h3>
-                {{-- <a href="{{route('admin.instructor.index')}}" class="btn btn-light"><i class="fa fa-arrow-circle-left"></i> Back to list</a> --}}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>Instructors</h3>
             </div>
-            <div class="card mt-2">
+            <hr class="mt-3">
+        </div>
+    </div>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-xl-9 col-md-9">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Update Instructor</h5>
+                </div>
                 <div class="card-body">
                     <form action="{{route('admin.instructor.update', $instructor->id)}}" method="post">
                         {{ csrf_field() }} {{method_field('PUT')}}
@@ -89,7 +95,7 @@
                             @endif
                         </div>
         
-                        <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-pencil-alt"></i> Update</button>
+                        <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-pencil"></i> Update</button>
                     </form>
                 </div>
             </div>

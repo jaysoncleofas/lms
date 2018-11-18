@@ -8,74 +8,83 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            {{-- <h3 class="text-oswald">{{$course->name}} / {{$section->name}}</h3> --}}
-            <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
-            <h3 class="text-oswald font-weight-bold">Section: <span class="font-weight-normal">{{$section->name}}</span></h3>
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <div class="post-prev-info mb-0">
+                {{ $section->name }}
+            </div>
+            <hr class="mt-0">
         </div>
     </div>
-
     <div class="row mt-3 justify-content-center">
-
-        <div class="col-lg-10 col-md-12 mb-4">
+        <div class="col-lg-10 col-md-12 mb-3">
             @if ($quiz->timeLimit > 0)
             <h4 class="text-oswald text-center"><span id="divCounter"></span> minutes</h4>
             @endif
 
             @if (!$quiz->isCode)
-                <form id="take-quiz-form-{{$quiz->id}}" action="{{route('student.take.store', [$course->id, $section->id, $quiz->id])}}" method="POST">
-                    @csrf
-                    <div id="smartwizard">
-                        <ul>
-                            <?php $i = 1; ?>
-                            @foreach($quiz->questions as $question)
-                            <li><a href="#step-{{$i}}">Q {{$i}}</a></li>
-                            <?php $i++; ?>
-                            @endforeach
-                        </ul>
-
-                        <div>
-                            <?php $i = 1; ?>
-                            @foreach($quiz->questions as $question)
-                            <div id="step-{{$i}}" class="">
-                                <h4 class="text-oswald">{{ $i }}. {{$question->question}} ?</h4>
-                                <input type="hidden" name="questions[{{ $i }}]" value="{{ $question->id }}">
-                                <img src="{{asset('storage/images/'.$question->question_image)}}" alt="" class="img-fluid mb-3 z-depth-1">
-
-                                @php
-                                if($question->option_one == '' && $question->option_two == '' && $question->option_three == ''){
-                                    $choices = [$question->correct];
-                                } else {
-                                    $choices = [
-                                    $question->correct,
-                                    $question->option_one,
-                                    $question->option_two,
-                                    $question->option_three
-                                    ];
-                                }
-                                shuffle($choices);
-                                @endphp
-
-                                @if (count($choices) == 1)
-                                    <div class="md-form">
-                                        <input type="text" name="answers[{{ $question->id }}]" value="" class="form-control" id="choices{{ $question->id }}">
-                                        <label for="choices{{ $question->id }}">Answer</label>
-                                    </div>
-                                @else
-                                    @foreach($choices as $key => $option)
-                                        @if (!empty($option))
-                                            <div class="form-check">
-                                                <input type="radio" name="answers[{{ $question->id }}]" value="{{ $option }}" class="form-check-input" id="choices{{ $key.''.$question->id }}">
-                                                <label class="form-check-label" for="choices{{ $key.''.$question->id }}">{{ $option }}</label>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                @endif
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">{{ $quiz->title }}</h5>
+                </div>
+                <div class="card-body">
+                    <form id="take-quiz-form-{{$quiz->id}}" action="{{route('student.take.store', [$course->id, $section->id, $quiz->id])}}" method="POST">
+                        @csrf
+                        <div id="smartwizard">
+                            <ul>
+                                <?php $i = 1; ?>
+                                @foreach($quiz->questions as $question)
+                                <li><a href="#step-{{$i}}">Q {{$i}}</a></li>
+                                <?php $i++; ?>
+                                @endforeach
+                            </ul>
+                            {{-- <hr class="my-0"> --}}
+                            <div class="pt-3 pl-3">
+                                <?php $i = 1; ?>
+                                @foreach($quiz->questions as $question)
+                                <div id="step-{{$i}}" class="">
+                                    <p>{{ $i }}. {{$question->question}} ?</p>
+                                    <input type="hidden" name="questions[{{ $i }}]" value="{{ $question->id }}">
+                                    <img src="{{asset('storage/images/'.$question->question_image)}}" alt="" class="img-fluid mb-3 z-depth-1">
+    
+                                    @php
+                                    if($question->option_one == '' && $question->option_two == '' && $question->option_three == ''){
+                                        $choices = [$question->correct];
+                                    } else {
+                                        $choices = [
+                                        $question->correct,
+                                        $question->option_one,
+                                        $question->option_two,
+                                        $question->option_three
+                                        ];
+                                    }
+                                    shuffle($choices);
+                                    @endphp
+    
+                                    @if (count($choices) == 1)
+                                        <div class="md-form">
+                                            <input type="text" name="answers[{{ $question->id }}]" value="" class="form-control" id="choices{{ $question->id }}">
+                                            <label for="choices{{ $question->id }}">Answer</label>
+                                        </div>
+                                    @else
+                                        @foreach($choices as $key => $option)
+                                            @if (!empty($option))
+                                                <div class="form-check pl-0">
+                                                    <input type="radio" name="answers[{{ $question->id }}]" value="{{ $option }}" class="form-check-input" id="choices{{ $key.''.$question->id }}">
+                                                    <label class="form-check-label" for="choices{{ $key.''.$question->id }}">{{ $option }}</label>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <?php $i++; ?>
+                                @endforeach
                             </div>
-                            <?php $i++; ?>
-                            @endforeach
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+            </div>
             @else 
                 <div class="card mt-3">
                     <div class="card-body">
@@ -104,8 +113,7 @@
                                         </span>
                                         @endif
                                     </div>
-                                    <button type="submit" name="button" class="btn btn-primary mt-4 float-right finish"><i class="fa fa-check"></i> Finish</button>
-                                    <a id="execute" class="btn btn-info mt-4 float-right"><i class="fa fa-save"></i> Execute</a>
+                                    <a id="execute" class="btn btn-info"><i class="fa fa-save"></i> Execute</a>
                                 </form>
                             </div>
                         </div>
@@ -122,6 +130,7 @@
                         </div>
                     </div>
                 </div>
+                <button type="submit" name="button" class="btn btn-primary mt-4 float-right finish"><i class="fa fa-check"></i> Finish</button>
             @endif
         </div>
     </div>
@@ -233,7 +242,7 @@
     });
 
     //var hoursleft = 0;
-    var minutesleft = {{$quiz->timeLimit}}; //give minutes you wish
+    var minutesleft = {{ $quiz->timeLimit }}; //give minutes you wish
     var secondsleft = 00; // give seconds you wish
     var finishedtext = "Countdown finished!";
     var end1_{{$csqu}};

@@ -64,9 +64,9 @@ class LessonController extends Controller
             $request->validate([
                 'upload_file' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:25000',
             ]);
-                    $lessonfile = $request->upload_file;
-                    $name = time().'-'.$lessonfile->getClientOriginalName();
-                    $lessonfile->storeAs('public/files', $name);
+            $lessonfile = $request->upload_file;
+            $name = time().'-'.$lessonfile->getClientOriginalName();
+            $lessonfile->storeAs('public/files', $name);
         }
 
          $lesson = new Lesson;

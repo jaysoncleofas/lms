@@ -13,7 +13,7 @@
                     </li>
                     @if (Nav::hasSegment('section', 4))
                         <li>
-                            <a href="{{route('student.section.index', [$course->id, $section->id])}}" class="{{Nav::isRoute('student.section.index')}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Section</a>
+                            <a href="{{route('student.section.index', [$course->id, $section->id])}}" class="{{Nav::isRoute('student.section.index')}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i>  Section</a>
                         </li>
                         <li>
                             <a href="{{route('student.announcement', [$course->id, $section->id])}}" class="{{Nav::hasSegment('announcement',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bullhorn"></i> Announcement</a>

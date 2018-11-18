@@ -24,7 +24,7 @@ class AnnouncementController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $announcements = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->latest()->paginate(20);
+        $announcements = Announcement::where('instructor_id', $user->id)->where('course_id', $course_id)->orderBy('updated_at', 'desc')->paginate(20);
         return view('instructor.announcement.index', compact('course', 'announcements'));
     }
 

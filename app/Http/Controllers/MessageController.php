@@ -19,7 +19,7 @@ class MessageController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $convos = Convo::where('user_id', $user->id)->orWhere('to_user_id', $user->id)->get();
+        $convos = Convo::where('user_id', $user->id)->orWhere('to_user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(10);
         // return $convos;
         return view('message.index', compact('convos'));
     }
@@ -50,8 +50,7 @@ class MessageController extends Controller
 
         $convo = Convo::where('user_id', $user->id)->where('to_user_id', $request->to_user_id)->first();
 
-        if(!$convo)
-        {
+        if(!$convo){
             $convo = new Convo;
             $convo->user_id = $user->id;
             $convo->to_user_id = $request->to_user_id;
@@ -135,6 +134,9 @@ class MessageController extends Controller
         $message->user_id = $user->id;
         $message->message = $request->message;
         $message->save();
+
+        $convo->updated_at = date("Y-m-d H:i:s");
+        $convo->save();
 
         session()->flash('status', 'Successfully sent');
         session()->flash('type', 'success');

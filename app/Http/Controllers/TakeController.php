@@ -18,16 +18,14 @@ class TakeController extends Controller
     {
         $checktakes = Take::where('user_id', Auth::id())->where('quiz_id', $quiz_id)->where('section_id', $section_id)->first();
         
-        if($checktakes)
-        {
+        if($checktakes){
             session()->flash('status', 'Already taken the quiz');
             session()->flash('type', 'error');
-
             return redirect()->route('student.quiz.show', [$course_id, $section_id, $quiz_id]);
         }
         
         $result = 0;
-        // return $request->input('questions', []);
+        
         $take = Take::create([
             'user_id' => Auth::id(),
             'section_id' => $section_id,
@@ -35,41 +33,27 @@ class TakeController extends Controller
             'result'  => $result,
         ]);
 
-
         foreach ($request->input('questions', []) as $key => $question) {
             $status = 0;
             $questionMaster = Question::find($question);
-            if ($request->input('answers.'.$question) != null
-                && $request->input('answers.'.$question) == $questionMaster->correct
-
-                // Question::find($request->input('answers.'.$question))->correct
-            ) {
+            if ($request->input('answers.'.$question) != null && $request->input('answers.'.$question) == $questionMaster->correct) {
                 $status = 1;
                 $result++;
             }
-            // TakeAnswer::create([
-            //     'user_id'     => Auth::id(),
-            //     'take_id'     => $take->id,
-            //     'question_id' => $question,
-            //     'option'   => $request->input('answers.'.$question),
-            //     'correct'     => $status,
-            // ]);
         }
-
         $take->update(['result' => $result]);
 
+        session()->flash('status', 'Quiz finished');
+        session()->flash('type', 'success');  
         return redirect()->route('student.take.result', [$course_id, $section_id, $quiz_id, $take->id]);
     }
 
     public function storeCodeQuiz(Request $request, $course_id, $section_id, $quiz_id)
     {
         $checktakes = Take::where('user_id', Auth::id())->where('quiz_id', $quiz_id)->where('section_id', $section_id)->first();
-        
-        if($checktakes)
-        {
+        if($checktakes){
             session()->flash('status', 'Already taken the quiz');
             session()->flash('type', 'error');
-
             return redirect()->route('student.quiz.show', [$course_id, $section_id, $quiz_id]);
         }
         
@@ -92,9 +76,7 @@ class TakeController extends Controller
         $section = Section::where('course_id', $course->id)->whereHas('users', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->findOrFail($section_id);
-
         $quiz = $section->quizzes()->findOrFail($quiz_id);
-
         $take = Take::where('quiz_id', $quiz->id)->findOrFail($take_id);
 
         return view('student.quiz.result', compact('course', 'section', 'quiz', 'take'));
@@ -102,18 +84,19 @@ class TakeController extends Controller
 
     public function store_assignment(Request $request, $course_id, $section_id, $assignment_id)
     {
-        $result = 0;
-        // return $request->input('questions', []);
+        $request->validate([
+            $request->content ? 'content' : 'code' => 'required'
+        ]);
+
         $pass = Pass::create([
             'user_id' => Auth::id(),
             'section_id' => $section_id,
             'assignment_id' => $assignment_id,
-            'content'  => Purifier::clean($request->content),
+            'content'  => $request->content ? Purifier::clean($request->content) : $request->code,
         ]);
 
-        session()->flash('status', 'Assignment submitted!');
+        session()->flash('status', 'Assignment submitted');
         session()->flash('type', 'success');
-
         return redirect()->route('student.pass.result_assignment', [$course_id, $section_id, $assignment_id, $pass->id]);
     }
 

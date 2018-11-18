@@ -14,19 +14,23 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="text-oswald">{{$course->name}} / {{$section->name}}</h3>
-            <h4 class="text-oswald">Assignmment </h4>
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <div class="post-prev-info mb-0">
+                {{ $section->name }}
+            </div>
+            <hr class="mt-0">
         </div>
     </div>
 
     <div class="row mt-3 justify-content-center">
-
-        <div class="col-lg-12 col-md-12 mb-4">
+        <div class="col-lg-10 col-md-12 mb-3">
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            <strong>{{ $assignment->title }}</strong>
+                            <h4 class="text-oswald">{{ $assignment->title }}</h4>
                             {!! $assignment->content !!}
                         </div>
                     </div>
@@ -51,7 +55,7 @@
                         <div class="card-body">
                             <div class="form-group mb-3">
                                 <p class="mb-1">Code <span class="red-asterisk">*</span></p>
-                                <textarea name="code" id="code" class="form-control rounded-0 pt-0 {{$errors->has('code') ? 'is-invalid' : ''}}" rows="15">{{old('code')}}</textarea>
+                                <textarea name="code" id="code" class="form-control rounded-0 pt-0" rows="15">{{old('code')}}</textarea>
                                 {{-- <label for="code">Description</label> --}}
                                 @if ($errors->has('code'))
                                 <span class="invalid-feedback" role="alert">
@@ -80,61 +84,50 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 @section('script')
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        window.onbeforeunload = function() {
-            return true;
-        };
-
-        $('#pass-assignment-form-{{$assignment->id}}').on('submit', function(){
-            window.onbeforeunload = null;
-        });
-
+    <script type="text/javascript">
+        $(document).ready(function() {
+            window.onbeforeunload = function() {
+                return true;
+            };
+            $('#pass-assignment-form-{{$assignment->id}}').on('submit', function(){
+                window.onbeforeunload = null;
+            });
             $(document).on('click', '#passAssignment', function(e) {
-            e.preventDefault();
-            var $this = $(this);
-            swal({
-                title: 'Are you sure you want to submit this assignment?',
-                // text: 'Are you sure you want to submit this assignment?!',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ok'
-            }).then((result) => {
-                if (result.value) {
-                    window.onbeforeunload = null;
-                    $('#pass-assignment-form-{{$assignment->id}}').submit();
-                } else if (
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    const toast = swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-
-                    toast({
-                        type: 'error',
-                        title: 'Cancelled.'
-                    })
-                }
-            })   
-        });
-
+                e.preventDefault();
+                var $this = $(this);
+                swal({
+                    title: 'Are you sure you want to submit this assignment?',
+                    // text: 'Are you sure you want to submit this assignment?!',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ok'
+                }).then((result) => {
+                    if (result.value) {
+                        window.onbeforeunload = null;
+                        $('#pass-assignment-form-{{$assignment->id}}').submit();
+                    } else if (
+                        result.dismiss === swal.DismissReason.cancel
+                    ) {
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        toast({
+                            type: 'error',
+                            title: 'Cancelled.'
+                        })
+                    }
+                })   
+            });
             $("#execute").click(function () {
                 var code = $("#code").val();
-
-                // $("#form_id").submit(); // Form submission.
-                // alert(code);
-
                 var url = '{{ route('runCode') }}';
                 $.ajax({
                     type: 'post',
@@ -152,10 +145,7 @@
                         $("#result").text(result.text);
                     }
                 })
-
             });
-
-    });
-
-  </script>
+        });
+    </script>
 @endsection

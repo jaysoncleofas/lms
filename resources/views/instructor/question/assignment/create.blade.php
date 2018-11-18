@@ -85,24 +85,23 @@
 @endsection
 
 @section('script')
-@include('partials.notification')
-<script>
-    function previewFile() {
-        var preview = document.querySelector('.img-preview'); //selects the query named img
-        var file = document.querySelector('input[type=file]').files[0]; //sames as here
-        var reader = new FileReader();
+    <script>
+        function previewFile() {
+            var preview = document.querySelector('.img-preview'); //selects the query named img
+            var file = document.querySelector('input[type=file]').files[0]; //sames as here
+            var reader = new FileReader();
 
-        reader.onloadend = function () {
-            preview.src = reader.result;
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file); //reads the data as a URL
+            }
+
         }
 
-        if (file) {
-            reader.readAsDataURL(file); //reads the data as a URL
-        }
+        previewFile(); //calls the function named previewFile()
 
-    }
-
-    previewFile(); //calls the function named previewFile()
-
-</script>
+    </script>
 @endsection

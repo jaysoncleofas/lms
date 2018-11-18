@@ -66,6 +66,7 @@ class InstructorController extends Controller
             'email'        => $request->email,
             'mobileNumber' => $request->mobileNumber,
             'password'     => $request->password ? bcrypt($request->password) : bcrypt('secret'),
+            'avatar'       => 'profile_pic.png'
         ]);
 
         session()->flash('status', 'Successfully saved');
@@ -99,7 +100,6 @@ class InstructorController extends Controller
         $instructor = User::findOrFail($instructor_id);
         $course = $instructor->courses()->findOrFail($course_id);
         $section = Section::where('course_id', $course->id)->where('instructor_id', $instructor->id)->findOrFail($section_id);
-
         return view('admin.instructor.section', compact('instructor', 'course', 'section'));
     }
 

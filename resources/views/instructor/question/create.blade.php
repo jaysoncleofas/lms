@@ -6,20 +6,21 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <div>
-            <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
-        </div>
-        <div>
-            <a href="{{route('instructor.question.index', [$course->id, $quiz->id])}}" class="btn btn-light"><i class="fa fa-arrow-circle-left"></i> Back</a>
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <a href="{{ route('instructor.question.index', [$course->id, $quiz->id]) }}" class="btn btn-light my-0 mr-0"><i class="fa fa-arrow-circle-left"></i> Back</a>
         </div>
     </div>
-    <div class="row justify-content-center mt-5">
-        <div class="col-lg-11 col-md-12 mb-4">
-            {{-- <h4>Quiz: {{ $quiz->title }}</h4> --}}
-            <div class="card mt-3">
+    <hr class="mt-2">
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-10 col-md-12 mb-3">
+            <h3 class="text-oswald">Quiz: {{ $quiz->title }}</h3>
+            <div class="card">
                 <div class="card-header text-white bg-primary">
-                    <h5 class="text-oswald mb-0">Quiz: {{ $quiz->title }} | Add {{ !$quiz->isCode ? 'Question' : 'Item' }}</h5>
+                    <h5 class="text-oswald mb-0">Add Question</h5>
                 </div>
                 <div class="card-body">
                     <form class="" action="{{route('instructor.question.store', [$course->id, $quiz->id])}}" method="post" enctype="multipart/form-data">
@@ -106,7 +107,6 @@
 @endsection
 
 @section('script')
-@include('partials.notification')
 <script>
     function previewFile() {
         var preview = document.querySelector('.img-preview'); //selects the query named img

@@ -12,10 +12,15 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <hr class="mt-3">
+        </div>
     </div>
-    <div class="row mt-5 justify-content-center">
+    <div class="row mt-3 justify-content-center">
         <div class="col-xl-9 col-md-9 mb-4">
             <div class="card">
                 <div class="card-header text-white bg-primary">
@@ -40,14 +45,14 @@
                             <div class="col">
                                 <div class="md-form">
                                     <p class="select2Label mb-0">Upload file <span class="red-asterisk">*</span></p>
-                                    <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip, max:10MB</span>
+                                    {{-- <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip, max:10MB</span> --}}
                                     <div class="file-field">
                                         <div class="btn btn-primary float-left ml-0 btn-md">
-                                            <span><i class="fa fa-file-upload"></i> Choose file</span>
+                                            <span><i class="fa fa-file"></i> Choose file</span>
                                             <input type="file" name="upload_file">
                                         </div>
                                         <div class="file-path-wrapper pr-3">
-                                            <input class="file-path" type="text" name="upload_file" id="upload_file" placeholder="Upload file" value="{{substr($lesson->upload_file, 20)}}" readonly>
+                                            <input class="file-path" type="text" name="upload_file" id="upload_file" placeholder="File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip, max:10MB" value="{{substr($lesson->upload_file, 20)}}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +91,7 @@
                                 <label class="form-check-label" for="checkbox">All Section</label>
                             </div>
                         </div>
-                        <button type="submit" name="button" class="btn btn-primary float-right mt-5"><i class="fa fa-pencil-alt"></i> Update</button>
+                        <button type="submit" name="button" class="btn btn-primary float-right mt-5"><i class="fa fa-pencil"></i> Update</button>
                     </form>
                 </div>
             </div>

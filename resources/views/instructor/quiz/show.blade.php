@@ -6,11 +6,16 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <hr class="mt-3">
+        </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-lg-4 col-sm-4 mb-4">
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 mb-3">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <i class="fa fa-save fa-3x tiles-left-icon"></i> 
@@ -20,13 +25,18 @@
             </div>
         </div>
     </div>
-
-    <div class="row mt-3">
-        <div class="col-xl-12 col-md-12 mb-4">
+    <hr class="mb-2">
+    <div class="row mt-0">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $quiz->isCode ? "Code " : '' }}Quiz: {{$quiz->title}}</h3>
+            </div>
+            <hr class="mt-3">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-md-12 mb-3">
             <div class="card">
-                <div class="card-header">
-                    <h5 class="text-oswald mb-0 font-weight-bold">{{ $quiz->isCode ? "Code " : '' }}Quiz: <span class="font-weight-normal">{{$quiz->title}}</span></h5>
-                </div>
                 <div class="card-body pb-0">
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
@@ -63,7 +73,6 @@
 
 @section('script')
 <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-@include('partials.notification')
 <script>
     $(document).ready(function () {
         $('#example').DataTable({

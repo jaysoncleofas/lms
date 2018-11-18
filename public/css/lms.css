@@ -117,6 +117,7 @@ div.dataTables_wrapper div.dataTables_length select {
 @media only screen and (max-width: 993px) {
     main.admin{
         margin-left: 0px !important;
+        margin-top: 65px !important
     }
 
     #slide-out {
@@ -135,7 +136,7 @@ div.dataTables_wrapper div.dataTables_length select {
 
 main.admin{
     margin-left: 240px;
-    margin-top: 80px;
+    margin-top: 71px;
     padding: 15px 15px;
 }
 footer{
@@ -367,4 +368,78 @@ footer.page-footer .footer-copyright {
     .instructor-des{
         text-align: center !important
     }
+}
+
+.post-prev-title h3 {
+    margin: 0;
+    font-family: Oswald !important;
+    line-height: 26px;
+    font-weight: 600 !important;
+    line-height: initial;
+    color: #4b4e53;
+}
+
+a {
+    color: #4b4e53;
+    outline: none !important;
+    text-decoration: none;
+    transition: all .3s ease 0s;
+}
+
+a:hover, a:focus {
+    color: #97999c;
+    text-decoration: none;
+    transition: all .3s ease 0s;
+    cursor: pointer;
+}
+a:hover {
+    color: #97999c;
+    text-decoration: none;
+    transition: all .3s ease 0s;
+    cursor: pointer;
+}
+
+.post-prev-info, .post-prev-info a {
+    color: #a3a6a8;
+}
+
+.post-prev-info {
+    margin-bottom: 14px;
+    text-transform: uppercase;
+}
+
+.icon-count {
+    font-size: 12px;
+    margin-left: 7px;
+}
+
+.icon_comment_alt{
+    font-family: ElegantIcons;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.post-prev-count {
+    margin-left: 12px;
+    color: #7e8082;
+}
+
+.blog-more {
+    font-weight: 600;
+}
+
+@media (max-width: 1300px) {
+    .profile-avatar {
+        height: 200px !important;
+        width: 200px !important;
+    }
+}
+
+.select2-results{
+    border: 1px solid #ced4da !important;
 }

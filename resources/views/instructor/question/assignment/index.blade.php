@@ -73,7 +73,6 @@
 
 @section('script')
 <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-@include('partials.notification')
 <script>
     $(document).ready(function () {
         $('#example').DataTable({

@@ -86,7 +86,6 @@
 @endsection
 
 @section('script')
-@include('partials.notification')
 <script>
     function previewFile() {
         var preview = document.querySelector('.img-preview'); //selects the query named img

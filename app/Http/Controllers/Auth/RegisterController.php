@@ -88,6 +88,7 @@ class RegisterController extends Controller
             'email'         => $data['email'],
             'mobileNumber'  => $data['mobileNumber'],
             'password'      => Hash::make($data['password']),
+            'avatar'        => 'profile_pic.png'
         ]);
 
         $user->sections()->sync($data['sections'], false);

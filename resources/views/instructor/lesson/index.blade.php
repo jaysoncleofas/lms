@@ -6,13 +6,17 @@
 
 @section('content')
 <div class="container-fluid">
-
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
-        <a href="{{ route('instructor.lesson.create', $course->id) }}" class="btn btn-primary mx-0"><i class="fa fa-plus"></i> Add Lesson</a>
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <a href="{{ route('instructor.lesson.create', $course->id) }}" class="btn btn-primary my-0 mr-0"><i class="fa fa-plus"></i> Add Lesson</a>
+        </div>
     </div>
-    <div class="row mt-lg-3">
-        <div class="col-lg-4 col-sm-4 mb-4">
+    <hr class="mt-2">
+    <div class="row mt-3">
+        <div class="col-lg-4 col-sm-4 mb-3">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
                     <i class="fa fa-bookmark fa-3x tiles-left-icon"></i> 
@@ -46,7 +50,7 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{ route('instructor.lesson.download', [$course->id, $lesson->id]) }}" class="btn-link" data-toggle="tooltip" title="Download" data-placement="left">{{ substr($lesson->upload_file, 20 )}}</a>
+                                    <a href="{{ route('instructor.lesson.download', [$course->id, $lesson->id]) }}" class="btn-link" data-toggle="tooltip" title="Download" data-placement="left">{{ substr($lesson->upload_file, 11 )}}</a>
                                 </td>
                                 <td>
                                     <a href="javascript:void(0);" data-href="{{ route('instructor.lesson.status', [$course->id, $lesson->id]) }}" class="deactivate btn btn-sm {{ $lesson->status == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="lesson" data-action="{{ $lesson->status == 1 ? 'deactivate' : 'activate' }}" data-from="lesson" data-value="{{ $lesson->status == 1 ? 0 : 1  }}">
@@ -58,8 +62,8 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('instructor.lesson.edit', [$course->id, $lesson->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil-alt"></i></a>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.lesson.destroy', [$course->id, $lesson->id]) }}" class="perma_delete text-danger" data-method="delete" data-from="lesson" data-toggle="tooltip" title="Delete" data-placement="right"><i class="fa fa-trash"></i></a> 
+                                    <a href="{{ route('instructor.lesson.edit', [$course->id, $lesson->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a>
+                                    <a href="javascript:void(0);" data-href="{{ route('instructor.lesson.destroy', [$course->id, $lesson->id]) }}" class="perma_delete text-danger" data-method="delete" data-from="lesson" data-toggle="tooltip" title="Delete" data-placement="left"><i class="fa fa-trash"></i></a> 
                                 </td>
                             </tr>
                             @endforeach
@@ -74,7 +78,6 @@
 
 @section('script')
     <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-    @include('partials.notification')
     <script>
         $(document).ready(function () {
             $('#example').DataTable({

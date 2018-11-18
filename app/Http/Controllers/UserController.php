@@ -21,31 +21,15 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-
         $request->validate([
-            'firstName' => 'required|string|max:255',
-            'lastName'  => 'required|string|max:255',
-            'middleName'=> 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            'birthDate' => 'nullable|max:255',
+            'email'        => 'required|string|email|unique:users,email,'.$user->id.',id|max:255',
+            'username'     => 'required|string|unique:users,username,'.$user->id.',id|max:255',
+            'mobileNumber' => 'nullable|digits:11|unique:users,mobileNumber,'.$user->id.',id',
+            'firstName'    => 'required|string|max:255',
+            'lastName'     => 'required|string|max:255',
+            'middleName'   => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
+            'birthDate'    => 'nullable|max:255',
         ]);
-
-        if ($request->email != $user->email) {
-            $request->validate([
-                'email'     => 'required|string|email|unique:users|max:255',
-            ]);
-        }
-
-        if ($request->username != $user->username) {
-            $request->validate([
-                'username'  => 'required|string|unique:users|max:255',
-            ]);
-        }
-
-        if ($request->mobileNumber != $user->mobileNumber) {
-            $request->validate([
-                'mobileNumber'=> 'nullable|digits:11|unique:users',
-            ]);
-        }
 
         if ($request->hasFile('avatar')) {
             $request->validate([
@@ -53,11 +37,8 @@ class UserController extends Controller
             ]);
             
             $avatar = $request->avatar;
-            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-            $name = $timestamp. '-' .$avatar->getClientOriginalName();
-            // $avatar->image = $name;
+            $name = time().$user->id.'.'.$avatar->getClientOriginalExtension();
             $avatar->storeAs('public/avatars', $name);
-            
             $user->avatar = $name;
         }
 
@@ -66,7 +47,6 @@ class UserController extends Controller
             $request->validate([
                 'studentNumber'  => 'required|alpha_num|unique:users|digits:10',
             ]);
-
             $user->studentNumber = $request->studentNumber;
         }
 
@@ -89,7 +69,6 @@ class UserController extends Controller
 
         session()->flash('status', 'Update successful');
         session()->flash('type', 'success');
-
         return redirect()->route('profile.index');
     }
 
@@ -99,10 +78,10 @@ class UserController extends Controller
         $user->avatar = 'profile_pic.png';
         $user->save();
 
-        session()->flash('status', 'Remove profile picture successful');
+        session()->flash('status', 'Remove profile avatar successful');
         session()->flash('type', 'success');
-
-        return redirect()->route('profile.update');
+        return response('success', 200);
+        // return redirect()->route('profile.update');
     }
 
     public function change_password_index()
@@ -113,7 +92,6 @@ class UserController extends Controller
     public function change_password_update(Request $request)
     {
         $user = Auth::user();
-
         $this->validate($request, [
             'currentPassword' => 'required|min:6',
             'password' => 'required|min:6|confirmed',
@@ -121,69 +99,64 @@ class UserController extends Controller
         ]);
 
         if (Hash::check(Input::get('currentPassword'), $user['password'])) {
-                $this->validate($request, [
-                    'password' => 'required|min:6|confirmed'
-                    ]);
-                $user->password = bcrypt(Input::get('password'));
-                $user->save();
-                session()->flash('status', 'You have successfully changed your password!');
-                session()->flash('type', 'success');
-                return redirect()->route('change.password.index');
-              } else {
-                session()->flash('status', 'Invalid Current Password');
-                session()->flash('type', 'error');
-                return redirect()->route('change.password.index');
-              }
+            $this->validate($request, [
+                'password' => 'required|min:6|confirmed'
+                ]);
+            $user->password = bcrypt(Input::get('password'));
+            $user->save();
+            session()->flash('status', 'You have successfully changed your password!');
+            session()->flash('type', 'success');
+            return redirect()->route('change.password.index');
+        } else {
+            session()->flash('status', 'Invalid Current Password');
+            session()->flash('type', 'error');
+            return redirect()->route('change.password.index');
+        }
     }
 
     public function my_files()
     {
-        $data['files'] = File::where('user_id', Auth::id())->latest()->get();
+        $data['files'] = File::where('user_id', Auth::id())->oldest()->get();
         return view('profile.my_files', $data);
     }
 
     public function files_store(Request $request)
     {
         $request->validate([
-            'file_upload' => 'required',
+            'file_upload' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:10000',
         ]);
 
         if ($request->hasFile('file_upload')) {
-           $request->validate([
-               'file_upload' => 'mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,rar,zip|max:10000',
-           ]);
-
            $fileUpload = $request->file_upload;
            $name = time().'-'.$fileUpload->getClientOriginalName();
            $type = $fileUpload->getClientOriginalExtension();
            $size = $fileUpload->getClientSize();
            $fileUpload->storeAs('public/userfiles', $name);
+           
+           $file = new File;
+           $file->user_id = Auth::id();
+           $file->name = $name;
+           $file->type = $type;
+           $file->size = $size;
+           $file->save();
        }
-
-        $files = new File;
-        $files->user_id = Auth::id();
-        $files->name = $name;
-        $files->type = $type;
-        $files->size = $size;
-        $files->save();
 
         session()->flash('status', 'Successfully saved');
         session()->flash('type', 'success');
-
         return redirect()->back();
     }
 
 
-    public function files_download($file_id){
-
+    public function files_download($file_id)
+    {
         $entry = File::findOrFail($file_id);
         $pathToFile = storage_path()."/app/public/userfiles/".$entry->name;
-        $name = substr($entry->name,11);
+        $name = substr($entry->name, 11);
         return response()->download($pathToFile, $name);
     }
 
-    public function files_destroy($file_id){
-
+    public function files_destroy($file_id)
+    {
         $entry = File::findOrFail($file_id);
         $entry->delete();
 
@@ -191,6 +164,4 @@ class UserController extends Controller
         session()->flash('type', 'success');
         return response('success', 200);
     }
-
-
 }

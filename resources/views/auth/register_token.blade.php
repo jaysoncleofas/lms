@@ -30,7 +30,3 @@
     </div>
 </div>
 @endsection
-
-@section('script')
-@include('partials.notification')
-@endsection

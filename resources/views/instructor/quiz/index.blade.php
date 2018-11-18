@@ -6,10 +6,15 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
-        <a href="{{route('instructor.quiz.create', $course->id)}}" class="btn btn-primary mr-0"><i class="fa fa-plus"></i> Add Quiz</a>
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <a href="{{ route('instructor.quiz.create', $course->id) }}" class="btn btn-primary my-0 mr-0"><i class="fa fa-plus"></i> Add Quiz</a>
+        </div>
     </div>
+    <hr class="mt-2">
     <div class="row mt-3">
         <div class="col-lg-4 col-sm-4 mb-4">
             <div class="card">
@@ -78,7 +83,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('instructor.quiz.edit', [$course->id, $quiz->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil-alt"></i></a> 
+                                    <a href="{{ route('instructor.quiz.edit', [$course->id, $quiz->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a> 
                                     <a href="javascript:void(0);" data-href="{{ route('instructor.quiz.destroy', [$course->id, $quiz->id]) }}" class="perma_delete text-danger" data-placement="left" data-method="delete" data-from="quiz" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> 
                                 </td>
                             </tr>
@@ -95,7 +100,6 @@
 
 @section('script')
 <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-@include('partials.notification')
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
@@ -107,6 +111,5 @@
             order:[]
         });
     });
-
 </script>
 @endsection

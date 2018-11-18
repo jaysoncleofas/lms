@@ -2,13 +2,20 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-lg-9">
-            <div class="row px-3 d-flex justify-content-between align-items-center">
-                <h3 class="text-oswald font-weight-bold">Add Instructor</h3>
-                {{-- <a href="{{route('admin.instructor.index')}}" class="btn btn-light"><i class="fa fa-arrow-circle-left"></i> Back to list</a> --}}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>Instructors</h3>
             </div>
-            <div class="card mt-2">
+            <hr class="mt-3">
+        </div>
+    </div>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-lg-9">
+            <div class="card">
+                <div class="card-header text-white bg-primary">
+                    <h5 class="text-oswald mb-0">Add Instructor</h5>
+                </div>
                 <div class="card-body">
                     <form action="{{route('admin.instructor.store')}}" method="post">
                         {{ csrf_field() }}
@@ -79,7 +86,7 @@
                         </div>
         
                         <div class="md-form">
-                            <input type="password" name="password" id="password" placeholder="Leave empty, default is secret" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
+                            <input type="password" name="password" id="password" placeholder="Leave empty, default password is secret" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
                             <label for="password">Password</label>
                             @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">

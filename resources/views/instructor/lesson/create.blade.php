@@ -12,14 +12,19 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span></h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <hr class="mt-3">
+        </div>
     </div>
-    <div class="row mt-5 justify-content-center">
+    <div class="row mt-3 justify-content-center">
         <div class="col-xl-9 col-md-9 mb-4">
             <div class="card">
                 <div class="card-header text-white bg-primary">
-                    <h5 class="text-oswald mb-0">Add Assignment</h5>
+                    <h5 class="text-oswald mb-0">Add Lesson</h5>
                 </div>
                 <div class="card-body">
                     <form class="" action="{{route('instructor.lesson.store', $course->id)}}" method="post" enctype="multipart/form-data">
@@ -38,14 +43,14 @@
                             <div class="col">
                                 <div class="md-form">
                                     <p class="select2Label mb-0">Upload file <span class="red-asterisk">*</span></p>
-                                    <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip, max:10MB</span>
+                                    {{-- <span class="grey-text">File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip, max:10MB</span> --}}
                                     <div class="file-field">
                                         <div class="btn btn-primary btn-md float-left ml-0">
-                                            <span><i class="fa fa-file-upload"></i> Choose file</span>
+                                            <span><i class="fa fa-file"></i> Choose file</span>
                                             <input type="file" name="upload_file" value="{{ old('upload_file') }}">
                                         </div>
                                         <div class="file-path-wrapper pr-3">
-                                            <input class="file-path {{$errors->has('upload_file') ? 'is-invalid' : ''}}" value="{{ old('upload_file') }}" type="text" name="upload_file" id="upload_file" readonly>
+                                            <input class="file-path {{$errors->has('upload_file') ? 'is-invalid' : ''}}"  placeholder="File type supported: pdf, doc, ppt, xls, docx, pptx, xlsx, rar, zip, max:10MB" value="{{ old('upload_file') }}" type="text" name="upload_file" id="upload_file" readonly>
                                         </div>
                                     </div>
                                 </div>

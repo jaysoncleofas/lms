@@ -177,6 +177,17 @@ class AssignmentController extends Controller
          return redirect()->route('instructor.assignment.index', $course->id);
      }
 
+     public function passUpdate(Request $request, $id)
+     {
+        $pass = Pass::findOrFail($id);
+        $pass->grade = $request->grade;
+        $pass->save();
+
+        session()->flash('status', 'Successfully graded');
+        session()->flash('type', 'success');
+        return redirect()->back();
+     }
+
     /**
      * Remove the specified resource from storage.
      *

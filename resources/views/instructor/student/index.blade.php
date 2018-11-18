@@ -6,13 +6,18 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row px-3 d-flex justify-content-between align-items-center">
-        <div>
-            <h3 class="text-oswald font-weight-bold">Course: <span class="font-weight-normal">{{ $course->name }}</span> </h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="post-prev-title">
+                <h3>{{ $course->name }}</h3>
+            </div>
+            <div class="post-prev-info mb-0">
+                {{ $section->name }}
+            </div>
+            <hr class="mt-0">
         </div>
     </div>
-    
-    <div class="row mt-3">
+    <div class="row mt-0">
         <div class="col-lg-4 col-sm-4 mb-3">
             <div class="card">
                 <div class="text-white blue text-center py-4 px-4">
@@ -23,12 +28,9 @@
             </div>
         </div>
     </div>
-    
     <div class="row mt-3">
-        <div class="col-xl-12 col-md-12 mb-4">
-            <hr>
-            <h4 class="text-oswald font-weight-bold">Section: <span class="font-weight-normal">{{ $section->name }}</span></h4>
-            <div class="card mt-3">
+        <div class="col-xl-12 col-md-12 mb-3">
+            <div class="card">
                 <div class="card-body pb-0">
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
@@ -61,7 +63,6 @@
 
 @section('script')
     <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
-    @include('partials.notification')
     <script>
         $(document).ready(function () {
             $('#example').DataTable({

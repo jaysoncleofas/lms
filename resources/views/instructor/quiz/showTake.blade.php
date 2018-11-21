@@ -46,7 +46,7 @@
                                             @csrf @method('PUT')
                                             <div class="modal-body">
                                                 <div class="md-form">
-                                                    <input type="number" name="grade" id="grade" class="form-control" value="{{ $take->result }}">
+                                                    <input type="text" name="grade" id="grade" class="form-control" value="{{ $take->result }}">
                                                         <label for="grade">Grade</label>
                                                 </div>
                                             </div>

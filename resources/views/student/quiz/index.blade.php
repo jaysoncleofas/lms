@@ -46,7 +46,8 @@
                             <th>{{ $key+1 }}.</th>
                             <td>
                                 {{-- <a href=""> --}}
-                                    <strong>{{ $quiz->isCode ? 'Code Quiz:' : '' }}</strong> {{ substr($quiz->title, 0, 100) }}{{ strlen($quiz->title) > 100 ? "..." : "" }}
+                                    {{-- <strong>{{ $quiz->isCode ? 'Code Quiz:' : '' }}</strong>  --}}
+                                    {{ substr($quiz->title, 0, 100) }}{{ strlen($quiz->title) > 100 ? "..." : "" }}
                                 {{-- </a> --}}
                             </td>
                             <td>

@@ -44,7 +44,7 @@
                                     <th>Section</th>
                                     <th>Student</th>
                                     <th>Date Submitted</th>
-                                    <th>Result</th>
+                                    <th>Grade</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

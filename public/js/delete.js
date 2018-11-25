@@ -219,3 +219,25 @@ $(document).on('click', '.remove_avatar', function(e) {
           }
       })   
 });
+
+$(document).on('click', '.unread', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var url = "{{ route('markAsRead') }}";
+    var convo_id = $this.data('convo');
+    $.ajax({
+        type: 'GET',
+        url:  $this.data('href'),
+        data: {id: $this.data('value')},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(result) {
+            if (result == 'success'){
+                console.log(result);
+                window.location.href = "/messages/convo/"+convo_id;
+            }
+        }
+    });
+   
+});

@@ -7,16 +7,21 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="post-prev-title">
-                <h3>{{ $course->name }}</h3>
+        <div class="col-lg-12 d-flex justify-content-between">
+            <div>
+                <div class="post-prev-title">
+                    <h3>{{ $course->name }}</h3>
+                </div>
+                <div class="post-prev-info mb-0">
+                    {{ $section->name }}
+                </div>
             </div>
-            <div class="post-prev-info mb-0">
-                {{ $section->name }}
+            <div>
+                <a href="{{route('instructor.export.section', [$course->id, $section->id])}}" class="btn btn-light my-0 mr-0"><i class="fa fa-download"></i> Export</a>
             </div>
-            <hr class="mt-0">
         </div>
     </div>
+    <hr class="mt-3">
     <div class="row mt-0">
         <div class="col-lg-4 col-sm-4 mb-3">
             <div class="card">

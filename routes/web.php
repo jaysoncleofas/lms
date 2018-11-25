@@ -72,6 +72,8 @@ Route::prefix('instructor')->name('instructor.')->middleware(['verified', 'instr
     Route::get('/course/{course}/assignment/{assignment}/question/{question}/edit', 'Instructor\QuestionAssignmentController@edit')->name('question.assignmentEdit');
     Route::put('/course/{course}/assignment/{assignment}/question/{question}', 'Instructor\QuestionAssignmentController@update')->name('question.assignmentUpdate');
     Route::delete('/course/{course}/assignment/{assignment}/question/{question}', 'Instructor\QuestionAssignmentController@destroy')->name('question.assignmentDestroy');
+
+    Route::get('/export/{course}/{section}', 'Instructor\SectionController@export')->name('export.section');
 });
 
 
@@ -119,4 +121,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/messages/convo/{convo}', 'MessageController@show')->name('message.show');
 
     Route::post('/runcode', 'TakeController@runCode')->name('runCode');
+    Route::get('/markAsRead', 'MessageController@markAsRead')->name('markAsRead');
+    Route::get('/markAsAllRead', 'MessageController@markAsAllRead')->name('markAsAllRead');
 });

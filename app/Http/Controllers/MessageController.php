@@ -8,6 +8,7 @@ use App\Convo;
 use Auth;
 use App\User;
 use carbon\Carbon;
+use App\Notifications\MessageSent;
 
 class MessageController extends Controller
 {
@@ -49,7 +50,7 @@ class MessageController extends Controller
         $user = Auth::user();
 
         $convo = Convo::where('user_id', $user->id)->where('to_user_id', $request->to_user_id)->first();
-
+        $to_user = User::findOrFail($request->to_user_id);    
         if(!$convo){
             $convo = new Convo;
             $convo->user_id = $user->id;
@@ -62,6 +63,8 @@ class MessageController extends Controller
         $message->user_id = $user->id;
         $message->message = $request->message;
         $message->save();
+
+        $to_user->notify(new MessageSent($message->toArray()));
 
         session()->flash('status', 'Successfully sent');
         session()->flash('type', 'success');
@@ -127,7 +130,7 @@ class MessageController extends Controller
 
         $user = Auth::user();
 
-        $convo = Convo::findOrFail($convo_id);
+        $convo = Convo::findOrFail($convo_id); 
 
         $message = new Message;
         $message->convo_id = $convo->id;
@@ -138,9 +141,29 @@ class MessageController extends Controller
         $convo->updated_at = date("Y-m-d H:i:s");
         $convo->save();
 
-        session()->flash('status', 'Successfully sent');
-        session()->flash('type', 'success');
+        if($convo->user_id == $user->id){
+            $to_user = User::findOrFail($convo->to_user_id);   
+        } else {
+            $to_user = User::findOrFail($convo->user_id);   
+        }
 
+        $to_user->notify(new MessageSent($message->toArray()));
+
+        // session()->flash('status', 'Successfully sent');
+        // session()->flash('type', 'success');
+
+        return redirect()->back();
+    }
+
+    public function markAsRead(Request $request)
+    {
+        auth()->user()->unreadNotifications->where('id',  $request->id)->markAsRead();
+        return response('success', 200);
+    }
+
+    public function markAsAllRead(Request $request)
+    {
+        auth()->user()->unreadNotifications->markAsRead();
         return redirect()->back();
     }
 }

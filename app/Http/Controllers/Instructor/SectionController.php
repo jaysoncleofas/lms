@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Course;
 use App\User;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Section;
 
 class SectionController extends Controller
@@ -149,5 +150,38 @@ class SectionController extends Controller
         session()->flash('status', 'Successfully updated');
         session()->flash('type', 'success');
         return response('success', 200); 
+    }
+
+    public function export($course_id, $section_id)
+    {
+        $course = Course::findOrFail($course_id);
+        $section = Section::findOrFail($section_id);
+        $students = $section->users()->get();
+        $quizzes = $section->quizzes()->get();
+        $assignments = $section->assignments()->get();
+        $fileName = $course->name.'_'.$section->name;
+
+        $new_data = array();                
+        $data = $students;
+        foreach ($data as $key => $value) {
+            $new_data[$value->id]['Name'] = $value->lastFirstName();
+            foreach($quizzes as $quiz){
+                $new_data[$value->id][$quiz->title] = $value->takesQuiz($quiz->id)->result ?? '';
+            }
+            foreach($assignments as $assignment){
+                $new_data[$value->id][$assignment->title] = $value->passesExport($assignment->id)->grade ?? '';
+            }
+        }
+        return Excel::create('ss', function($excel) use ($new_data,  $course, $section) {
+            $excel->sheet('sss', function($sheet) use ($new_data,  $course, $section) {
+                $sheet->setWidth('A', 35);
+                $sheet->getStyle('A1')->getFont()->setBold(true);
+                $sheet->getStyle('A2:B2')->getFont()->setBold(true);
+                $sheet->getStyle('4')->getFont()->setBold(true);
+                $sheet->setCellvalue('A1', strtoupper($course->name));
+                $sheet->setCellvalue('A2', strtoupper($section->name));
+                $sheet->fromArray($new_data, null, 'A4' );
+            });
+        })->download('xlsx');
     }
 }

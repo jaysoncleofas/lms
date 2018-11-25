@@ -33,6 +33,7 @@
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Title</th>
                                 <th>Sections</th>
                                 <th>File</th>
@@ -41,8 +42,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lessons as $lesson)
+                            @foreach ($lessons as $key => $lesson)
                             <tr>
+                                <td>{{ $key+1 }}.</td>
                                 <td><a href="{{ route('instructor.lesson.show', [$course->id, $lesson->id]) }}" class="btn-link">{{ $lesson->title }}</a></td>
                                 <td>
                                     @foreach ($lesson->sections as $key => $section2)
@@ -53,13 +55,13 @@
                                     <a href="{{ route('instructor.lesson.download', [$course->id, $lesson->id]) }}" class="btn-link" data-toggle="tooltip" title="Download" data-placement="left">{{ substr($lesson->upload_file, 11 )}}</a>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.lesson.status', [$course->id, $lesson->id]) }}" class="deactivate btn btn-sm {{ $lesson->status == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="lesson" data-action="{{ $lesson->status == 1 ? 'deactivate' : 'activate' }}" data-from="lesson" data-value="{{ $lesson->status == 1 ? 0 : 1  }}">
-                                        @if ($lesson->status == 1) 
-                                            Active
-                                        @else 
+                                    <div class="switch">
+                                        <label>
                                             Inactive
-                                        @endif    
-                                    </a>
+                                            <input class="active-mode-switch" type="checkbox" {{ $lesson->status ? 'checked' : '' }} lessonId="{{ $lesson->id }}">
+                                            <span class="lever"></span> Active
+                                        </label>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="{{ route('instructor.lesson.edit', [$course->id, $lesson->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a>
@@ -87,6 +89,40 @@
                     searchPlaceholder: "Search",
                 },
                 order:[]
+            });
+            $('.active-mode-switch').change(function() {
+                var status = 0;
+                var id = $(this).attr('lessonId');
+                if ($(this).is(':checked')) {
+                    status = 1;
+                }
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url : "{{ route('instructor.lesson.status', [$course->id, $lesson->id]) }}",
+                    type : 'PUT',
+                    data: { id: id, status : status },
+                    success: function(result) {
+                        var newResult = JSON.parse(result);
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+
+                        toast({
+                            type: 'success',
+                            title: newResult.status
+                        })
+                    },
+                    error : function(error) {
+                        console.log('error');
+                        console.log(error);
+                    }
+                });
             });
         });
     </script>

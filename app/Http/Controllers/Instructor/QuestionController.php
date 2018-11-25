@@ -22,9 +22,7 @@ class QuestionController extends Controller
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
-
          $questions = Question::where('quiz_id', $quiz->id)->get();
-
          return view('instructor.question.index', compact('course', 'quiz', 'questions'));
      }
 
@@ -38,7 +36,6 @@ class QuestionController extends Controller
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
-
         return view('instructor.question.create', compact('course', 'quiz'));
     }
 
@@ -89,9 +86,8 @@ class QuestionController extends Controller
          $question->option_three = $quiz->isCode == 1 ? '' : $request->option_three;
          $question->save();
 
-         session()->flash('status', 'Successfully saved!');
+         session()->flash('status', 'Successfully saved');
          session()->flash('type', 'success');
-
          return redirect()->route('instructor.question.create', [$course->id, $quiz->id]);
      }
 
@@ -117,9 +113,7 @@ class QuestionController extends Controller
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
          $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->where('isCode', false)->findOrFail($quiz_id);
-
          $question = Question::where('quiz_id', $quiz->id)->findOrFail($question_id);
-
          return view('instructor.question.edit', compact('course', 'quiz', 'question'));
      }
 
@@ -163,7 +157,7 @@ class QuestionController extends Controller
          $question->option_three = $request->option_three;
          $question->save();
 
-         session()->flash('status', 'Successfully saved!');
+         session()->flash('status', 'Successfully saved');
          session()->flash('type', 'success');
 
          return redirect()->route('instructor.question.index', [$course->id, $quiz->id]);

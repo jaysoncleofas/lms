@@ -70,7 +70,7 @@ class HomeController extends Controller
                 return redirect()->route('privacy_policy', $token->token);
             }
         }
-        session()->flash('status', 'Invalid token!');
+        session()->flash('status', 'Invalid token');
                 session()->flash('type', 'error');
                 return redirect()->back();
     }
@@ -81,13 +81,13 @@ class HomeController extends Controller
 
         if(isset($section)){
             if(Carbon::parse($section->expireDate)->isPast()){
-                session()->flash('status', 'Token already expired!');
+                session()->flash('status', 'Token already expired');
                 session()->flash('type', 'error');
                 return redirect()->back();
             } elseif($section->token == $token){
                 return view('auth.register', compact('section'));
             }
-            session()->flash('status', 'Invalid token!');
+            session()->flash('status', 'Invalid token');
             session()->flash('type', 'error');
             return redirect()->back();
         }
@@ -99,13 +99,13 @@ class HomeController extends Controller
 
         if(isset($section)){
             if(Carbon::parse($section->expireDate)->isPast()){
-                session()->flash('status', 'Token already expired!');
+                session()->flash('status', 'Token already expired');
                 session()->flash('type', 'error');
                 return redirect()->back();
             } elseif($section->token == $token){
                 return view('auth.privacy_policy', compact('section'));
             }
-            session()->flash('status', 'Invalid token!');
+            session()->flash('status', 'Invalid token');
             session()->flash('type', 'error');
             return redirect()->back();
         }

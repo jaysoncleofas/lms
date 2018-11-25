@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div>
-                <a href="{{route('instructor.export.section', [$course->id, $section->id])}}" class="btn btn-light my-0 mr-0"><i class="fa fa-download"></i> Export</a>
+                <a href="{{route('instructor.export.section', [$course->id, $section->id])}}" class="btn btn-elegant my-0 mr-0"><i class="fa fa-download"></i> Export</a>
             </div>
         </div>
     </div>

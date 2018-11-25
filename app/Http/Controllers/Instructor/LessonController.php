@@ -51,7 +51,7 @@ class LessonController extends Controller
      public function store(Request $request, $course_id)
      {    
          $request->validate([
-             'title' => 'required|unique:lessons|string|max:255',
+             'title' => 'required|string|max:255',
              'content' => 'required_without:upload_file',
              'upload_file' => 'required_without:content',
              'sections' => 'required'
@@ -146,7 +146,7 @@ class LessonController extends Controller
      public function update(Request $request, $course_id, $id)
      {
         $request->validate([
-            'title' => 'required|unique:lessons,title,'.$id.',id|string|max:255',
+            'title' => 'required|string|max:255',
             'content' => 'required_without:upload_file',
             'upload_file' => 'required_without:content',
             'sections' => 'required'
@@ -206,13 +206,11 @@ class LessonController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($lesson_id);
+        $lesson = Lesson::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($request->id);
         $lesson->status = $request->status == 1 ? true : false;
         $lesson->save();
-        $status = $request->status == 1 ? 'activated' : 'deactivated';
-        session()->flash('status', 'Successfully '.$status);
-        session()->flash('type', 'success');
-        return response('success', 200);
+        $status = $request->status == 1 ? 'Lesson Activated' : 'Lesson Deactivated';
+        return json_encode(['text' => 'success', 'return' => '1', 'status' => $status]);
     }
 
     public function download($course_id, $lesson_id)

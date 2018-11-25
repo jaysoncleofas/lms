@@ -198,13 +198,13 @@ class StudentController extends Controller
 
         if(isset($section)){
             if(Carbon::parse($section->expireDate)->isPast()){
-                session()->flash('status', 'Token already expired!');
+                session()->flash('status', 'Token already expired');
                 session()->flash('type', 'error');
                 return redirect()->back();
             } elseif($section->token == $token){
                 return view('student.course.add', compact('section'));
             }
-            session()->flash('status', 'Invalid token!');
+            session()->flash('status', 'Invalid token');
             session()->flash('type', 'error');
             return redirect()->back();
         }
@@ -219,7 +219,7 @@ class StudentController extends Controller
         // return $checkSection;
 
         if($checkSection){
-            session()->flash('status', 'Already registered!');
+            session()->flash('status', 'Already registered');
             session()->flash('type', 'error');
             return redirect()->route('student.dashboard');
         }
@@ -228,7 +228,7 @@ class StudentController extends Controller
 
 
 
-        session()->flash('status', 'Success!');
+        session()->flash('status', 'Success');
         session()->flash('type', 'success');
         return redirect()->route('student.dashboard');
     }

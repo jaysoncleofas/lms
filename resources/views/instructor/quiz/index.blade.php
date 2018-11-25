@@ -70,17 +70,17 @@
                                         <a href="{{route('instructor.question.create', [$course->id, $quiz->id])}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Add Question" data-placement="right">{{count($quiz->questions)}}</a>
                                     @endif
                                 </td>
-                                <td>{{$quiz->timeLimit ?? 0}} minutes</td>
-                                <td>{{$quiz->startDate ? $quiz->startDate->toFormattedDateString() : ''}}</td>
-                                <td>{{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : ''}}</td>
+                                <td>{{ $quiz->timeLimit ?? 0 }} minutes</td>
+                                <td>{{ $quiz->startDate ? $quiz->startDate->toFormattedDateString() : '' }}</td>
+                                <td>{{ $quiz->expireDate ? $quiz->expireDate->toFormattedDateString() : '' }}</td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.quiz.status', [$course->id, $quiz->id]) }}" class="deactivate btn btn-sm {{ $quiz->isActive == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="token" data-action="{{ $quiz->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $quiz->isActive == 1 ? 0 : 1  }}">
-                                        @if ($quiz->isActive == 1) 
-                                            Active
-                                        @else 
+                                    <div class="switch">
+                                        <label>
                                             Inactive
-                                        @endif    
-                                    </a>
+                                            <input class="active-mode-switch" type="checkbox" {{ $quiz->isActive ? 'checked' : '' }} quizId="{{ $quiz->id }}">
+                                            <span class="lever"></span> Active
+                                        </label>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="{{ route('instructor.quiz.edit', [$course->id, $quiz->id]) }}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a> 
@@ -109,6 +109,40 @@
                 searchPlaceholder: "Search",
             },
             order:[]
+        });
+        $('.active-mode-switch').change(function() {
+            var status = 0;
+            var id = $(this).attr('quizId');
+            if ($(this).is(':checked')) {
+                status = 1;
+            }
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url : "{{ route('instructor.quiz.status', [$course->id, $quiz->id]) }}",
+                type : 'PUT',
+                data: { id: id, status : status },
+                success: function(result) {
+                    var newResult = JSON.parse(result);
+                    const toast = swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    toast({
+                        type: 'success',
+                        title: newResult.status
+                    })
+                },
+                error : function(error) {
+                    console.log('error');
+                    console.log(error);
+                }
+            });
         });
     });
 </script>

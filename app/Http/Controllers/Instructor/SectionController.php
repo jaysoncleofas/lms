@@ -159,7 +159,7 @@ class SectionController extends Controller
         $students = $section->users()->get();
         $quizzes = $section->quizzes()->get();
         $assignments = $section->assignments()->get();
-        $fileName = $course->name.'_'.$section->name;
+        $fileName = $course->name.' '.$section->name;
 
         $new_data = array();                
         $data = $students;
@@ -172,15 +172,11 @@ class SectionController extends Controller
                 $new_data[$value->id][$assignment->title] = $value->passesExport($assignment->id)->grade ?? '';
             }
         }
-        return Excel::create('ss', function($excel) use ($new_data,  $course, $section) {
-            $excel->sheet('sss', function($sheet) use ($new_data,  $course, $section) {
+        return Excel::create($fileName, function($excel) use ($new_data,  $fileName) {
+            $excel->sheet($fileName, function($sheet) use ($new_data) {
                 $sheet->setWidth('A', 35);
-                $sheet->getStyle('A1')->getFont()->setBold(true);
-                $sheet->getStyle('A2:B2')->getFont()->setBold(true);
-                $sheet->getStyle('4')->getFont()->setBold(true);
-                $sheet->setCellvalue('A1', strtoupper($course->name));
-                $sheet->setCellvalue('A2', strtoupper($section->name));
-                $sheet->fromArray($new_data, null, 'A4' );
+                $sheet->getStyle('1')->getFont()->setBold(true);
+                $sheet->fromArray($new_data, null, 'A1' );
             });
         })->download('xlsx');
     }

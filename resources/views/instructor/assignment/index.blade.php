@@ -56,13 +56,13 @@
                                 <td>{{ $assignment->startDate ? $assignment->startDate->toFormattedDateString() : '' }}</td>
                                 <td>{{ $assignment->expireDate ? $assignment->expireDate->toFormattedDateString() : '' }}</td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.assignment.status', [$course->id, $assignment->id]) }}" class="deactivate btn btn-sm {{ $assignment->isActive == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="assignment" data-action="{{ $assignment->isActive == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $assignment->isActive == 1 ? 0 : 1  }}">
-                                        @if ($assignment->isActive == 1) 
-                                            Active
-                                        @else 
+                                    <div class="switch">
+                                        <label>
                                             Inactive
-                                        @endif    
-                                    </a>
+                                            <input class="active-mode-switch" type="checkbox" {{ $assignment->isActive ? 'checked' : '' }} assignmentId="{{ $assignment->id }}">
+                                            <span class="lever"></span> Active
+                                        </label>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="{{route('instructor.assignment.edit', [$course->id, $assignment->id])}}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a> 
@@ -90,6 +90,40 @@
                     searchPlaceholder: "Search",
                 },
                 order:[]
+            });
+            $('.active-mode-switch').change(function() {
+                var status = 0;
+                var id = $(this).attr('assignmentId');
+                if ($(this).is(':checked')) {
+                    status = 1;
+                }
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url : "{{ route('instructor.assignment.status', [$course->id, $assignment->id]) }}",
+                    type : 'PUT',
+                    data: { id: id, status : status },
+                    success: function(result) {
+                        var newResult = JSON.parse(result);
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+
+                        toast({
+                            type: 'success',
+                            title: newResult.status
+                        })
+                    },
+                    error : function(error) {
+                        console.log('error');
+                        console.log(error);
+                    }
+                });
             });
         });
     </script>

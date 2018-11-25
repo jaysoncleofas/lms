@@ -63,7 +63,7 @@ class TokenController extends Controller
         $token->expireDate = $request->formatted_expireDate_submit;
         $token->save();
 
-        session()->flash('status', 'Successfully saved!');
+        session()->flash('status', 'Successfully saved');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.token.index', $course->id);
@@ -106,13 +106,11 @@ class TokenController extends Controller
     {
         $user = Auth::user();
         $course = $user->courses()->findOrFail($course_id);
-        $token = Token::findOrFail($token_id);
+        $token = Token::findOrFail($request->id);
         $token->status = $request->status == 1 ? true : false;
         $token->save();
-        $status = $request->status == 1 ? 'activated' : 'deactivated';
-        session()->flash('status', 'Successfully '.$status);
-        session()->flash('type', 'success');
-        return response('success', 200);
+        $status = $request->status == 1 ? 'Token Activated' : 'Token Deactivated';
+        return json_encode(['text' => 'success', 'return' => '1', 'status' => $status]);
     }
 
     /**

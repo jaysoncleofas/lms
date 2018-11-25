@@ -217,13 +217,10 @@ class QuizController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($quiz_id);
+         $quiz = Quiz::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($request->id);
          $quiz->isActive = $request->status == 1 ? true : false;
          $quiz->save();
-
-         $status = $request->status == 1 ? 'activated' : 'deactivated';
-         session()->flash('status', 'Successfully '.$status);
-         session()->flash('type', 'success');
-         return response('success', 200);
+         $status = $request->status == 1 ? 'Quiz Activated' : 'Quiz Deactivated';
+        return json_encode(['text' => 'success', 'return' => '1', 'status' => $status]);
      }
 }

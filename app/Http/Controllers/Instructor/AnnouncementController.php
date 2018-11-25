@@ -93,7 +93,7 @@ class AnnouncementController extends Controller
        }
 
 
-        session()->flash('status', 'Successfully posted!');
+        session()->flash('status', 'Successfully posted');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.announcement.index', $course->id);
@@ -168,7 +168,7 @@ class AnnouncementController extends Controller
         $announcement->message = $request->message;
         $announcement->save();
 
-        session()->flash('status', 'Successfully updated!');
+        session()->flash('status', 'Successfully updated');
         session()->flash('type', 'success');
 
         return redirect()->route('instructor.announcement.index', $course->id);

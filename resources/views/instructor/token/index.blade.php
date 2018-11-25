@@ -33,6 +33,7 @@
                     <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Token</th>
                                 <th>Section</th>
                                 <th>Date Created</th>
@@ -42,20 +43,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($tokens as $token)
+                            @foreach ($tokens as $key => $token)
                             <tr>
-                                <td>{{$token->token}}</td>
-                                <td>{{$token->section->name ?? ''}}</td>
-                                <td>{{date('F j, Y',strtotime($token->created_at))}}</td>
-                                <td>{{$token->expireDate != null ? date('F j, Y',strtotime($token->expireDate)) : ''}}</td>
+                                <td>{{ $key+1 }}.</td>
+                                <td>{{ $token->token }}</td>
+                                <td>{{ $token->section->name ?? '' }}</td>
+                                <td>{{ date('F j, Y',strtotime($token->created_at)) }}</td>
+                                <td>{{ $token->expireDate != null ? date('F j, Y',strtotime($token->expireDate)) : '' }}</td>
                                 <td>
-                                    <a href="javascript:void(0);" data-href="{{ route('instructor.token.update', [$course->id, $token->id]) }}" class="deactivate btn btn-sm {{ $token->status == 1 ? 'btn-success' : 'btn-warning'  }}" data-method="put" data-from="token" data-action="{{ $token->status == 1 ? 'deactivate' : 'activate' }}" data-from="token" data-value="{{ $token->status == 1 ? 0 : 1  }}">
-                                        @if ($token->status == 1) 
-                                            Active
-                                        @else 
+                                    <div class="switch">
+                                        <label>
                                             Inactive
-                                        @endif    
-                                    </a>
+                                            <input class="active-mode-switch" type="checkbox" {{ $token->status ? 'checked' : '' }} tokenId="{{ $token->id }}">
+                                            <span class="lever"></span> Active
+                                        </label>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="javascript:void(0);" data-href="{{ route('instructor.token.destroy', [$course->id, $token->id]) }}" class="perma_delete text-danger" data-method="delete" data-from="token" data-toggle="tooltip" title="Delete" data-placement="left"><i class="fa fa-trash"></i></a> 
@@ -82,6 +84,40 @@
                     searchPlaceholder: "Search",
                 },
                 order:[]
+            });
+            $('.active-mode-switch').change(function() {
+                var status = 0;
+                var id = $(this).attr('tokenId');
+                if ($(this).is(':checked')) {
+                    status = 1;
+                }
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url : "{{ route('instructor.token.update', [$course->id, $token->id]) }}",
+                    type : 'PUT',
+                    data: { id: id, status : status },
+                    success: function(result) {
+                        var newResult = JSON.parse(result);
+                        const toast = swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+
+                        toast({
+                            type: 'success',
+                            title: newResult.status
+                        })
+                    },
+                    error : function(error) {
+                        console.log('error');
+                        console.log(error);
+                    }
+                });
             });
         });
     </script>

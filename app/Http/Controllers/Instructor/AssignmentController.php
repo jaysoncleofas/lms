@@ -212,13 +212,10 @@ class AssignmentController extends Controller
      {
          $user = Auth::user();
          $course = $user->courses()->findOrFail($course_id);
-         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($assignment_id);
+         $assignment = Assignment::where('instructor_id', $user->id)->where('course_id', $course_id)->findOrFail($request->id);
          $assignment->isActive = $request->status == 1 ? true : false;
          $assignment->save();
-
-         $status = $request->status == 1 ? 'activated' : 'deactivated';
-         session()->flash('status', 'Successfully '.$status);
-         session()->flash('type', 'success');
-         return response('success', 200);
+         $status = $request->status == 1 ? 'Assignment Activated' : 'Assignment Deactivated';
+         return json_encode(['text' => 'success', 'return' => '1', 'status' => $status]);
      }
 }

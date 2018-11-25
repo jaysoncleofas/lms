@@ -2,8 +2,8 @@
     <script>
         $(function() {
             swal({
-                title: 'Success!',
-                text: '{!! ucwords(session('status')) !!}.',
+                // title: '{{ session('type') == 'success' ? 'Success!' : 'Oops!' }}',
+                title: '{!! ucwords(session('status')) !!}!',
                 type: '{!! session('type') !!}',
                 confirmButtonText: 'Ok'
             })
@@ -22,12 +22,4 @@
         })
     });
 </script>
-
-    {{-- <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div> --}}
 @endif

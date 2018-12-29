@@ -30,7 +30,7 @@
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card">
                 <div class="card-body pb-0">
-                    <table id="example" class="table text-nowrap" cellspacing="0" width="100%">
+                    <table id="table" class="table text-nowrap" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th class="th-sm">Course</th>
@@ -38,22 +38,6 @@
                                 <th class="th-sm">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($courses as $course)
-                            <tr>
-                                <td>{{$course->name}}</td>
-                                <td style="white-space: normal;">
-                                    @foreach ($course->users as $key => $instructor)
-                                        <a class="btn-link" href="{{route('admin.instructor.show', $instructor->id)}}">{{$instructor->firstName.' '.$instructor->lastName}}</a>{{ $key < count($course->users) - 1 ? ', ' : ''  }}
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <a href="{{route('admin.course.edit', $course->id)}}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a> 
-                                    <a href="javascript:void(0);" data-href="{{ route('admin.course.destroy', $course->id) }}" class="perma_delete text-danger" data-placement="left" data-method="delete" data-from="course" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a> 
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -66,19 +50,26 @@
 <script src="{{ asset('js/addons/datatables.min.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable({
-            "scrollX": true,
+        $('#table').DataTable({
+            scrollX: true,
+            processing: true,
+            serverSide: true,
+            ajax: "{!! route('admin.courseList') !!}",
+            columns: [
+                {data: 'name', name: 'name'},
+                {data: 'instructors', name: 'instructors'},
+                {data: 'action', name: 'action'},
+            ],
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search",
             },
-            order: []
+            order: [],
         });
-
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
+        // tooltip for datatables
+        $('table').on('draw.dt', function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        })
     });
-
 </script>
 @endsection

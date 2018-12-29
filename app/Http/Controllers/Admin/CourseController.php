@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
+use DataTables;
 
 class CourseController extends Controller
 {
@@ -17,8 +18,25 @@ class CourseController extends Controller
      */
     public function index()
     {
+        $data['courses'] = Course::latest()->get();
+        return view('admin.course.index', $data);
+    }
+
+    public function coursesList()
+    {
         $courses = Course::latest()->get();
-        return view('admin.course.index', compact('courses'));
+        return DataTables::of($courses)
+                        ->addColumn('action', function ($course) {
+                            return '<a href="'.route('admin.course.edit', $course->id).'" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a> 
+                                    <a href="javascript:void(0);" data-href="'.route('admin.course.destroy', $course->id).'" class="perma_delete text-danger" data-placement="left" data-method="delete" data-from="course" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>';
+                        })
+                        ->addColumn('instructors', function (Course $course) {
+                            return $course->users->map(function($user) {
+                                return '<a class="btn-link" href="'.route('admin.instructor.show', $user->id).'">'.$user->name().'</a>';
+                            })->implode(', ');
+                        })
+                        ->rawColumns(['instructors', 'action'])
+                        ->toJson();
     }
 
     /**

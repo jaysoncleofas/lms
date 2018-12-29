@@ -26,7 +26,7 @@ class AddCodeToTakesTable extends Migration
     public function down()
     {
         Schema::table('takes', function (Blueprint $table) {
-            $table->dropColumn();
+            $table->dropColumn('code');
         });
     }
 }

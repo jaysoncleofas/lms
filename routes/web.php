@@ -35,6 +35,9 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
     Route::get('/instructor/trash', 'Admin\InstructorController@trash')->name('instructor.trash');
     Route::resource('/instructor', 'Admin\InstructorController');
     Route::get('/student', 'Admin\StudentController@index')->name('student.index');
+
+    // datables
+    Route::get('/list/courses', 'Admin\CourseController@coursesList')->name('courseList');
 });
 
 Route::prefix('instructor')->name('instructor.')->middleware(['verified', 'instructor', 'auth'])->group(function () {

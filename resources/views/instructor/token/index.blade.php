@@ -96,7 +96,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url : "{{ route('instructor.token.update', [$course->id, $token->id]) }}",
+                    url: "/instructor/course/{{ $course->id }}/token/"+id,
                     type : 'PUT',
                     data: { id: id, status : status },
                     success: function(result) {

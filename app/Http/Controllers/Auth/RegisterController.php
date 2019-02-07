@@ -49,10 +49,10 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        \Validator::extend('16Above', function($attribute, $value, $parameters) use($data){
-            $checkUser = Carbon::parse($data['formatted_birthDate_submit'])->age < 16; 
-            return !$checkUser; 
-        }, "16 years old above only!");
+        // \Validator::extend('16Above', function($attribute, $value, $parameters) use($data){
+        //     $checkUser = Carbon::parse($data['formatted_birthDate_submit'])->age < 16; 
+        //     return !$checkUser; 
+        // }, "16 years old above only!");
 
 
         return Validator::make($data, [
@@ -60,7 +60,8 @@ class RegisterController extends Controller
             'middleName'            => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
             'lastName'              => 'required|regex:/^[\pL\s\-]+$/u|max:255',
             'studentNumber'         => 'required|alpha_num|unique:users|digits:10',
-            'birthDate'             => 'required|max:255|16Above',
+            // 'birthDate'             => 'required|max:255|16Above',
+            'birthDate'             => 'required|max:255',
             'username'              => 'required|alpha_dash|unique:users|max:255',
             'email'                 => 'required|string|email|unique:users|max:255',
             'password'              => 'required|string|min:6|confirmed',

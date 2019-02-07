@@ -139,7 +139,8 @@
         max: new Date(),
         formatSubmit: 'yyyy-mm-dd',
         hiddenPrefix: 'formatted_',
-        selectYears: 50
+        selectYears: 10,
+        max: new Date(2003,11,31)
     });
 </script>
 @endsection

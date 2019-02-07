@@ -173,12 +173,23 @@
 
 @section('script')
     <script>
-        $('.datepicker').pickadate({
-            max: new Date(),
-            formatSubmit: 'yyyy-mm-dd',
-            hiddenPrefix: 'formatted_',
-            selectYears: 50
-        });
+        var student = '{!! $user->role !!}';
+        if( student == 'student'){
+            $('.datepicker').pickadate({
+                max: new Date(),
+                formatSubmit: 'yyyy-mm-dd',
+                hiddenPrefix: 'formatted_',
+                selectYears: 10, 
+                max: new Date(2003,11,31)               
+            });
+        } else {
+            $('.datepicker').pickadate({
+                max: new Date(),
+                formatSubmit: 'yyyy-mm-dd',
+                hiddenPrefix: 'formatted_',
+                selectYears: 40,              
+            });
+        }
 
         function previewFile(){
             var preview = document.querySelector('.img-preview'); //selects the query named img

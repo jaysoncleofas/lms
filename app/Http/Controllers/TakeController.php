@@ -116,12 +116,10 @@ class TakeController extends Controller
     }
 
     public function runCode(Request $request){
-
-        $executed = \App\Helpers\runCode::run($request->code);
+        $executed = \App\Helpers\runCode::run($request->code, $request->stdin);
         $data = json_decode($executed, true);
-        // $data = $executed['output'];
         $data2 = $data['output'];
-        // return  $data2;
+        
         return json_encode(['text' =>  $data2, 'return' => '1']);
     }
 }

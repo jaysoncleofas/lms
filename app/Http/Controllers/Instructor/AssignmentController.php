@@ -179,6 +179,10 @@ class AssignmentController extends Controller
 
      public function passUpdate(Request $request, $id)
      {
+        $request->validate([
+            'grade' => 'nullable|numeric|max:100',
+        ]);
+        
         $pass = Pass::findOrFail($id);
         $pass->grade = $request->grade;
         $pass->save();

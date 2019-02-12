@@ -139,7 +139,7 @@
         max: new Date(),
         formatSubmit: 'yyyy-mm-dd',
         hiddenPrefix: 'formatted_',
-        selectYears: 10,
+        selectYears: 40,
         max: new Date(2003,11,31)
     });
 </script>

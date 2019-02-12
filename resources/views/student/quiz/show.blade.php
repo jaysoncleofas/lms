@@ -113,6 +113,10 @@
                                         </span>
                                         @endif
                                     </div>
+                                    <div class="form-group mb-3">
+                                        <p class="mb-1">Stdin Inputs</p>
+                                        <textarea name="stdin" id="stdin" class="form-control rounded-0 pt-0" rows="3">{{old('stdin')}}</textarea>
+                                    </div>
                                     <a id="execute" class="btn btn-info"><i class="fa fa-save"></i> Execute</a>
                                 </form>
                             </div>
@@ -125,7 +129,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-12">
                                     <p class="select2Label">Result...</p>
-                                <p id="result"></p>
+                                <p id="result" style="white-space: pre-line"></p>
                             </div>
                         </div>
                     </div>
@@ -215,29 +219,36 @@
         $('.sw-btn-group').addClass('mt-3');
 
         $("#execute").click(function () {
+            var _this = $(this);
+            _this.html('<i class="fa fa-spinner fa-spin loading"></i> Running');
             var code = $("#code").val();
-
-            // $("#form_id").submit(); // Form submission.
-            // alert(code);
-
+            var stdin = $("#stdin").val();
             var url = '{{ route('runCode') }}';
             $.ajax({
                 type: 'post',
                 url: url,
-                data: {code: code},
+                data: {code: code, stdin, stdin},
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 beforeSend: function() {
-                    // $('.redeem_send_btn').attr('disabled', 'disabled');
+                    _this.attr('disabled', 'disable');
                 },
                 success: function(result) {
+                    setTimeout(function () {
+                        _this.html('<i class="fa fa-save"></i> Run');
+                        result = JSON.parse(result);
+                        $("#result").html(result.text);
+                        $('#execute').attr('disabled');
+                    }, 800);
+                },
+                error: function(result){
                     console.log(result);
-                    result = JSON.parse(result);
-                    $("#result").text(result.text);
+                },
+                complete: function() {
+                    _this.removeAttr('disabled');
                 }
             })
-
         });
     });
 

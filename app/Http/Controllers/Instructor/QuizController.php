@@ -184,6 +184,10 @@ class QuizController extends Controller
 
      public function takeUpdate(Request $request, $id)
      {
+        $request->validate([
+            'grade' => 'nullable|numeric|max:100',
+        ]);
+        
         $take = Take::findOrFail($id);
         $take->result = $request->grade;
         $take->save();

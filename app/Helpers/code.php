@@ -5,7 +5,7 @@ namespace App\Helpers;
 class runCode
 {
 
-    static function run($code)
+    static function run($code, $stdin)
     {
         $ch = curl_init();
 		$parameters = array(
@@ -13,7 +13,8 @@ class runCode
             'clientSecret' => 'aa55c923319d164b035fcdfae295e31867500ad1598a05227c01daca2c2f83b1',
 		    'script' => $code,
             'language' => 'java',
-            'versionIndex' => '2',
+			'versionIndex' => '2',
+			'stdin' => $stdin
 		);
 		curl_setopt( $ch, CURLOPT_URL,'https://api.jdoodle.com/v1/execute' );
 		curl_setopt( $ch, CURLOPT_POST, 1 );

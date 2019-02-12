@@ -8,6 +8,8 @@ use App\Http\Requests\UserRequest;
 use App\User;
 use App\Section;
 use App\Course;
+use App\Mail\newAccount;
+use Illuminate\Support\Facades\Mail;
 
 class InstructorController extends Controller
 {
@@ -57,6 +59,7 @@ class InstructorController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $password = $this->generateStrongPassword();
         $user = User::create([
             'role'         => 'instructor',
             'firstName'    => $request->firstName,
@@ -65,13 +68,54 @@ class InstructorController extends Controller
             'username'     => $request->username,
             'email'        => $request->email,
             'mobileNumber' => $request->mobileNumber,
-            'password'     => $request->password ? bcrypt($request->password) : bcrypt('secret'),
+            'password'     => bcrypt($password),
             'avatar'       => 'profile_pic.png'
         ]);
+
+        Mail::to($user->email)->send(new newAccount($user, $password));
+        // if($request->mobileNumber) {
+        //     $message = 'Hi '.$user->name().', Welcome to CCS Learning Management System! \n'.$lesson->course->name;
+        //     \App\Helpers\SMS::send($request->mobileNumber, $message);
+        // }  
 
         session()->flash('status', 'Successfully saved');
         session()->flash('type', 'success');
         return redirect()->route('admin.instructor.index');
+    }
+
+    function generateStrongPassword($length = 8, $add_dashes = false, $available_sets = 'luds')
+    {
+        $sets = array();
+        if(strpos($available_sets, 'l') !== false)
+            $sets[] = 'abcdefghjkmnpqrstuvwxyz';
+        if(strpos($available_sets, 'u') !== false)
+            $sets[] = 'ABCDEFGHJKMNPQRSTUVWXYZ';
+        if(strpos($available_sets, 'd') !== false)
+            $sets[] = '23456789';
+        if(strpos($available_sets, 's') !== false)
+            $sets[] = '!@#$%&*?';
+        $all = '';
+        $password = '';
+        foreach($sets as $set)
+        {
+            $password .= $set[array_rand(str_split($set))];
+            $all .= $set;
+        }
+        $all = str_split($all);
+        for($i = 0; $i < $length - count($sets); $i++)
+            $password .= $all[array_rand($all)];
+        $password = str_shuffle($password);
+        if(!$add_dashes)
+            return $password;
+        $dash_len = floor(sqrt($length));
+        $dash_str = '';
+        while(strlen($password) > $dash_len)
+        {
+            $dash_str .= substr($password, 0, $dash_len) . '-';
+            $password = substr($password, $dash_len);
+        }
+        $dash_str .= $password;
+        return $dash_str;
     }
 
     /**

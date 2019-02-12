@@ -20,7 +20,7 @@
                     <form action="{{route('admin.instructor.store')}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-row">
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3 col-md-6">
                                 <div class="md-form">
                                     <input type="text" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{old('firstName')}}">
                                     <label for="firstName">First Name <span class="red-asterisk">*</span></label>
@@ -31,7 +31,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3 col-md-6">
                                 <div class="md-form">
                                     <input type="text" name="middleName" id="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{old('middleName')}}">
                                     <label for="middleName">Middle Name</label>
@@ -42,13 +42,24 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3 col-md-6">
                                 <div class="md-form">
                                     <input type="text" id="lastName" name="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{old('lastName')}}">
                                     <label for="lastName">Last Name <span class="red-asterisk">*</span></label>
                                     @if ($errors->has('lastName'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('lastName') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-3 col-md-6">
+                                <div class="md-form">
+                                    <input type="text" id="suffix" name="suffix" class="form-control {{$errors->has('suffix') ? 'is-invalid' : ''}}" value="{{old('suffix')}}">
+                                    <label for="suffix">Suffix</label>
+                                    @if ($errors->has('suffix'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('suffix') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -85,7 +96,7 @@
                             @endif
                         </div>
         
-                        <div class="md-form">
+                        {{-- <div class="md-form">
                             <input type="password" name="password" id="password" placeholder="Leave empty, default password is secret" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
                             <label for="password">Password</label>
                             @if ($errors->has('password'))
@@ -93,7 +104,7 @@
                                 <strong>{{ $errors->first('password') }}</strong>
                             </span>
                             @endif
-                        </div>
+                        </div> --}}
         
                         <button type="submit" name="button" class="btn btn-primary float-right mt-4"><i class="fa fa-save"></i> Save</button>
                     </form>

@@ -10,6 +10,7 @@ use App\Section;
 use App\Course;
 use App\Mail\newAccount;
 use Illuminate\Support\Facades\Mail;
+use App\Rules\ValidUsername;
 
 class InstructorController extends Controller
 {
@@ -65,6 +66,7 @@ class InstructorController extends Controller
             'firstName'    => $request->firstName,
             'middleName'   => $request->middleName,
             'lastName'     => $request->lastName,
+            'suffixName'   => $request->suffix,
             'username'     => $request->username,
             'email'        => $request->email,
             'mobileNumber' => $request->mobileNumber,
@@ -72,7 +74,7 @@ class InstructorController extends Controller
             'avatar'       => 'profile_pic.png'
         ]);
 
-        Mail::to($user->email)->send(new newAccount($user, $password));
+        Mail::to($user->email)->queue(new newAccount($user, $password));
         // if($request->mobileNumber) {
         //     $message = 'Hi '.$user->name().', Welcome to CCS Learning Management System! \n'.$lesson->course->name;
         //     \App\Helpers\SMS::send($request->mobileNumber, $message);
@@ -171,19 +173,23 @@ class InstructorController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'firstName'    => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'lastName'     => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'middleName'   => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            'username'     => 'required|alpha_dash|unique:users,username,'.$user->id.',id|max:255',
+            'firstName'    => 'required|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'lastName'     => 'required|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'middleName'   => 'nullable|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'suffix'   => 'nullable|regex:/^[\pL\s\-]+$/u|min:1|max:255',
+            // 'username'     => 'required|alpha_dash|unique:users,username,'.$user->id.',id|min:5|max:255',
+            'username'     => ['required','unique:users,username,'.$user->id.',id','min:5','max:255', new ValidUsername],
             'email'        => 'required|string|email|unique:users,email,'.$user->id.',id|max:255',
             'mobileNumber' => 'nullable|alpha_num|digits:11|unique:users,mobileNumber,'.$user->id.',id',
-            'password'     => 'nullable|string|min:6|max:255',
+            // 'password'     => 'nullable|string|min:8|max:255',
+            'password'     => 'nullable|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/',
         ]);
 
         $user->update([
             'firstName'    => $request->firstName,
             'middleName'   => $request->middleName,
             'lastName'     => $request->lastName,
+            'suffixName'   => $request->suffix,
             'username'     => $request->username,
             'email'        => $request->email,
             'mobileNumber' => $request->mobileNumber,

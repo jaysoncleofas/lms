@@ -35,9 +35,35 @@
                             <tr>
                                 <th class="th-sm">Course</th>
                                 <th class="th-sm">Instructors</th>
+                                <th class="th-sm">Status</th>
                                 <th class="th-sm">Action</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach ($courses as $data)
+                                <tr>
+                                    <td>{{ $data->name }}</td> 
+                                    <td>
+                                        @foreach ($data->users as $key => $user)
+                                            <a class="btn-link" href="{{route('admin.instructor.show', $user->id)}}">{{ $user->name() }}</a>
+                                                {{ $key < count($data->users) - 1 ? ', ' : ''  }}
+                                        @endforeach  
+                                    </td>
+                                    <td>
+                                        <div class="switch">
+                                            <label>
+                                                Inactive
+                                                <input class="active-mode-switch" type="checkbox" {{$data->status ? 'checked' : ''}} courseId="{{$data->id}}">
+                                                <span class="lever"></span> Active
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('admin.course.edit', $data->id)}}" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a>
+                                    </td>
+                                </tr>    
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -52,14 +78,15 @@
     $(document).ready(function () {
         $('#table').DataTable({
             scrollX: true,
-            processing: true,
-            serverSide: true,
-            ajax: "{!! route('admin.courseList') !!}",
-            columns: [
-                {data: 'name', name: 'name'},
-                {data: 'instructors', name: 'instructors'},
-                {data: 'action', name: 'action'},
-            ],
+            // processing: true,
+            // serverSide: true,
+            // ajax: "{!! route('admin.courseList') !!}",
+            // columns: [
+            //     {data: 'name', name: 'name'},
+            //     {data: 'instructors', name: 'instructors'},
+            //     {data: 'status', name: 'status'},
+            //     {data: 'action', name: 'action'},
+            // ],
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search",
@@ -69,7 +96,42 @@
         // tooltip for datatables
         $('table').on('draw.dt', function() {
             $('[data-toggle="tooltip"]').tooltip();
-        })
+        });
+
+        $('#table').on('change', '.active-mode-switch', function() {
+            var status = 0;
+            var id = $(this).attr('courseId');
+            if ($(this).is(':checked')) {
+                status = 1;
+            }
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/admin/course/"+id+"/status",
+                type : 'PUT',
+                data: { id: id, status : status },
+                success: function(result) {
+                    var newResult = JSON.parse(result);
+                    const toast = swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    toast({
+                        type: 'success',
+                        title: newResult.status
+                    })
+                },
+                error : function(error) {
+                    console.log('error');
+                    console.log(error);
+                }
+            });
+        });
     });
 </script>
 @endsection

@@ -20,9 +20,9 @@
                     <form action="{{route('admin.instructor.store')}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-row">
-                            <div class="col-sm-12 col-lg-3 col-md-6">
+                            <div class="col-sm-12 col-lg-6 col-md-6">
                                 <div class="md-form">
-                                    <input type="text" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{old('firstName')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{old('firstName')}}">
                                     <label for="firstName">First Name <span class="red-asterisk">*</span></label>
                                     @if ($errors->has('firstName'))
                                     <span class="invalid-feedback" role="alert">
@@ -31,9 +31,9 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-3 col-md-6">
+                            <div class="col-sm-12 col-lg-6 col-md-6">
                                 <div class="md-form">
-                                    <input type="text" name="middleName" id="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{old('middleName')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="middleName" id="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{old('middleName')}}">
                                     <label for="middleName">Middle Name</label>
                                     @if ($errors->has('middleName'))
                                     <span class="invalid-feedback" role="alert">
@@ -42,9 +42,9 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-3 col-md-6">
+                            <div class="col-sm-12 col-lg-6 col-md-6">
                                 <div class="md-form">
-                                    <input type="text" id="lastName" name="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{old('lastName')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" id="lastName" name="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{old('lastName')}}">
                                     <label for="lastName">Last Name <span class="red-asterisk">*</span></label>
                                     @if ($errors->has('lastName'))
                                     <span class="invalid-feedback" role="alert">
@@ -53,9 +53,9 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-3 col-md-6">
+                            <div class="col-sm-12 col-lg-6 col-md-6">
                                 <div class="md-form">
-                                    <input type="text" id="suffix" name="suffix" class="form-control {{$errors->has('suffix') ? 'is-invalid' : ''}}" value="{{old('suffix')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" id="suffix" name="suffix" class="form-control {{$errors->has('suffix') ? 'is-invalid' : ''}}" value="{{old('suffix')}}">
                                     <label for="suffix">Suffix</label>
                                     @if ($errors->has('suffix'))
                                     <span class="invalid-feedback" role="alert">
@@ -113,4 +113,11 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $('#mobileNumber').mask('00000000000');
+        $('#studentNumber').mask('0000000000');
+    </script>
 @endsection

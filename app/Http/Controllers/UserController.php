@@ -8,7 +8,7 @@ use carbon\Carbon;
 use Illuminate\Support\Facades\Input as input;
 use Illuminate\Support\Facades\Hash;
 use App\File;
-
+use App\Rules\ValidUsername;
 
 class UserController extends Controller
 {
@@ -23,11 +23,13 @@ class UserController extends Controller
         $user = Auth::user();
         $request->validate([
             'email'        => 'required|string|email|unique:users,email,'.$user->id.',id|max:255',
-            'username'     => 'required|string|unique:users,username,'.$user->id.',id|max:255',
+            // 'username'     => 'required|string|unique:users,username,'.$user->id.',id|min:5|max:255',
+            'username'     => ['required','unique:users,username,'.$user->id.',id','min:5','max:255', new ValidUsername],
             'mobileNumber' => 'nullable|digits:11|unique:users,mobileNumber,'.$user->id.',id',
-            'firstName'    => 'required|string|max:255',
-            'lastName'     => 'required|string|max:255',
-            'middleName'   => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
+            'firstName'    => 'required|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'lastName'     => 'required|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'middleName'   => 'nullable|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'suffix'   => 'nullable|regex:/^[\pL\s\-]+$/u|min:1|max:255',
             'birthDate'    => 'nullable|max:255',
         ]);
 
@@ -50,21 +52,22 @@ class UserController extends Controller
             $user->studentNumber = $request->studentNumber;
         }
 
-        if ($user->role == 'student') {
-            if(Carbon::parse($request->formatted_birthDate_submit)->age >= 16 ){
-                $user->birthDate = $request->formatted_birthDate_submit;
-            } else {
-                session()->flash('statusError', '16 years old above only');
-                return redirect()->route('profile.index');
-            }
-        }
+        // if ($user->role == 'student') {
+        //     if(Carbon::parse($request->formatted_birthDate_submit)->age >= 16 ){
+        //         $user->birthDate = $request->formatted_birthDate_submit;
+        //     } else {
+        //         session()->flash('statusError', '16 years old above only');
+        //         return redirect()->route('profile.index');
+        //     }
+        // }
 
-        $user->firstName     = $request->firstName;
-        $user->middleName    = $request->middleName;
-        $user->lastName      = $request->lastName;
-        $user->username      = $request->username;
-        $user->email         = $request->email;
-        $user->mobileNumber  = $request->mobileNumber;
+        $user->firstName = $request->firstName;
+        $user->middleName = $request->middleName;
+        $user->lastName = $request->lastName;
+        $user->suffixName = $request->suffix;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->mobileNumber = $request->mobileNumber;
         $user->save();
 
         session()->flash('status', 'Update successful');
@@ -86,25 +89,26 @@ class UserController extends Controller
 
     public function change_password_index()
     {
-        return view('profile.change_password', compact('user'));
+        return view('profile.change_password');
     }
 
     public function change_password_update(Request $request)
     {
         $user = Auth::user();
         $this->validate($request, [
-            'currentPassword' => 'required|min:6',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6',
+            'currentPassword' => 'required',
+            // 'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/',
+            'password_confirmation' => 'required|min:8',
         ]);
 
         if (Hash::check(Input::get('currentPassword'), $user['password'])) {
             $this->validate($request, [
-                'password' => 'required|min:6|confirmed'
-                ]);
+                'password' => 'required|min:8|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/',
+            ]);
             $user->password = bcrypt(Input::get('password'));
             $user->save();
-            session()->flash('status', 'You have successfully changed your password!');
+            session()->flash('status', 'You have successfully changed your password');
             session()->flash('type', 'success');
             return redirect()->route('change.password.index');
         } else {

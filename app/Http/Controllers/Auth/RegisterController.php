@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use carbon\Carbon;
+use App\Rules\ValidUsername;
 
 class RegisterController extends Controller
 {
@@ -49,23 +50,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        // \Validator::extend('16Above', function($attribute, $value, $parameters) use($data){
-        //     $checkUser = Carbon::parse($data['formatted_birthDate_submit'])->age < 16; 
-        //     return !$checkUser; 
-        // }, "16 years old above only!");
-
-
         return Validator::make($data, [
-            'firstName'             => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'middleName'            => 'nullable|regex:/^[\pL\s\-]+$/u|max:255',
-            'lastName'              => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'firstName'    => 'required|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'lastName'     => 'required|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'middleName'   => 'nullable|regex:/^[\pL\s\-]+$/u|min:2|max:255',
+            'suffix'   => 'nullable|regex:/^[\pL\s\-]+$/u|min:1|max:255',
             'studentNumber'         => 'required|alpha_num|unique:users|digits:10',
             // 'birthDate'             => 'required|max:255|16Above',
             'birthDate'             => 'required|max:255',
-            'username'              => 'required|alpha_dash|unique:users|max:255',
+            // 'username'              => 'required|alpha_dash|unique:users|min:5|max:255',
+            'username'     => ['required','unique:users','min:5','max:255', new ValidUsername],
             'email'                 => 'required|string|email|unique:users|max:255',
-            'password'              => 'required|string|min:6|confirmed',
             'mobileNumber'          => 'nullable|alpha_num|digits:11|unique:users',
+            'password' => 'required|min:8|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/',
             'password_confirmation' => 'required'
         ]);
     }

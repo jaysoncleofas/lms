@@ -41,7 +41,7 @@
                     <tbody>
                         <tr>
                             <td>1.</td>
-                            <td>{{ $section->instructor->lastName }}, {{ $section->instructor->firstName }} {{ $section->instructor->middleName }}</td>
+                            <td>{{ $section->instructor->name() }}</td>
                             <td>{{ $section->instructor->email }}</td>
                             <td class="text-capitalize">{{ $section->instructor->role }}</td>
                             <td>
@@ -51,7 +51,7 @@
                         @foreach ($section->users as $key => $student)
                         <tr>
                             <td>{{ $key+2 }}.</td>
-                            <td>{{ $student->lastName }}, {{ $student->firstName }} {{ $student->middleName }}</td>
+                            <td>{{ $student->name() }}</td>
                             <td>{{ $student->email }}</td>
                             <td class="text-capitalize">{{ $student->role }}</td>
                             <td></td>

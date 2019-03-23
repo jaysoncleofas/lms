@@ -165,15 +165,18 @@ class SectionController extends Controller
         $data = $students;
         foreach ($data as $key => $value) {
             $new_data[$value->id]['Name'] = $value->lastFirstName();
-            foreach($quizzes as $quiz){
-                $new_data[$value->id][$quiz->title] = $value->takesQuiz($quiz->id)->result ?? '';
+            foreach($quizzes as $key => $quiz){
+                $num = $key+1;
+                $new_data[$value->id]['Q'.$num] = $value->takesQuiz($quiz->id)->result ?? '';
             }
-            foreach($assignments as $assignment){
-                $new_data[$value->id][$assignment->title] = $value->passesExport($assignment->id)->grade ?? '';
+            foreach($assignments as $key => $assignment){
+                $num = $key+1;
+                $new_data[$value->id]['A'.$num ] = $value->passesExport($assignment->id)->grade ?? '';
             }
         }
-        return Excel::create($fileName, function($excel) use ($new_data,  $fileName) {
-            $excel->sheet($fileName, function($sheet) use ($new_data) {
+
+        return Excel::create($fileName, function($excel) use ($new_data, $fileName, $section) {
+            $excel->sheet($section->name, function($sheet) use ($new_data) {
                 $sheet->setWidth('A', 35);
                 $sheet->getStyle('1')->getFont()->setBold(true);
                 $sheet->fromArray($new_data, null, 'A1' );

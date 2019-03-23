@@ -42,7 +42,7 @@
                         <tbody>
                             @foreach ($instructors as $instructor)
                             <tr>
-                                <td>{{$instructor->firstName.' '.$instructor->lastName}}</td>
+                                <td>{{$instructor->name()}}</td>
                                 <td>{{$instructor->email}}</td>
                                 <td>{{$instructor->username}}</td>
                                 <td>{{$instructor->mobileNumber}}</td>

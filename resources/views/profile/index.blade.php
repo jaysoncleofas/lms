@@ -48,9 +48,9 @@
                         </div>
                         <div class="card-body">
                             <div class="form-row">
-                                    <div class="col-md-4">
+                                    <div class="col-sm-12 col-lg-6 col-md-6">
                                         <div class="md-form">
-                                            <input type="text" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{$user->firstName}}">
+                                            <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{$user->firstName}}">
                                             <label for="firstName">First name <span class="red-asterisk">*</span></label>
                                             @if ($errors->has('firstName'))
                                                 <span class="invalid-feedback" role="alert">
@@ -59,9 +59,9 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-sm-12 col-lg-6 col-md-6">
                                         <div class="md-form">
-                                            <input type="text" name="middleName" id="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{$user->middleName ? $user->middleName : old('middleName')}}">
+                                            <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="middleName" id="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{$user->middleName ? $user->middleName : old('middleName')}}">
                                             <label for="middleName">Middle name</label>
                                             @if ($errors->has('middleName'))
                                                 <span class="invalid-feedback" role="alert">
@@ -70,13 +70,24 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-sm-12 col-lg-6 col-md-6">
                                         <div class="md-form">
-                                            <input type="text" name="lastName" id="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{$user->lastName}}">
+                                            <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="lastName" id="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{$user->lastName}}">
                                             <label for="lastName">Last name <span class="red-asterisk">*</span></label>
                                             @if ($errors->has('lastName'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('lastName') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-6 col-md-6">
+                                        <div class="md-form">
+                                            <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="suffix" id="suffix" class="form-control {{$errors->has('suffix') ? 'is-invalid' : ''}}" value="{{$user->suffixName ? $user->suffixName : old('suffix')}}">
+                                            <label for="suffix">Suffix</label>
+                                            @if ($errors->has('suffix'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('suffix') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -173,6 +184,9 @@
 
 @section('script')
     <script>
+        $('#mobileNumber').mask('00000000000');
+        $('#studentNumber').mask('0000000000');
+
         var student = '{!! $user->role !!}';
         if( student == 'student'){
             $('.datepicker').pickadate({

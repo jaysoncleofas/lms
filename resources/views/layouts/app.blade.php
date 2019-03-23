@@ -23,6 +23,7 @@
 
      {{-- favicon --}}
      <link rel="icon" sizes="100x100" href="{{ asset('images/ccs_favicon.png') }}" />
+     <link href="{{ asset('css/jquery-password-validator.css') }}" rel="stylesheet">
 
     @yield('styles')
 </head>
@@ -51,6 +52,9 @@
     <script src="{{ asset('js/mdb.min.js') }}"></script>
     <script src="{{ asset('js/delete.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.26.10/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="{{ asset('js/jquery.password-validator.js') }}"></script>
     <script>
         // SideNav Button Initialization
         $(".button-collapse").sideNav();

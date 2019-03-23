@@ -44,7 +44,7 @@
                         <tbody>
                             @foreach ($instructors as $instructor)
                             <tr>
-                                <td><a class="btn-link" href="{{route('admin.instructor.show', $instructor->id)}}">{{$instructor->firstName.' '.$instructor->lastName}}</a></td>
+                                <td><a class="btn-link" href="{{route('admin.instructor.show', $instructor->id)}}">{{ $instructor->name() }}</a></td>
                                 <td>{{$instructor->email}}</td>
                                 <td>{{$instructor->username}}</td>
                                 <td>{{$instructor->mobileNumber}}</td>

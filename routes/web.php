@@ -25,6 +25,7 @@ Route::post('/register/student/{section}', 'HomeController@register')->name('reg
 Auth::routes(['verify' => true]);
 
 Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(function () {
+    Route::put('/course/{course}/status', 'Admin\CourseController@status')->name('course.status');
     Route::get('/dashboard', 'HomeController@admin_dashboard')->name('dashboard');
     Route::get('/courses', 'Admin\CourseController@index')->name('course.index');
     Route::resource('/course', 'Admin\CourseController')->except('index');

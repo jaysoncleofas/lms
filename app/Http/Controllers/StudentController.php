@@ -175,6 +175,8 @@ class StudentController extends Controller
     {
         $token = Token::where('token', $request->token)->where('status', true)->whereHas('section', function($e){
             $e->where('isActive', true);
+        })->whereHas('course', function($e){
+            $e->where('status', true);
         })->first();
         
 
@@ -194,7 +196,9 @@ class StudentController extends Controller
 
     public function course_add($token)
     {
-        $section = Token::where('token', $token)->where('status', true)->firstOrFail();
+        $section = Token::where('token', $token)->where('status', true)->whereHas('course', function($e){
+            $e->where('status', true);
+        })->firstOrFail();
 
         if(isset($section)){
             if(Carbon::parse($section->expireDate)->isPast()){

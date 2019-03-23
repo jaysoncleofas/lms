@@ -27,15 +27,25 @@ class CourseController extends Controller
         $courses = Course::latest()->get();
         return DataTables::of($courses)
                         ->addColumn('action', function ($course) {
-                            return '<a href="'.route('admin.course.edit', $course->id).'" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a> 
-                                    <a href="javascript:void(0);" data-href="'.route('admin.course.destroy', $course->id).'" class="perma_delete text-danger" data-placement="left" data-method="delete" data-from="course" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>';
+                            return '<a href="'.route('admin.course.edit', $course->id).'" class="blue-text mr-3" data-toggle="tooltip" title="Edit" data-placement="left"><i class="fa fa-pencil"></i></a>';
+                        })
+                        ->addColumn('status', function ($course) {
+                            $check_Status = $course->status ? 'checked' : '';
+                            return '<div class="switch">
+                            <label>
+                                Inactive
+                                <input class="active-mode-switch" type="checkbox" '. $check_Status .' courseId="'.$course->id.'">
+                                <span class="lever"></span> Active
+                            </label>
+                        </div>';
+                            
                         })
                         ->addColumn('instructors', function (Course $course) {
                             return $course->users->map(function($user) {
                                 return '<a class="btn-link" href="'.route('admin.instructor.show', $user->id).'">'.$user->name().'</a>';
                             })->implode(', ');
                         })
-                        ->rawColumns(['instructors', 'action'])
+                        ->rawColumns(['instructors', 'action', 'status'])
                         ->toJson();
     }
 
@@ -49,6 +59,17 @@ class CourseController extends Controller
         $instructors = User::where('role', 'instructor')->get();
 
         return view('admin.course.create', compact('instructors'));
+    }
+
+    public function status(Request $request, $course_id)
+    {
+        // $user = Auth::user();
+        // $course = $user->courses()->findOrFail($course_id);
+        $course = Course::findOrFail($request->id);
+        $course->status = $request->status == 1 ? true : false;
+        $course->save();
+        $status = $request->status == 1 ? 'Lesson Activated' : 'Lesson Deactivated';
+        return json_encode(['text' => 'success', 'return' => '1', 'status' => $status]);
     }
 
     /**

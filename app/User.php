@@ -34,12 +34,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function courses()
     {
-        return $this->belongsToMany('App\Course')->latest();
+        return $this->belongsToMany('App\Course')->where('status', true)->latest();
     }
 
     public function sections()
     {
-        return $this->belongsToMany('App\Section')->where('isActive', true);
+        return $this->belongsToMany('App\Section')->where('isActive', true)->whereHas('course', function($e){
+            $e->where('status', true);
+        });
     }
 
     public function instructorSections()
@@ -109,12 +111,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function name()
     {
-        return ucfirst($this->firstName) . ' ' . ucfirst($this->lastName);
+        if($this->suffixName != ''){
+            return ucfirst($this->firstName) . ' ' . ucfirst($this->lastName) . ' ' . ucfirst($this->suffixName);
+        } else {
+            return ucfirst($this->firstName) . ' ' . ucfirst($this->lastName);
+        }
     }
 
     public function lastFirstName()
     {
-        return ucfirst($this->lastName) . ', ' . ucfirst($this->firstName) . ' ' . ucfirst($this->middleName);
+        if($this->suffixName != ''){
+            return ucfirst($this->lastName) . ', ' . ucfirst($this->firstName) . ' ' . ucfirst($this->middleName). ' ' . ucfirst($this->suffixName);
+        } else {
+            return ucfirst($this->lastName) . ', ' . ucfirst($this->firstName) . ' ' . ucfirst($this->middleName);
+        }
     }
 }
 

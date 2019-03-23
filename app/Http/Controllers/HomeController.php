@@ -59,7 +59,9 @@ class HomeController extends Controller
 
     public function check_token(Request $request)
     {
-        $token = Token::where('token', $request->classToken)->where('status', true)->first();
+        $token = Token::where('token', $request->classToken)->where('status', true)->whereHas('course', function($e){
+            $e->where('status', true);
+        })->first();
 
         if(isset($token)){
             if(Carbon::parse($token->expireDate)->isPast()){
@@ -77,7 +79,9 @@ class HomeController extends Controller
 
     public function register_student($token)
     {
-        $section = Token::where('token', $token)->where('status', true)->firstOrFail();
+        $section = Token::where('token', $token)->where('status', true)->whereHas('course', function($e){
+            $e->where('status', true);
+        })->firstOrFail();
 
         if(isset($section)){
             if(Carbon::parse($section->expireDate)->isPast()){
@@ -95,7 +99,9 @@ class HomeController extends Controller
 
     public function privacy_policy($token)
     {
-        $section = Token::where('token', $token)->where('status', true)->firstOrFail();
+        $section = Token::where('token', $token)->where('status', true)->whereHas('course', function($e){
+            $e->where('status', true);
+        })->firstOrFail();
 
         if(isset($section)){
             if(Carbon::parse($section->expireDate)->isPast()){

@@ -98,7 +98,7 @@
                         <tbody>
                             @foreach ($section->users as $student)
                             <tr>
-                                <td>{{$student->firstName.' '.$student->lastName}}</td>
+                                <td>{{$student->name()}}</td>
                                 <td>{{$student->email}}</td>
                                 <td>{{$student->mobileNumber}}</td>
                                 <td>{{date('F j, Y',strtotime($student->created_at))}}</td>

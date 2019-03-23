@@ -18,6 +18,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mdb-pro.css') }}" rel="stylesheet">
     <link href="{{ asset('css/lms.css') }}" rel="stylesheet">
+    <style>
+        .borderbot {
+            border-bottom: 1px solid #929496 !important
+        }
+    </style>
 </head>
 <body>
     <div id="app" class="login_page">
@@ -37,7 +42,7 @@
                                         <form action="{{route('login')}}" method="post">
                                             @csrf
                                             <div class="md-form">
-                                                <input type="text" name="email" id="email" value="{{old('email')}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                                                <input type="text" name="email" id="email" value="{{old('email')}}" class="form-control borderbot {{ $errors->has('email') ? 'is-invalid' : '' }}">
                                                 <label for="email">Username or Email</label>
                                                 @if ($errors->has('email'))
                                                     <span class="invalid-feedback" role="alert">
@@ -46,7 +51,7 @@
                                                 @endif
                                             </div>
                                             <div class="md-form">
-                                                <input type="password" id="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}">
+                                                <input type="password" id="password" name="password" class="form-control borderbot {{ $errors->has('password') ? 'is-invalid' : '' }}">
                                                 <label for="password">Password</label>
                                                 @if ($errors->has('password'))
                                                     <span class="invalid-feedback" role="alert">

@@ -13,9 +13,9 @@
                         @csrf
                         <input type="hidden" name="sections" value="{{$section->section->id}}">
                         <div class="form-row">
-                            <div class="col-md-4">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="md-form">
-                                    <input type="text" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{old('firstName')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{old('firstName')}}">
                                     <label for="firstName">First Name <span class="red-asterisk">*</span></label>
                                     @if ($errors->has('firstName'))
                                     <span class="invalid-feedback" role="alert">
@@ -24,19 +24,30 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="md-form">
-                                    <input type="text" name="middleName" id="middleName" class="form-control" value="{{old('middleName')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="middleName" id="middleName" class="form-control" value="{{old('middleName')}}">
                                     <label for="middleName">Middle Name</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="md-form">
-                                    <input type="text" name="lastName" id="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{old('lastName')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="lastName" id="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{old('lastName')}}">
                                     <label for="lastName">Last Name <span class="red-asterisk">*</span></label>
                                     @if ($errors->has('lastName'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('lastName') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6 col-md-6">
+                                <div class="md-form">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" id="suffix" name="suffix" class="form-control {{$errors->has('suffix') ? 'is-invalid' : ''}}" value="{{old('suffix')}}">
+                                    <label for="suffix">Suffix</label>
+                                    @if ($errors->has('suffix'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('suffix') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -105,7 +116,7 @@
         
                         <div class="md-form">
                             <input type="password" id="password" name="password" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}">
-                            <label for="password">Password <span class="red-asterisk">*</span></label>
+                            <label for="password" class="label_password">Password <span class="red-asterisk">*</span></label>
                             @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('password') }}</strong>
@@ -115,7 +126,7 @@
         
                         <div class="md-form">
                             <input type="password" id="password-confirm" name="password_confirmation" class="form-control {{$errors->has('password_confirmation') ? 'is-invalid' : ''}}">
-                            <label for="password-confirm">Confirm Password <span class="red-asterisk">*</span></label>
+                            <label for="password-confirm" class="label_confirm">Confirm Password <span class="red-asterisk">*</span></label>
                             @if ($errors->has('password_confirmation'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -134,13 +145,55 @@
 @endsection
 
 @section('script')
-<script>
-    $('.datepicker').pickadate({
-        max: new Date(),
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenPrefix: 'formatted_',
-        selectYears: 40,
-        max: new Date(2003,11,31)
-    });
-</script>
+    <script>
+        $(function() {
+            $('#mobileNumber').mask('00000000000');
+            $('#studentNumber').mask('0000000000');
+
+            $('.datepicker').pickadate({
+               max: new Date(),
+               formatSubmit: 'yyyy-mm-dd',
+               hiddenPrefix: 'formatted_',
+               selectYears: 40,
+               max: new Date(2003,11,31)
+           });
+
+            $( "#password" ).focus(function() {
+                $('.label_password').addClass('active');
+            });
+
+            $( "#password" ).focusout(function() {
+                if($( "#password" ).val() == ''){
+                    $('.label_password').removeClass('active');
+                }
+            });
+
+            
+            $("#password").passwordValidator({
+                // list of qualities to require
+                require: ['length', 'lower', 'upper', 'digit'],
+                // minimum length requirement
+                length: 8
+            });
+
+            // $( "#password-confirm" ).focus(function() {
+            //     $('.label_confirm').addClass('active');
+            // });
+
+            // $( "#password-confirm" ).focusout(function() {
+            //     if($( "#password-confirm" ).val() == ''){
+            //         $('.label_confirm').removeClass('active');
+            //     }
+            // });
+
+            
+            // $("#password-confirm").passwordValidator({
+            //     // list of qualities to require
+            //     require: ['length', 'lower', 'upper', 'digit'],
+            //     // minimum length requirement
+            //     length: 8
+            // });
+        });
+    </script>
+
 @endsection

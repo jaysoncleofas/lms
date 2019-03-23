@@ -20,9 +20,9 @@
                     <form action="{{route('admin.instructor.update', $instructor->id)}}" method="post">
                         {{ csrf_field() }} {{method_field('PUT')}}
                         <div class="form-row">
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-6 col-md-6">
                                 <div class="md-form">
-                                    <input type="text" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{$instructor->firstName}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" name="firstName" id="firstName" class="form-control {{$errors->has('firstName') ? 'is-invalid' : ''}}" value="{{$instructor->firstName}}">
                                     <label for="firstName">First Name <span class="red-asterisk">*</span></label>
                                     @if ($errors->has('firstName'))
                                     <span class="invalid-feedback" role="alert">
@@ -31,9 +31,9 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-6 col-md-6">
                                 <div class="md-form">
-                                    <input type="text" id="middleName" name="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{$instructor->middleName ? $instructor->middleName : old('middleName')}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" id="middleName" name="middleName" class="form-control {{$errors->has('middleName') ? 'is-invalid' : ''}}" value="{{$instructor->middleName ? $instructor->middleName : old('middleName')}}">
                                     <label for="middleName">Middle Name</label>
                                     @if ($errors->has('middleName'))
                                     <span class="invalid-feedback" role="alert">
@@ -42,13 +42,24 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-6 col-md-6">
                                 <div class="md-form">
-                                    <input type="text" id="lastName" name="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{$instructor->lastName}}">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" id="lastName" name="lastName" class="form-control {{$errors->has('lastName') ? 'is-invalid' : ''}}" value="{{$instructor->lastName}}">
                                     <label for="lastName">Last Name <span class="red-asterisk">*</span></label>
                                     @if ($errors->has('lastName'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('lastName') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6 col-md-6">
+                                <div class="md-form">
+                                    <input type="text" pattern="[A-Za-z]*" title="Only Alphabets" id="suffix" name="suffix" class="form-control {{$errors->has('suffix') ? 'is-invalid' : ''}}" value="{{$instructor->suffixName}}">
+                                    <label for="suffix">Suffix</label>
+                                    @if ($errors->has('suffix'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('suffix') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -102,4 +113,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(function() {
+            $('#mobileNumber').mask('00000000000');
+            $('#studentNumber').mask('0000000000');
+            $("#password").passwordValidator({
+                // list of qualities to require
+                require: ['length', 'lower', 'upper', 'digit'],
+                // minimum length requirement
+                length: 8
+            });
+        });
+    </script>
 @endsection

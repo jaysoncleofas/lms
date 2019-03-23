@@ -42,7 +42,7 @@
     <div style="width:100%;">
         <div style="width:600px; background-color:#ffffff;margin:0 auto;padding:35px;color:#333333">
             <h1 style="font-size: 19px;font-weight: bold;">
-                Hi {{ $user->firstName.' '.$user->lastName }}!
+                Hi {{ $user->name() }}!
             </h1>
             <p style="font-size: 16px; line-height: 1.5em; color: #84888d;">
                 There's a new quiz in your course {{ $announcement->course->name }}.

@@ -61,7 +61,7 @@
                             <select class="multiple-select form-control" multiple="multiple" id="instructors" name="instructors[]" required
                                 style="width:100% !important;">
                                 @foreach ($instructors as $instructor)
-                                <option value="{{ $instructor->id }}">{{ $instructor->firstName.' '.$instructor->lastName }}</option>
+                                <option value="{{ $instructor->id }}">{{ $instructor->name() }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -25,6 +25,13 @@
      <link rel="icon" sizes="100x100" href="{{ asset('images/ccs_favicon.png') }}" />
      <link href="{{ asset('css/jquery-password-validator.css') }}" rel="stylesheet">
 
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     @yield('styles')
 </head>
 <body>

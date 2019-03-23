@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Message;
 use Illuminate\Http\Request;
 use App\Convo;
+use App\Course;
+use App\Section;
 use Auth;
 use App\User;
+use DB;
 use carbon\Carbon;
 use App\Notifications\MessageSent;
 
@@ -17,12 +20,31 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($role,$course_id,$section_id,$tab)
+    {
+        $data['course'] = Course::findOrFail($course_id);
+        $data['section'] = Section::findOrFail($section_id);
+        $user = Auth::user();
+        $data['convos'] = Convo::where('user_id', $user->id)->orWhere('to_user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(10);
+        // return $convos;
+        return view('message.index', $data);
+    }
+
+    public function index2()
     {
         $user = Auth::user();
-        $convos = Convo::where('user_id', $user->id)->orWhere('to_user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(10);
+        $data['convos'] = Convo::where('user_id', $user->id)->orWhere('to_user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(10);
         // return $convos;
-        return view('message.index', compact('convos'));
+        return view('message.index', $data);
+    }
+
+    public function index3($role,$course_id,$tab)
+    {
+        $data['course'] = Course::findOrFail($course_id);
+        $user = Auth::user();
+        $data['convos'] = Convo::where('user_id', $user->id)->orWhere('to_user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(10);
+        // return $convos;
+        return view('message.index', $data);
     }
 
     /**
@@ -78,16 +100,44 @@ class MessageController extends Controller
      * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show($convo_id)
+    public function show($role,$course_id,$section_id,$tab,$convo_id)
     {
-        $me = Auth::user();
-        $conversation = Convo::findOrFail($convo_id);
-        
-        $messages = Message::where('convo_id', $convo_id)->get();
+        $data['course'] = Course::findOrFail($course_id);
+        $data['section'] = Section::findOrFail($section_id);
+        $data['me'] = Auth::user();
+        $data['conversation'] = Convo::findOrFail($convo_id);
+        $conversation = $data['conversation'];
+        $data['messages'] = Message::where('convo_id', $convo_id)->get();
 
-        return view('message.show', compact('conversation', 'messages', 'me'));
+        DB::table('notifications')->where('notifiable_id', auth()->id())->whereNull('read_at')->whereJsonContains('data', ['convo_id' => $conversation->id])->update(['read_at' => date('Y-m-d H:i:s')]);
+
+        return view('message.show', $data);
     }
 
+    public function show2($convo_id)
+    {
+        $data['me'] = Auth::user();
+        $data['conversation'] = Convo::findOrFail($convo_id);
+        $conversation = $data['conversation'];
+        $data['messages'] = Message::where('convo_id', $convo_id)->get();
+
+        DB::table('notifications')->where('notifiable_id', auth()->id())->whereNull('read_at')->whereJsonContains('data', ['convo_id' => $conversation->id])->update(['read_at' => date('Y-m-d H:i:s')]);
+
+        return view('message.show', $data);
+    }
+
+    public function show3($role,$course_id,$tab,$convo_id)
+    {
+        $data['course'] = Course::findOrFail($course_id);
+        $data['me'] = Auth::user();
+        $data['conversation'] = Convo::findOrFail($convo_id);
+        $conversation = $data['conversation'];
+        $data['messages'] = Message::where('convo_id', $convo_id)->get();
+
+        DB::table('notifications')->where('notifiable_id', auth()->id())->whereNull('read_at')->whereJsonContains('data', ['convo_id' => $conversation->id])->update(['read_at' => date('Y-m-d H:i:s')]);
+
+        return view('message.show', $data);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -158,6 +208,11 @@ class MessageController extends Controller
     public function markAsRead(Request $request)
     {
         auth()->user()->unreadNotifications->where('id',  $request->id)->markAsRead();
+        $test = auth()->user()->unreadNotifications->where('id', $request->id)->first();
+
+        $convo_id = $test->data['convo_id'];
+        $teat1 = DB::table('notifications')->where('notifiable_id', auth()->id())->whereJsonContains('data', ['convo_id' => $convo_id])->update(['read_at' => date('Y-m-d H:i:s')]);
+
         return response('success', 200);
     }
 

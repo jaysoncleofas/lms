@@ -16,7 +16,8 @@
             <a href="{{route('my_files')}}" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Files"><i class="fa fa-file"></i> </a>
         </li>
         @if(auth()->user()->role != 'admin')
-        <li class="nav-item dropdown">
+        <notification :userid="{{ auth()->id() }}" :unreads="{{ auth()->user()->unreadnotifications }}"></notification>
+        {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-envelope"></i> 
                 @if (auth()->user()->unreadnotifications->count())
@@ -47,7 +48,7 @@
                 @endforeach
                 <a class="dropdown-item" href="{{route('message.index')}}">See All</a>
             </div>
-        </li>
+        </li> --}}
         @endif
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

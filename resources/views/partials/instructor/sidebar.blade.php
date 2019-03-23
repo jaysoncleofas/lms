@@ -14,22 +14,22 @@
 
                 @if (Nav::hasSegment('course', 2))
                     <li>
-                        <a href="{{route('instructor.section.index', $course->id)}}" class="{{Nav::hasSegment('section',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Sections</a>
+                        <a href="{{route('instructor.section.index', $course->id)}}" class="{{Nav::hasSegment('section',4)}} {{Nav::hasSegment('sections',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i> Sections</a>
                     </li>
                     <li>
-                        <a href="{{route('instructor.announcement.index', $course->id)}}" class="{{Nav::hasSegment('announcement',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bullhorn"></i> Announcements</a>
+                        <a href="{{route('instructor.announcement.index', $course->id)}}" class="{{Nav::hasSegment('announcements',4)}} {{Nav::hasSegment('announcement',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bullhorn"></i> Announcements</a>
                     </li>
                     <li>
-                        <a href="{{route('instructor.lesson.index', $course->id)}}" class="{{Nav::hasSegment('lesson',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bookmark"></i> Lessons</a>
+                        <a href="{{route('instructor.lesson.index', $course->id)}}" class="{{Nav::hasSegment('lesson',4)}} {{Nav::hasSegment('lessons',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bookmark"></i> Lessons</a>
                     </li>
                     <li>
-                        <a href="{{route('instructor.quiz.index', $course->id)}}" class="{{Nav::hasSegment('quiz',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i> Quizzes</a>
+                        <a href="{{route('instructor.quiz.index', $course->id)}}" class="{{Nav::hasSegment('quiz',4)}} {{Nav::hasSegment('quizzes',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i> Quizzes</a>
                     </li>
                     <li>
-                        <a href="{{route('instructor.assignment.index', $course->id)}}" class="{{Nav::hasSegment('assignment',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignments</a>
+                        <a href="{{route('instructor.assignment.index', $course->id)}}" class="{{Nav::hasSegment('assignment',4)}} {{Nav::hasSegment('assignments',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignments</a>
                     </li>
                     <li>
-                        <a href="{{route('instructor.token.index', $course->id)}}" class="{{Nav::hasSegment('token',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-key"></i> Tokens</a>
+                        <a href="{{route('instructor.token.index', $course->id)}}" class="{{Nav::hasSegment('token',4)}} {{Nav::hasSegment('tokens',4)}} collapsible-header waves-effect arrow-r"><i class="fa fa-key"></i> Tokens</a>
                     </li>
                 @endif
             </ul>

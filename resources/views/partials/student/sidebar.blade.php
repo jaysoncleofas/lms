@@ -13,19 +13,19 @@
                     </li>
                     @if (Nav::hasSegment('section', 4))
                         <li>
-                            <a href="{{route('student.section.index', [$course->id, $section->id])}}" class="{{Nav::isRoute('student.section.index')}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i>  Section</a>
+                            <a href="{{route('student.section.index', [$course->id, $section->id])}}" class="{{Nav::isRoute('student.section.index')}} {{Nav::hasSegment('mysection',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-graduation-cap"></i>  Section</a>
                         </li>
                         <li>
-                            <a href="{{route('student.announcement', [$course->id, $section->id])}}" class="{{Nav::hasSegment('announcement',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bullhorn"></i> Announcement</a>
+                            <a href="{{route('student.announcement', [$course->id, $section->id])}}" class="{{Nav::hasSegment('announcements',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bullhorn"></i> Announcements</a>
                         </li>
                         <li>
-                            <a href="{{route('student.lesson.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('lesson',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bookmark"></i> Lesson</a>
+                            <a href="{{route('student.lesson.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('lessons',6)}} {{Nav::hasSegment('lesson',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-bookmark"></i> Lessons</a>
                         </li>
                         <li>
-                            <a href="{{route('student.quiz.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('quiz',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i> Quiz</a>
+                            <a href="{{route('student.quiz.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('quizzes',6)}} {{Nav::hasSegment('quiz',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i> Quizzes</a>
                         </li>
                         <li>
-                            <a href="{{route('student.assignment.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('assignment',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignment</a>
+                            <a href="{{route('student.assignment.index', [$course->id, $section->id])}}" class="{{Nav::hasSegment('assignment',6)}} {{Nav::hasSegment('assignments',6)}} collapsible-header waves-effect arrow-r"><i class="fa fa-address-book"></i> Assignments</a>
                         </li>
                     @endif
                 </ul>

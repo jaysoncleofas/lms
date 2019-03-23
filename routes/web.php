@@ -43,30 +43,37 @@ Route::prefix('admin')->name('admin.')->middleware(['admin', 'auth'])->group(fun
 
 Route::prefix('instructor')->name('instructor.')->middleware(['verified', 'instructor', 'auth'])->group(function () {
     Route::get('/all-course', 'HomeController@instructor_dashboard')->name('dashboard');
+
+    Route::get('/course/{course}/sections', 'Instructor\SectionController@index')->name('section.index');
     Route::put('/course/{course}/section/{section}/status', 'Instructor\SectionController@status')->name('section.status');
     Route::get('/course/{course}/section/deactivated', 'Instructor\SectionController@deactivated')->name('section.deactivated');
-    Route::resource('/course/{course}/section', 'Instructor\SectionController')->except('show');
+    Route::resource('/course/{course}/section', 'Instructor\SectionController')->except(['index','show']);
 
-    Route::resource('/course/{course}/announcement', 'Instructor\AnnouncementController')->except(['show']);
+    Route::get('/course/{course}/announcements', 'Instructor\AnnouncementController@index')->name('announcement.index');
+    Route::resource('/course/{course}/announcement', 'Instructor\AnnouncementController')->except(['index','show']);
 
     Route::resource('/course/{course}/section/{section}/student', 'Instructor\StudentController');
 
+    Route::get('/course/{course}/lessons', 'Instructor\LessonController@index')->name('lesson.index');
     Route::get('/course/{course}/lesson/download/{lesson}', 'Instructor\LessonController@download')->name('lesson.download');
     Route::put('/course/{course}/lesson/{lesson}/status', 'Instructor\LessonController@status')->name('lesson.status');
-    Route::resource('/course/{course}/lesson', 'Instructor\LessonController');
+    Route::resource('/course/{course}/lesson', 'Instructor\LessonController')->except(['index']);
 
+    Route::get('/course/{course}/quizzes', 'Instructor\QuizController@index')->name('quiz.index');
     Route::put('/take/{take}', 'Instructor\QuizController@takeUpdate')->name('quiz.takeUpdate');
     Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');
     Route::get('/course/{course}/quiz/{quiz}/take/{take}', 'Instructor\QuizController@takeShow')->name('quiz.takeShow');
     Route::put('/course/{course}/quiz/{quiz}/status', 'Instructor\QuizController@status')->name('quiz.status');
-    Route::resource('/course/{course}/quiz', 'Instructor\QuizController');
+    Route::resource('/course/{course}/quiz', 'Instructor\QuizController')->except(['index']);
 
+    Route::get('/course/{course}/assignments', 'Instructor\AssignmentController@index')->name('assignment.index');
     Route::put('/pass/{pass}', 'Instructor\AssignmentController@passUpdate')->name('assignment.passUpdate');
     Route::get('/course/{course}/assignment/{assignment}/section/{section}/submit/{submit}', 'Instructor\AssignmentController@show_submit')->name('assignment.submit');
     Route::put('/course/{course}/assignment/{assignment}/status', 'Instructor\AssignmentController@status')->name('assignment.status');
-    Route::resource('/course/{course}/assignment', 'Instructor\AssignmentController');
+    Route::resource('/course/{course}/assignment', 'Instructor\AssignmentController')->except(['index']);
 
-    Route::resource('/course/{course}/token', 'Instructor\TokenController')->except(['show']);
+    Route::get('/course/{course}/tokens', 'Instructor\TokenController@index')->name('token.index');
+    Route::resource('/course/{course}/token', 'Instructor\TokenController')->except(['index','show']);
 
     Route::resource('/course/{course}/quiz/{quiz}/question', 'Instructor\QuestionController');
 
@@ -83,17 +90,17 @@ Route::prefix('instructor')->name('instructor.')->middleware(['verified', 'instr
 
 Route::prefix('student')->name('student.')->middleware(['verified', 'student', 'auth'])->group(function () {
     Route::get('/dashboard', 'HomeController@student_dashboard')->name('dashboard');
-    Route::get('/course/{course}/section/{section}/announcement', 'StudentController@announcement')->name('announcement');
-    Route::get('/course/{course}/section/{section}', 'StudentController@section_index')->name('section.index');
+    Route::get('/course/{course}/section/{section}/announcements', 'StudentController@announcement')->name('announcement');
+    Route::get('/course/{course}/section/{section}/mysection', 'StudentController@section_index')->name('section.index');
     // lesson
-    Route::get('/course/{course}/section/{section}/lesson', 'StudentController@lesson_index')->name('lesson.index');
+    Route::get('/course/{course}/section/{section}/lessons', 'StudentController@lesson_index')->name('lesson.index');
     Route::get('/course/{course}/section/{section}/lesson/{lesson}', 'StudentController@lesson_show')->name('lesson.show');
     Route::get('/course/{course}/section/{section}/lesson/{lesson}/download', 'StudentController@lesson_download')->name('lesson.download');
 
-    Route::get('/course/{course}/section/{section}/quiz', 'StudentController@quiz_index')->name('quiz.index');
+    Route::get('/course/{course}/section/{section}/quizzes', 'StudentController@quiz_index')->name('quiz.index');
     Route::get('/course/{course}/section/{section}/quiz/{quiz}', 'StudentController@quiz_show')->name('quiz.show');
 
-    Route::get('/course/{course}/section/{section}/assignment', 'StudentController@assignment_index')->name('assignment.index');
+    Route::get('/course/{course}/section/{section}/assignments', 'StudentController@assignment_index')->name('assignment.index');
     Route::get('/course/{course}/section/{section}/assignment/{assignment}', 'StudentController@assignment_show')->name('assignment.show');
 
     Route::post('/course/{course}/section/{section}/quiz/{quiz}/takes/code-quiz', 'TakeController@storeCodeQuiz')->name('take.storeCodeQuiz');
@@ -121,10 +128,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/new-message', 'MessageController@store')->name('message.store');
     Route::post('/new-message/reply/{convo}', 'MessageController@reply')->name('message.reply');
-    Route::get('/messages', 'MessageController@index')->name('message.index');
-    Route::get('/messages/convo/{convo}', 'MessageController@show')->name('message.show');
+    Route::get('/{student?}/course/{course?}/section/{section?}/{tab?}/messages', 'MessageController@index')->name('message.index');
+    Route::get('/{student?}/course/{course?}/section/{section?}/{tab?}/messages/convo/{convo}', 'MessageController@show')->name('message.show');
+
+    Route::get('/{instructor?}/course/{course?}/{tab?}/messages', 'MessageController@index3')->name('message.index3');
+    Route::get('/{instructor?}/course/{course?}/{tab?}/messages/convo/{convo}', 'MessageController@show3')->name('message.show3');
+
+    Route::get('/messages', 'MessageController@index2')->name('message.index2');
+    Route::get('/messages/convo/{convo}', 'MessageController@show2')->name('message.show2');
 
     Route::post('/runcode', 'TakeController@runCode')->name('runCode');
     Route::get('/markAsRead', 'MessageController@markAsRead')->name('markAsRead');
     Route::get('/markAsAllRead', 'MessageController@markAsAllRead')->name('markAsAllRead');
+    Route::get('/getUserFullname', 'UserController@getUserFullname')->name('getUserFullname');
+    Route::get('/get_messages_url', 'UserController@get_messages_url')->name('get_messages_url');
 });

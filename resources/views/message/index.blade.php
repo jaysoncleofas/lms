@@ -14,9 +14,23 @@
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-12">
+                        @php
+                            $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                            $uri_segments = explode('/', $uri_path);
+
+                            if(isset($uri_segments[6])){
+                                $tab = $uri_segments[6];
+                            } else {
+                                $tab = 'notab';
+                            }
+                        @endphp
                         <div class="list-group">
                             @forelse ($convos as $convo)
-                                <a href="{{ route('message.show', $convo->id) }}" class="list-group-item list-group-item-action media">
+                                @if ($tab != 'notab')
+                                    <a href="{{ route('message.show', [auth()->user()->role,$course->id,$section->id,$tab,$convo->id]) }}" class="list-group-item list-group-item-action media">
+                                @else
+                                    <a href="{{ route('message.show2', $convo->id) }}" class="list-group-item list-group-item-action media">
+                                @endif
                                     @if ($convo->to_user_id == auth()->user()->id)
                                         <img class="img-fluid rounded-circle z-depth-1 mr-3 avatar-sm float-left" style="object-fit:cover;height:50px;width:50px;" src="{{ $convo->user->avatar ? asset('storage/avatars/'.$convo->user->avatar)  : asset('images/profile_pic.png') }}">
                                         <div class="d-flex justify-content-between mb-1 ">
